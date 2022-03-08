@@ -13,4 +13,4 @@
 | Laura Cazorla Garcés | lauracazorla | lauracazorla | 
 
 ## Contents of this repository
-This repository contains the code of the backend of the application. The code of the frontend of the application is available at the following repository: [alili707/PES_RevPollution](https://github.com/alili707/PES_RevPollution).
+This repository contains the code of the backend of the application. The code of the frontend of the application is available at the following repository: [alili707/PES_RevPollution_FrontEnd](https://github.com/alili707/PES_RevPollution_FrontEnd).
