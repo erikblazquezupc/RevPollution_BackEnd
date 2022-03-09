@@ -1,0 +1,7 @@
+{
+    "java.project.outputPath": "exe",
+    "java.project.sourcePaths": ["src", "test"],
+    "java.project.referencedLibraries": [
+        "**/*.jar"
+    ]
+}
