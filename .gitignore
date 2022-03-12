@@ -1,2 +1,6 @@
 src/Main.java
 exe
+target
+build
+.vscode
+doc/api.pdf

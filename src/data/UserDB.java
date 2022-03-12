@@ -21,7 +21,7 @@ public class UserDB implements UserDataCtrl{
     private UserDB(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?useSSL=false", "dev", "aRqffCdBd9t!");
+            conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             insert = conn.prepareStatement("INSERT INTO User(username, password, email, name, tel, img) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             selectByUsername = conn.prepareStatement("SELECT * FROM User WHERE username = ?");
             select = conn.prepareStatement("SELECT * FROM User WHERE idUser = ?");
