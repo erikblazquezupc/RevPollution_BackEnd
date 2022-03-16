@@ -57,13 +57,13 @@ http://10.4.41.56/RevPollution/services/signup/signup
 Curl:
 
 ```
-curl -X POST "http://10.4.41.56/RevPollution/services/login/login?username=username&password=password"
+curl -X POST "http://10.4.41.56/RevPollution/services/login/login?username=username&password=password&name=name&email=email&telf=telf&image=image"
 ```
 
 Dart:
 
 ``` Dart
-var request = http.Request('POST', Uri.parse('http://10.4.41.56/RevPollution/services/login/login?username=username&password=password'));
+var request = http.Request('POST', Uri.parse('http://10.4.41.56/RevPollution/services/login/login?username=username&password=password&name=name&email=email&telf=telf&image=image'));
 
 http.StreamedResponse response = await request.send();
 
