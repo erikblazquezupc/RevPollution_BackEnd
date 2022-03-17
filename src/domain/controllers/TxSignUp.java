@@ -29,8 +29,7 @@ public class TxSignUp {
         DataCtrl dataCtrl = DataCtrl.getInstance();
         UserDataCtrl userCtrl = dataCtrl.getUserDataCtrl();
         User u = new User(username, name, email, password, telf, image);
-        userCtrl.insert(u);
-        result = true;
+        result = userCtrl.insert(u);
     }
 
     public boolean getResult(){
