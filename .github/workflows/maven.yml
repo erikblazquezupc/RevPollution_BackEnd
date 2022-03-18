@@ -42,7 +42,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        cache: mavens
+        cache: maven
     - name: VPN info
       run:  f5fpc --info
       #run: docker run --name f5fpc-vpn --net host -i --rm --privileged matthiaslohr/f5fpc /opt/connect.sh
