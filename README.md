@@ -14,3 +14,7 @@
 
 ## Contents of this repository
 This repository contains the code of the backend of the application. The code of the frontend of the application is available at the following repository: [alili707/PES_RevPollution_FrontEnd](https://github.com/alili707/PES_RevPollution_FrontEnd).
+
+## API Documentation
+
+[API Documentation](doc/api.md)
