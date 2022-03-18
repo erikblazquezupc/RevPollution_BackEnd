@@ -29,7 +29,7 @@ jobs:
     - name: Install f5fpc
       run:  sudo dpkg -i f5fpc/linux_f5cli.x86_64.deb
     - name: Start VPN
-      run:  f5fpc -s -t upclink.upc.edu
+      run:  f5fpc -s -t upclink.upc.edu -u erik.blazquez -p RevPollution22
       #run: docker run --name f5fpc-vpn --net host -i --rm --privileged matthiaslohr/f5fpc /opt/connect.sh
     - name: Build with Maven
       run:  mvn -B package --file pom.xml
