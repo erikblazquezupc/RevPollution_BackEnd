@@ -6,5 +6,6 @@ CREATE TABLE User (
 	name VARCHAR(20),
 	tel VARCHAR(9),
 	img TEXT,
+	token TEXT,
 	PRIMARY KEY (idUser)
 )

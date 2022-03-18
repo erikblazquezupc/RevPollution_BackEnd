@@ -20,7 +20,7 @@ public class LogIn {
 	public Response login(@QueryParam("username") String username, @QueryParam("password") String password) {
 		TxLogIn tx = new TxLogIn(username, password);
 		tx.execute();
-		boolean result = tx.getResult();
+		String result = tx.getResult();
 		return Response.ok(result).build();
 	}
 }

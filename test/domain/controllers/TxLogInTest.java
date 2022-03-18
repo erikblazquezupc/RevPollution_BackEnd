@@ -1,7 +1,7 @@
 package domain.controllers;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,7 +32,7 @@ public class TxLogInTest {
     public void testTxLogInTest() {
         TxLogIn tx = new TxLogIn("username", "password");
         tx.execute();
-        assertTrue(tx.getResult());
+        assertNotNull(tx.getResult());
 
     }
 
@@ -40,7 +40,7 @@ public class TxLogInTest {
     public void testTxLogInTestFail() {
         TxLogIn tx = new TxLogIn("username", "");
         tx.execute();
-        assertFalse(tx.getResult());
+        assertNull(tx.getResult());
         
     }
 }

@@ -1,8 +1,8 @@
 package api;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import javax.ws.rs.core.Response;
 
@@ -36,7 +36,7 @@ public class LogInTest {
         LogIn l = new LogIn();
         Response r = l.login("username", "password");
         assertEquals(200, r.getStatus());
-        assertTrue(Boolean.parseBoolean(r.getEntity().toString()));
+        assertNotNull(r.getEntity());
     }
 
     @Test
@@ -44,6 +44,6 @@ public class LogInTest {
         LogIn l = new LogIn();
         Response r = l.login("username", "passwor");
         assertEquals(200, r.getStatus());
-        assertFalse(Boolean.parseBoolean(r.getEntity().toString()));
+        assertNull(r.getEntity());
     }
 }
