@@ -27,7 +27,7 @@ jobs:
     - name: LS
       run:  ls -l
     - name: Install f5fpc
-      run:  dpkg -i f5fpc/linux_f5cli.x86_64.deb
+      run:  sudo dpkg -i f5fpc/linux_f5cli.x86_64.deb
     - name: Start VPN
       run:  f5fpc -s -t upclink.upc.edu
       #run: docker run --name f5fpc-vpn --net host -i --rm --privileged matthiaslohr/f5fpc /opt/connect.sh
