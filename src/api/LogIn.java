@@ -18,7 +18,6 @@ public class LogIn {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/login")
 	public Response login(@QueryParam("username") String username, @QueryParam("password") String password) {
-		System.out.println("login");
 		TxLogIn tx = new TxLogIn(username, password);
 		tx.execute();
 		boolean result = tx.getResult();
