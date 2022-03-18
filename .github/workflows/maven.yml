@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  vpn:
 
     runs-on: ubuntu-latest
 
@@ -29,7 +29,20 @@ jobs:
     - name: Install f5fpc
       run:  sudo dpkg -i f5fpc/linux_f5cli.x86_64.deb
     - name: Start VPN
-      run:  f5fpc -s -t upclink.upc.edu -u erik.blazquez -p RevPollution22
+      run:  f5fpc -s -t upclink.upc.edu -u erik.blazquez -p RevPollution22 -b -i
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: mavens
     - name: VPN info
       run:  f5fpc --info
       #run: docker run --name f5fpc-vpn --net host -i --rm --privileged matthiaslohr/f5fpc /opt/connect.sh
