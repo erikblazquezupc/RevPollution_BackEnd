@@ -10,7 +10,6 @@ public class User{
     String img;
 
     public User(){
-
     }
 
     public User(String username, String email, String password) {
