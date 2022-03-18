@@ -22,5 +22,9 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
+    - name: Install docker image f5fpc
+      run: docker pull matthiaslohr/f5fpc:latest
+    - name: Start VPN
+      run: docker run --name f5fpc-vpn --net host -it --rm --privileged matthiaslohr/f5fpc /opt/connect.sh
     - name: Build with Maven
-      run: docker pull matthiaslohr/f5fpc:latest & docker run --name f5fpc-vpn --net host -it --rm --privileged matthiaslohr/f5fpc /opt/connect.sh & mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml
