@@ -10,7 +10,7 @@ import domain.User;
 import domain.dataCtrl.UserDataCtrl;
 
 public class UserDB implements UserDataCtrl{
-    static UserDB instance;
+    private static UserDB instance;
     Connection conn;
     PreparedStatement insert;
     PreparedStatement update;
