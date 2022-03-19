@@ -10,7 +10,7 @@ import domain.User;
 import domain.dataCtrl.UserDataCtrl;
 
 public class UserDB implements UserDataCtrl{
-    static UserDB instance;
+    private static UserDB instance;
     Connection conn;
     PreparedStatement insert;
     PreparedStatement update;
@@ -95,7 +95,6 @@ public class UserDB implements UserDataCtrl{
                 String tel = r.getString("tel");
                 String img = r.getString("img");
                 User u = new User(id, username, name, email, password, tel, img);
-                u.setId(id);
                 return u;
             }
         } catch (SQLException e) {

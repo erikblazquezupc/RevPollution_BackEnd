@@ -1,5 +1,6 @@
 package domain.dataCtrl;
 
+import data.StationDB;
 import data.UserDB;
 
 public class DataCtrl{
@@ -12,5 +13,9 @@ public class DataCtrl{
 
     public UserDataCtrl getUserDataCtrl(){
         return UserDB.getInstance();
+    }
+
+    public StationDataCtrl getStationDataCtrl(){
+        return StationDB.getInstance();
     }
 }
