@@ -63,4 +63,54 @@ public class Concentration {
         return "Concentration [station=" + station.getName() + ", particle=" + particle.getName() + ", instant=" + instant + ", value=" + value +  
                 "]" ;
     }
+
+    public int getStationId() {
+        return station.getId();
+    }
+
+    public String getParticleName() {
+        return particle.getName();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((instant == null) ? 0 : instant.hashCode());
+        result = prime * result + ((particle == null) ? 0 : particle.hashCode());
+        result = prime * result + ((station == null) ? 0 : station.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(value);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Concentration other = (Concentration) obj;
+        if (instant == null) {
+            if (other.instant != null)
+                return false;
+        } else if (!instant.equals(other.instant))
+            return false;
+        if (particle == null) {
+            if (other.particle != null)
+                return false;
+        } else if (!particle.equals(other.particle))
+            return false;
+        if (station == null) {
+            if (other.station != null)
+                return false;
+        } else if (!station.equals(other.station))
+            return false;
+        if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value))
+            return false;
+        return true;
+    }
 }

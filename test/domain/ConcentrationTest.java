@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import com.mysql.fabric.xmlrpc.base.Data;
-
 import org.junit.Before;
 import org.junit.Test;
 
