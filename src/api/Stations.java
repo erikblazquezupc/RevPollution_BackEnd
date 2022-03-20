@@ -10,17 +10,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import domain.StationStub;
-import domain.controllers.TxGetMapStations;
+import domain.controllers.TxGetStations;
 
-@Path("/station")
-public class Station {
+@Path("/stations")
+public class Stations {
 	
 	@GET
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/station")
+	@Path("/stations")
 	public Response getStations() {
-		TxGetMapStations tx = new TxGetMapStations();
+		TxGetStations tx = new TxGetStations();
 		tx.execute();
 		ArrayList<StationStub> result = tx.getResult();
 		return Response.ok(result).build();
