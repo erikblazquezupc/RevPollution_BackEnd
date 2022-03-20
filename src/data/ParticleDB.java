@@ -28,7 +28,7 @@ public class ParticleDB implements ParticleDataCtrl{
             select = conn.prepareStatement("SELECT * FROM Particle WHERE name = ?");
             selectAll = conn.prepareStatement("SELECT * FROM Particle");
             delete = conn.prepareStatement("DELETE FROM Particle WHERE name = ?");
-            update = conn.prepareStatement("UPDATE Station SET name = ?, unit = ?");
+            update = conn.prepareStatement("UPDATE Particle SET name = ?, unit = ? WHERE name = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -69,6 +69,7 @@ public class ParticleDB implements ParticleDataCtrl{
         try {
             update.setString(1, p.getName());
             update.setString(2, p.getUnit());
+            update.setString(3, p.getName());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
