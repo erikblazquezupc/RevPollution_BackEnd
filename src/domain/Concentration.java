@@ -19,48 +19,48 @@ public class Concentration {
 
     }
 
-    public Concentration(StationStub station, Particle p, Date d, double v) {
+    public Concentration(StationStub station, Particle particle, Date date, double value) {
         this.station = station;
-        this.particle = p;
-        this.instant = d;
-        this.value = v;
+        this.particle = particle;
+        this.instant = date;
+        this.value = value;
     }
 
     public StationStub getStation() {
         return station;
     }
 
-    public void setStation(StationStub s) {
-        station = s;
+    public void setStation(StationStub station) {
+        this.station = station;
     }
 
     public Particle getParticle() {
         return particle;
     }
 
-    public void setParticle(Particle p) {
-        particle = p;
+    public void setParticle(Particle particle) {
+        this.particle = particle;
     }
 
     public Date getInstant() {
         return instant;
     }
 
-    public void setInstant(Date d) {
-        instant = d;
+    public void setInstant(Date date) {
+        this.instant = date;
     }
 
     public double getValue() {
         return value;
     }
 
-    public void setValue(double v) {
-        value = v;
+    public void setValue(double value) {
+        this.value = value;
     }
 
     @Override
     public String toString() {
-        return "Concentration [station=" + station + ", particle=" + particle + ", instant=" + instant + ", value=" + value +  
+        return "Concentration [station=" + station.getName() + ", particle=" + particle.getName() + ", instant=" + instant + ", value=" + value +  
                 "]" ;
     }
 }

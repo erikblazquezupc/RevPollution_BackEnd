@@ -44,7 +44,7 @@ public class ParticleDB implements ParticleDataCtrl{
     public boolean insert(Particle p){
         try {
             insert.setString(1, p.getName());
-            insert.setString(2, p.getUnitToString());
+            insert.setString(2, p.getUnit());
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
             if (r.next()) {
@@ -68,7 +68,7 @@ public class ParticleDB implements ParticleDataCtrl{
     public void update(Particle p){
         try {
             update.setString(1, p.getName());
-            update.setString(2, p.getUnitToString());
+            update.setString(2, p.getUnit());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

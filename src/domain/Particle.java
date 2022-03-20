@@ -3,39 +3,44 @@ package domain;
 public class Particle {
 
     private enum Units {
-        mgm3, ugm3, ppm, ngm3;
+        mgm3("mg/m3"), 
+        ugm3("ug/m3"),
+        ppm("ppm"), 
+        ngm3("ng/m3");
+        
+        private final String UnitName;
+
+        Units(String UnitName) {
+            this.UnitName = UnitName;
+        }
+
+        @Override
+        public String toString() {
+            return UnitName;
+        }
+
+        public static Units get(String u){
+            if (u.equals("mg/m3")) return mgm3;
+            if (u.equals("ug/m3")) return ugm3;
+            if (u.equals("ppm")) return ppm;
+            if (u.equals("ng/m3")) return ngm3;
+            return null;
+        }
     }
 
     String name;
     Units unit;
 
     public Particle () {
-
     }
 
     public Particle(String name) {
         this.name = name;
     }
 
-    public Particle (String name, Units u) {
-        this.name = name;
-        this.unit = u;
-    }
-
     public Particle (String name, String u) {
         this.name = name;
-        if (u.equals("mg/m3")) {
-            this.unit = Units.mgm3;
-        }
-        else if (u.equals("ug/m3")) {
-            this.unit = Units.ugm3;
-        }
-        else if (u.equals("ppm")) {
-            this.unit = Units.ppm;
-        }
-        else if (u.equals("ng/m3")) {
-            this.unit = Units.ngm3;
-        }
+        this.unit = Units.get(u);
     }
 
     public String getName() {
@@ -46,48 +51,16 @@ public class Particle {
         this.name = name;
     }
 
-    public Units getUnit() {
-        return unit;
+    public String getUnit() {
+        return unit.toString();
     }
 
-    public String getUnitToString() {
-        String s = new String();
-        if (unit.equals(Units.mgm3)) {
-            s = "mg/m3";
-        }
-        else if (unit.equals(Units.ugm3)) {
-            s = "ug/m3";
-        }
-        else if (unit.equals(Units.ppm)) {
-            s = "ppm";
-        }
-        else if (unit.equals(Units.ugm3)) {
-            s = "ug/m3";
-        }
-        return s;
-    }
-
-    public void setUnit(Units u) {
-        this.unit = u;
-    }
-
-    public void setUnitByString(String u) {
-        if (u.equals("mg/m3")) {
-            this.unit = Units.mgm3;
-        }
-        else if (u.equals("ug/m3")) {
-            this.unit = Units.ugm3;
-        }
-        else if (u.equals("ppm")) {
-            this.unit = Units.ppm;
-        }
-        else if (u.equals("ng/m3")) {
-            this.unit = Units.ngm3;
-        }
+    public void setUnit(String u) {
+        this.unit = Units.get(u);
     }
 
     @Override
     public String toString() {
-        return "Particle [name=" + name + ", unit=" + getUnitToString() + "]";
+        return "Particle [name=" + name + ", unit=" + unit.toString() + "]";
     }
 }
