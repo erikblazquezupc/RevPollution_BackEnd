@@ -6,7 +6,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -20,10 +19,10 @@ public class Station {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/station")
-	public Response getStations(@QueryParam("stations") ArrayList<StationStub> stations) {
-		TxGetMapStations tx = new TxGetMapStations(stations);
+	public Response getStations() {
+		TxGetMapStations tx = new TxGetMapStations();
 		tx.execute();
-		boolean result = tx.getResult();
+		ArrayList<StationStub> result = tx.getResult();
 		return Response.ok(result).build();
 	}
 }

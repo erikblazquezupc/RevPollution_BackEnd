@@ -6,24 +6,22 @@ import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
-public class TxGetMapStations {
-    private boolean result;
-    private ArrayList<StationStub> stations;
+public class TxGetStations {
+    private ArrayList<StationStub> result;
 
-    public TxGetMapStations(ArrayList<StationStub> stations) {
-        this.stations = stations;
-        this.result = false;
+    public TxGetStations() {
+        this.result = null;
     }
 
     public void execute() {
         DataCtrl dataCtrl = DataCtrl.getInstance();
         StationDataCtrl stationCtrl = dataCtrl.getStationDataCtrl();
-        stations = stationCtrl.selectAll();
+        ArrayList<StationStub> stations = stationCtrl.selectAll();
         if(stations.isEmpty()) return;
-        result = true;
+        result = stations;
     }
 
-    public boolean getResult(){
+    public ArrayList<StationStub> getResult(){
         return result;
     }
 }
