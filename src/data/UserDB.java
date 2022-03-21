@@ -39,7 +39,7 @@ public class UserDB implements UserDataCtrl{
         return instance;
     }
 
-    public void insert(User u){
+    public boolean insert(User u){
         try {
             insert.setString(1, u.getUsername());
             insert.setString(2, u.getPassword());
@@ -50,11 +50,14 @@ public class UserDB implements UserDataCtrl{
             insert.setString(7, u.getToken());
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
-            if (r.next())
+            if (r.next()) {
                 u.setId(r.getInt(1));
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public void delete(int id){
