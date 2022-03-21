@@ -11,6 +11,8 @@ import java.util.List;
 import domain.StationStub;
 import domain.dataCtrl.StationDataCtrl;
 
+import java.util.ArrayList;
+
 public class StationDB implements StationDataCtrl{
     static StationDB instance;
     Connection conn;
@@ -20,6 +22,7 @@ public class StationDB implements StationDataCtrl{
     PreparedStatement select;
     PreparedStatement selectAll;
     PreparedStatement selectByName;
+    PreparedStatement selectAll;
 
     private StationDB(){
         try {
@@ -52,6 +55,7 @@ public class StationDB implements StationDataCtrl{
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
             if (r.next())
+                System.out.println(r.getInt(1));
                 s.setId(r.getInt(1));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,6 +77,7 @@ public class StationDB implements StationDataCtrl{
             update.setString(2, s.getAddress());
             update.setDouble(3, s.getLat());
             update.setDouble(4, s.getLon());
+            update.setInt(5, s.getId());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,8 +91,8 @@ public class StationDB implements StationDataCtrl{
             while(r.next()) {
                 String name = r.getString("name");
                 String address = r.getString("address");
-                Double lat = r.getDouble("password");
-                Double lon = r.getDouble("tel");
+                Double lat = r.getDouble("lat");
+                Double lon = r.getDouble("lon");
                 StationStub s = new StationStub(id, name, address, lat, lon);
                 return s;
             }
@@ -130,6 +135,27 @@ public class StationDB implements StationDataCtrl{
                 StationStub s = new StationStub(id, name, address, lat, lon);
                 return s;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<StationStub> selectAll(){
+        ArrayList<StationStub> ret = new ArrayList<StationStub> ();
+
+        try {
+            ResultSet r = selectAll.executeQuery();
+            while(r.next()) {
+                int id = r.getInt("idStation");
+                String name = r.getString("name");
+                String address = r.getString("address");
+                Double lat = r.getDouble("lat");
+                Double lon = r.getDouble("lon");
+                StationStub s = new StationStub(id, name, address, lat, lon);
+                ret.add(s);
+            }
+            return ret;
         } catch (SQLException e) {
             e.printStackTrace();
         }
