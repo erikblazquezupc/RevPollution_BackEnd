@@ -6,12 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import domain.StationStub;
 import domain.dataCtrl.StationDataCtrl;
-
-import java.util.ArrayList;
 
 public class StationDB implements StationDataCtrl{
     static StationDB instance;
@@ -22,7 +19,6 @@ public class StationDB implements StationDataCtrl{
     PreparedStatement select;
     PreparedStatement selectAll;
     PreparedStatement selectByName;
-    PreparedStatement selectAll;
 
     private StationDB(){
         try {
@@ -102,26 +98,6 @@ public class StationDB implements StationDataCtrl{
         return null;
     }
 
-    public List<StationStub> selectAll(){
-        try {
-            ResultSet r = selectAll.executeQuery();
-            List<StationStub> stations = new ArrayList<StationStub>();
-            while(r.next()) {
-                int idStation = r.getInt("idStation");
-                String name = r.getString("name");
-                String address = r.getString("address");
-                Double lat = r.getDouble("lat");
-                Double lon = r.getDouble("lon");
-                StationStub s = new StationStub(idStation, name, address, lat, lon);
-                stations.add(s);
-            }
-            return stations;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<StationStub>();
-    }
-
     public StationStub selectByName(String un){
         try {
             selectByName.setString(1, un);
@@ -143,7 +119,6 @@ public class StationDB implements StationDataCtrl{
 
     public ArrayList<StationStub> selectAll(){
         ArrayList<StationStub> ret = new ArrayList<StationStub> ();
-
         try {
             ResultSet r = selectAll.executeQuery();
             while(r.next()) {
