@@ -17,7 +17,7 @@ public class TxGetStationsTest {
 
     @Before
     public void setUp(){
-        s = new StationStub(1234, "test", "Test Rd, 1", 0, 0);
+        s = new StationStub("test", "Test Rd, 1", 0, 0);
         DataCtrl dataCtrl = DataCtrl.getInstance();
         sdc = dataCtrl.getStationDataCtrl();
         sdc.insert(s);
@@ -33,6 +33,6 @@ public class TxGetStationsTest {
         TxGetStations tx = new TxGetStations();
         tx.execute();
         assertNotNull(tx.getResult());
-        assertTrue("The Station is in the response", tx.getResult().contains(s));
+        assertTrue(tx.getResult().contains(s));
     }
 }

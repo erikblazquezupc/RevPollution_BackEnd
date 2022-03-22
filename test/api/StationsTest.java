@@ -2,6 +2,8 @@ package api;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import javax.ws.rs.core.Response;
 
 import org.junit.After;
@@ -16,10 +18,12 @@ public class StationsTest {
     
     StationStub s;
     StationDataCtrl sdc;
+    Stations st;
 
     @Before
     public void setUp(){
-        s = new StationStub(1234, "test", "Test Rd, 1", 0, 0);
+        st = new Stations();
+        s = new StationStub("test", "Test Rd, 1", 0, 0);
         DataCtrl dataCtrl = DataCtrl.getInstance();
         sdc = dataCtrl.getStationDataCtrl();
         sdc.insert(s);
@@ -32,10 +36,10 @@ public class StationsTest {
 
     @Test
     public void testGetStations() {
-        Stations s = new Stations();
-        Response r = s.stations();
+        
+        Response r = st.stations();
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
-        // Falta algun check mes?
+        assertTrue(r.getEntity().toString().contains(s.toString()));
     }
 }

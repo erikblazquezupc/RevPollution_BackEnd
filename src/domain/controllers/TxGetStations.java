@@ -1,13 +1,13 @@
 package domain.controllers;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
 public class TxGetStations {
-    private List<StationStub> result;
+    private ArrayList<StationStub> result;
 
     public TxGetStations(){}
 
@@ -17,7 +17,7 @@ public class TxGetStations {
         result = sdc.selectAll();;
     }
 
-    public List<StationStub> getResult(){
+    public ArrayList<StationStub> getResult(){
         return result;
     }
 }
