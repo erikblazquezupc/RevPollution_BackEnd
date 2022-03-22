@@ -16,7 +16,7 @@ http://10.4.41.56/RevPollution/services/login/login
 
 Curl:
 
-```
+``` bash
 curl -X GET "http://10.4.41.56/RevPollution/services/login/login?username=username&password=password"
 ```
 
@@ -24,6 +24,39 @@ Dart:
 
 ``` Dart
 var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/login/login?username=username&password=password'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
+
+## Stations
+
+### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/stations/stations
+
+### Query parameters
+
+None
+
+### Examples
+
+Curl:
+
+``` bash
+curl -X GET "http://10.4.41.56/RevPollution/services/stations/stations"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/stations/stations'));
 
 http.StreamedResponse response = await request.send();
 
@@ -52,18 +85,16 @@ http://10.4.41.56/RevPollution/services/signup/signup
 | telf | String | Phone number of the user who wants to log in. |
 | image | String | Profile picture of the user who wants to log in. |
 
-### Examples
-
 Curl:
 
-```
-curl -X POST "http://10.4.41.56/RevPollution/services/login/login?username=username&password=password&name=name&email=email&telf=telf&image=image"
+``` bash
+curl -X POST "http://10.4.41.56/RevPollution/services/signup/signup?username=username&password=password&name=name&email=email&telf=telf&image=image"
 ```
 
 Dart:
 
 ``` Dart
-var request = http.Request('POST', Uri.parse('http://10.4.41.56/RevPollution/services/login/login?username=username&password=password&name=name&email=email&telf=telf&image=image'));
+var request = http.Request('POST', Uri.parse('http://10.4.41.56/RevPollution/services/signup/signup?username=username&password=password&name=name&email=email&telf=telf&image=image'));
 
 http.StreamedResponse response = await request.send();
 
