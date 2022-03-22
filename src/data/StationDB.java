@@ -51,7 +51,6 @@ public class StationDB implements StationDataCtrl{
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
             if (r.next())
-                System.out.println(r.getInt(1));
                 s.setId(r.getInt(1));
         } catch (SQLException e) {
             e.printStackTrace();

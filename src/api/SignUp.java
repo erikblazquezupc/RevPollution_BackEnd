@@ -16,12 +16,11 @@ public class SignUp {
     @POST
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/signup")
+	@Path("/")
 
 	public Response signup(@QueryParam("username") String username, @QueryParam("password") String password, 
     @QueryParam("name") String name, @QueryParam("email") String email, @QueryParam("telf") String telf, 
     @QueryParam("image") String image) {
-		System.out.println("signup");
 		TxSignUp tx = new TxSignUp(username, name, password, email, telf, image);
 		tx.execute();
 		boolean result = tx.getResult();

@@ -126,7 +126,7 @@ public class ConcentrationDB implements ConcentrationDataCtrl{
                 Timestamp ts = r.getTimestamp("instant");
                 Date date = new Date(ts.getTime());
                 double value = r.getDouble("value");
-
+                
                 StationStub stat = StationDB.getInstance().select(stationId);
                 Particle part = ParticleDB.getInstance().select(nameParticle);
 
