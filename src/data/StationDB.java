@@ -5,11 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import domain.StationStub;
 import domain.dataCtrl.StationDataCtrl;
-
-import java.util.ArrayList;
 
 public class StationDB implements StationDataCtrl{
     static StationDB instance;
@@ -18,8 +17,8 @@ public class StationDB implements StationDataCtrl{
     PreparedStatement update;
     PreparedStatement delete;
     PreparedStatement select;
-    PreparedStatement selectByName;
     PreparedStatement selectAll;
+    PreparedStatement selectByName;
 
     private StationDB(){
         try {
@@ -120,7 +119,6 @@ public class StationDB implements StationDataCtrl{
 
     public ArrayList<StationStub> selectAll(){
         ArrayList<StationStub> ret = new ArrayList<StationStub> ();
-
         try {
             ResultSet r = selectAll.executeQuery();
             while(r.next()) {
