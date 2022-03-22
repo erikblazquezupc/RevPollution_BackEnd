@@ -9,6 +9,7 @@ public interface StationDataCtrl {
     public void delete(int id);
     public void update(StationStub s);
     public StationStub select(int id);
+    public ArrayList<StationStub> selectAll();
     public StationStub selectByName(String s);
     public ArrayList<StationStub> selectAll();
 }

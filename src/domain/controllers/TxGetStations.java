@@ -9,16 +9,12 @@ import domain.dataCtrl.StationDataCtrl;
 public class TxGetStations {
     private ArrayList<StationStub> result;
 
-    public TxGetStations() {
-        this.result = null;
-    }
+    public TxGetStations(){}
 
-    public void execute() {
+    public void execute(){
         DataCtrl dataCtrl = DataCtrl.getInstance();
-        StationDataCtrl stationCtrl = dataCtrl.getStationDataCtrl();
-        ArrayList<StationStub> stations = stationCtrl.selectAll();
-        if(stations.isEmpty()) return;
-        result = stations;
+        StationDataCtrl sdc = dataCtrl.getStationDataCtrl();
+        result = sdc.selectAll();;
     }
 
     public ArrayList<StationStub> getResult(){
