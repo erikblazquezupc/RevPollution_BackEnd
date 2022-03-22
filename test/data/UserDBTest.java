@@ -17,6 +17,7 @@ public class UserDBTest {
     @Before
     public void setUp(){
         u = new User("username", "name", "email@prueba", "password", "tel", "img");
+        u.setToken("token");
         udb = UserDB.getInstance();
         udb.insert(u);
         assertNotNull(u.getId());
@@ -32,6 +33,12 @@ public class UserDBTest {
     @Test
     public void testSelectByUsername() {
         User u2 = udb.selectByUsername("username");
+        assertEquals(u, u2);
+    }
+
+    @Test
+    public void testSlectByToken() {
+        User u2 = udb.selectByToken("token");
         assertEquals(u, u2);
     }
 

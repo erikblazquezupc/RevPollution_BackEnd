@@ -73,4 +73,37 @@ if (response.statusCode == 200) {
 else {
   print(response.reasonPhrase);
 }
+
 ```
+## UserInfo
+
+### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/userinfo
+
+### Query parameters
+
+|Name | Type | Description |
+|---|---|---|
+| token | String | token of the user who wants to getinfo |
+### Examples
+
+Curl:
+
+```
+curl -X GET "http://10.4.41.56/RevPollution/services/userinfo?token=token"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/userinfo?token=token'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}

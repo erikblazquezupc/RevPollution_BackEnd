@@ -17,6 +17,7 @@ public class UserDB implements UserDataCtrl{
     PreparedStatement delete;
     PreparedStatement select;
     PreparedStatement selectByUsername;
+    PreparedStatement selectByToken;
 
     private UserDB(){
         try {
@@ -24,6 +25,7 @@ public class UserDB implements UserDataCtrl{
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             insert = conn.prepareStatement("INSERT INTO User(username, password, email, name, tel, img, token) VALUES (?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             selectByUsername = conn.prepareStatement("SELECT * FROM User WHERE username = ?");
+            selectByToken = conn.prepareStatement("SELECT * FROM User WHERE token = ?");
             select = conn.prepareStatement("SELECT * FROM User WHERE idUser = ?");
             delete = conn.prepareStatement("DELETE FROM User WHERE idUser = ?");
             update = conn.prepareStatement("UPDATE User SET username = ?, password = ?, email = ?, name = ?, tel = ?, img = ?, token = ? WHERE idUser = ?");
@@ -120,6 +122,28 @@ public class UserDB implements UserDataCtrl{
                 String tel = r.getString("tel");
                 String img = r.getString("img");
                 String token = r.getString("token");
+                User u = new User(id, username, name, email, password, tel, img);
+                u.setToken(token);
+                return u;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User selectByToken(String token){
+        try {
+            selectByToken.setString(1, token);
+            ResultSet r = selectByToken.executeQuery();
+            while(r.next()) {
+                int id = r.getInt("idUser");
+                String username = r.getString("username");
+                String name = r.getString("name");
+                String email = r.getString("email");
+                String password = r.getString("password");
+                String tel = r.getString("tel");
+                String img = r.getString("img");
                 User u = new User(id, username, name, email, password, tel, img);
                 u.setToken(token);
                 return u;
