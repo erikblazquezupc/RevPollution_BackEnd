@@ -51,7 +51,7 @@ public class ConcentrationDBTest {
 
     @Test
     public void testSelectMostRecentFromStation() {
-        assertEquals(c, cdb.selectMostRecentFromStation(s.getId()));
+        assertEquals(c, cdb.selectMostRecentFromStation(s.getId()).get(0));
     }
 
     @Test

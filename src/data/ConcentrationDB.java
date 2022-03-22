@@ -13,6 +13,7 @@ import domain.Particle;
 import domain.dataCtrl.ConcentrationDataCtrl;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 public class ConcentrationDB implements ConcentrationDataCtrl{
     static ConcentrationDB instance;
@@ -115,12 +116,13 @@ public class ConcentrationDB implements ConcentrationDataCtrl{
         return null;
     }
 
-    public Concentration selectMostRecentFromStation(int station) {
+    public ArrayList<Concentration> selectMostRecentFromStation(int station) {
+        ArrayList<Concentration> ret = new ArrayList<Concentration> ();
         try {
-            Concentration c;
             selectMostRecentFromStation.setInt(1, station);
             ResultSet r = selectMostRecentFromStation.executeQuery();
             while(r.next()) {
+
                 int stationId = r.getInt("idStation");
                 String nameParticle = r.getString("nameParticle");
                 Timestamp ts = r.getTimestamp("instant");
@@ -130,9 +132,10 @@ public class ConcentrationDB implements ConcentrationDataCtrl{
                 StationStub stat = StationDB.getInstance().select(stationId);
                 Particle part = ParticleDB.getInstance().select(nameParticle);
 
-                c = new Concentration(stat, part, date, value);
-                return c;
+                Concentration c = new Concentration(stat, part, date, value);
+                ret.add(c);
             }
+            return ret;
         } catch (SQLException e) {
             e.printStackTrace();
         }
