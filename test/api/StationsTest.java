@@ -36,8 +36,7 @@ public class StationsTest {
 
     @Test
     public void testGetStations() {
-        
-        Response r = st.stations();
+        Response r = st.getStations();
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
         assertTrue(r.getEntity().toString().contains(s.toString()));

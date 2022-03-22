@@ -11,5 +11,4 @@ public interface StationDataCtrl {
     public StationStub select(int id);
     public ArrayList<StationStub> selectAll();
     public StationStub selectByName(String s);
-    public ArrayList<StationStub> selectAll();
 }
