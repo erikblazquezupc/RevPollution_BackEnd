@@ -30,7 +30,7 @@ public class ConcentrationDB implements ConcentrationDataCtrl{
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             insert = conn.prepareStatement("INSERT INTO Concentration(idStation, nameParticle, instant, value) VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             select = conn.prepareStatement("SELECT * FROM Concentration WHERE idStation = ? AND nameParticle = ? AND instant = ?");
-            selectMostRecentFromStation = conn.prepareStatement("SELECT * FROM Concentration c1 WHERE c1.idStation = ? AND NOT EXISTS (SELECT * FROM Concentration c2 WHERE c2.instant > c1.instant AND c2.idStation = c1.idStation)");
+            selectMostRecentFromStation = conn.prepareStatement("SELECT * FROM Concentration c1 WHERE c1.idStation = ? AND NOT EXISTS (SELECT * FROM Concentration c2 WHERE c2.instant > c1.instant AND c2.idStation = c1.idStation AND c2.nameParticle = c1.nameParticle)");
             delete = conn.prepareStatement("DELETE FROM Concentration WHERE idStation = ? AND nameParticle = ? AND instant = ?");
             update = conn.prepareStatement("UPDATE Concentration SET value = ? WHERE idStation = ? AND nameParticle = ? AND instant = ?");
         } catch (ClassNotFoundException e) {

@@ -19,8 +19,7 @@ public class ConcentrationsFromStation {
 	@GET
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/concentrations")
-
+	@Path("/")
 	public Response concentrationsFromStation(@QueryParam("idStation") int idStation) {
 		TxGetConcentrationsFromStation tx = new TxGetConcentrationsFromStation(idStation);
 		tx.execute();
