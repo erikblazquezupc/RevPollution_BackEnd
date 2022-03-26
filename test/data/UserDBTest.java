@@ -55,4 +55,11 @@ public class UserDBTest {
         User u2 = udb.select(u.getId());
         assertEquals(u, u2);
     }
+    
+    @Test
+    public void testDeleteToken(){
+        udb.deleteToken("username");
+        u = udb.select(u.getId());
+        assertNull(u.getToken());
+    }
 }
