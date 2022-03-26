@@ -18,6 +18,7 @@ public class UserDB implements UserDataCtrl{
     PreparedStatement select;
     PreparedStatement selectByUsername;
     PreparedStatement selectByToken;
+    PreparedStatement deleteToken;
 
     private UserDB(){
         try {
@@ -29,6 +30,7 @@ public class UserDB implements UserDataCtrl{
             select = conn.prepareStatement("SELECT * FROM User WHERE idUser = ?");
             delete = conn.prepareStatement("DELETE FROM User WHERE idUser = ?");
             update = conn.prepareStatement("UPDATE User SET username = ?, password = ?, email = ?, name = ?, tel = ?, img = ?, token = ? WHERE idUser = ?");
+            deleteToken = conn.prepareStatement("UPDATE User SET token = null WHERE username = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -152,5 +154,14 @@ public class UserDB implements UserDataCtrl{
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void deleteToken(String username) {
+        try {
+            deleteToken.setString(1, username);
+            deleteToken.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
