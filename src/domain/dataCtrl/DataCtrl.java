@@ -2,6 +2,7 @@ package domain.dataCtrl;
 
 import data.StationDB;
 import data.UserDB;
+import data.ConcentrationDB;
 
 public class DataCtrl{
     static DataCtrl instance;
@@ -17,5 +18,9 @@ public class DataCtrl{
 
     public StationDataCtrl getStationDataCtrl(){
         return StationDB.getInstance();
+    }
+
+    public ConcentrationDataCtrl getConcentrationDataCtrl(){
+        return ConcentrationDB.getInstance();
     }
 }

@@ -13,6 +13,7 @@ import domain.Particle;
 import domain.dataCtrl.ConcentrationDataCtrl;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 public class ConcentrationDB implements ConcentrationDataCtrl{
     static ConcentrationDB instance;
@@ -29,7 +30,7 @@ public class ConcentrationDB implements ConcentrationDataCtrl{
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             insert = conn.prepareStatement("INSERT INTO Concentration(idStation, nameParticle, instant, value) VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             select = conn.prepareStatement("SELECT * FROM Concentration WHERE idStation = ? AND nameParticle = ? AND instant = ?");
-            selectMostRecentFromStation = conn.prepareStatement("SELECT * FROM Concentration c1 WHERE c1.idStation = ? AND NOT EXISTS (SELECT * FROM Concentration c2 WHERE c2.instant > c1.instant AND c2.idStation = c1.idStation)");
+            selectMostRecentFromStation = conn.prepareStatement("SELECT * FROM Concentration c1 WHERE c1.idStation = ? AND NOT EXISTS (SELECT * FROM Concentration c2 WHERE c2.instant > c1.instant AND c2.idStation = c1.idStation AND c2.nameParticle = c1.nameParticle)");
             delete = conn.prepareStatement("DELETE FROM Concentration WHERE idStation = ? AND nameParticle = ? AND instant = ?");
             update = conn.prepareStatement("UPDATE Concentration SET value = ? WHERE idStation = ? AND nameParticle = ? AND instant = ?");
         } catch (ClassNotFoundException e) {
@@ -115,24 +116,26 @@ public class ConcentrationDB implements ConcentrationDataCtrl{
         return null;
     }
 
-    public Concentration selectMostRecentFromStation(int station) {
+    public ArrayList<Concentration> selectMostRecentFromStation(int station) {
+        ArrayList<Concentration> ret = new ArrayList<Concentration> ();
         try {
-            Concentration c;
             selectMostRecentFromStation.setInt(1, station);
             ResultSet r = selectMostRecentFromStation.executeQuery();
             while(r.next()) {
+
                 int stationId = r.getInt("idStation");
                 String nameParticle = r.getString("nameParticle");
                 Timestamp ts = r.getTimestamp("instant");
                 Date date = new Date(ts.getTime());
                 double value = r.getDouble("value");
-
+                
                 StationStub stat = StationDB.getInstance().select(stationId);
                 Particle part = ParticleDB.getInstance().select(nameParticle);
 
-                c = new Concentration(stat, part, date, value);
-                return c;
+                Concentration c = new Concentration(stat, part, date, value);
+                ret.add(c);
             }
+            return ret;
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -8,9 +8,11 @@ public class StationStub {
     double lon;
 
     public StationStub(){
+        this.id = -1;
     }
-
+    
     public StationStub(String name, String address, double lat, double lon) {
+        this.id = -1;
         this.name = name;
         this.address = address;
         this.lat = lat;

@@ -1,7 +1,7 @@
 package domain.controllers;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,16 +11,14 @@ import domain.User;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.UserDataCtrl;
 
-public class TxLogInTest {
+public class TxSignUpTest {
     User u;
     UserDataCtrl udc;
 
     @Before
     public void setUp(){
-        u = new User("username", "name", "email@prueba", "password", "tel", "img");
         DataCtrl dataCtrl = DataCtrl.getInstance();
         udc = dataCtrl.getUserDataCtrl();
-        udc.insert(u);
     }
     
     @After
@@ -29,18 +27,11 @@ public class TxLogInTest {
     }
 
     @Test
-    public void testTxLogIn() {
-        TxLogIn tx = new TxLogIn("username", "password");
+    public void testTxSignUp() {
+        TxSignUp tx = new TxSignUp("usernametx", "nametx", "passwordtx", "emailtx", "telftx", "imagetx");
         tx.execute();
-        assertNotNull(tx.getResult());
-
-    }
-
-    @Test
-    public void testTxLogInTestFail() {
-        TxLogIn tx = new TxLogIn("username", "");
-        tx.execute();
-        assertNull(tx.getResult());
-        
+        assertTrue(tx.getResult());
+        u = udc.selectByUsername("usernametx");
+        assertNotNull(u);
     }
 }

@@ -29,7 +29,7 @@ public class TxGetStationsTest {
     }
 
     @Test
-    public void testTxLogInTest() {
+    public void testTxGetStations() {
         TxGetStations tx = new TxGetStations();
         tx.execute();
         assertNotNull(tx.getResult());

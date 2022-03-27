@@ -23,13 +23,11 @@ public class TxLogIn {
         UserDataCtrl userCtrl = dataCtrl.getUserDataCtrl();
         User u = userCtrl.selectByUsername(username);
         String hash = hash(username, password);
-        System.out.println(hash);
         if(u == null) return;
         if(!u.getPassword().equals(password)) return;
         String token = hash(Long.toString(System.currentTimeMillis()), username);
         u.setToken(token);
         userCtrl.update(u);
-        System.out.println(token);
         result = token;
     }
 

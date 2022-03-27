@@ -1,10 +1,8 @@
-package api;
+package domain.controllers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import javax.ws.rs.core.Response;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,19 +12,15 @@ import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
-public class StationsTest {
-    
+public class TxCreateStationTest {
     StationStub s;
     StationDataCtrl sdc;
-    Stations st;
 
     @Before
     public void setUp(){
-        st = new Stations();
-        s = new StationStub("test", "Test Rd, 1", 0, 0);
         DataCtrl dataCtrl = DataCtrl.getInstance();
         sdc = dataCtrl.getStationDataCtrl();
-        sdc.insert(s);
+        s = new StationStub("nametx", "addrestx", 0.0, 0.0);
     }
     
     @After
@@ -35,10 +29,11 @@ public class StationsTest {
     }
 
     @Test
-    public void testGetStations() {
-        Response r = st.getStations();
-        assertEquals(200, r.getStatus());
-        assertNotNull(r.getEntity());
-        assertTrue(r.getEntity().toString().contains(s.toString()));
+    public void testTxCreateStation() {
+        TxCreateStation tx = new TxCreateStation("nametx", "addrestx", 0.0, 0.0);
+        tx.execute();
+        s = sdc.selectByName("nametx");
+        assertNotNull(s);
+        assertTrue(tx.getResult());
     }
 }
