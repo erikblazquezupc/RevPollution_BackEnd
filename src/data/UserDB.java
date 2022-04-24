@@ -17,6 +17,7 @@ public class UserDB implements UserDataCtrl{
     PreparedStatement delete;
     PreparedStatement select;
     PreparedStatement selectByUsername;
+    PreparedStatement setPic;
 
     private UserDB(){
         try {
@@ -27,6 +28,7 @@ public class UserDB implements UserDataCtrl{
             select = conn.prepareStatement("SELECT * FROM User WHERE idUser = ?");
             delete = conn.prepareStatement("DELETE FROM User WHERE idUser = ?");
             update = conn.prepareStatement("UPDATE User SET username = ?, password = ?, email = ?, name = ?, tel = ?, img = ? WHERE idUser = ?");
+            setPic = conn.prepareStatement("UPDATE User SET img = ? WHERE username = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -51,6 +53,17 @@ public class UserDB implements UserDataCtrl{
             ResultSet r = insert.getGeneratedKeys();
             if (r.next())
                 u.setId(r.getInt(1));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void setPic(String username, String image){
+        try {
+            setPic.setString(1, image);
+            setPic.setString(2, username);
+            setPic.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

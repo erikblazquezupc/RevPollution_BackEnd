@@ -8,4 +8,5 @@ public interface UserDataCtrl {
     public void update(User u);
     public User select(int id);
     public User selectByUsername(String un);
+    public void setPic(String username, String image);
 }
