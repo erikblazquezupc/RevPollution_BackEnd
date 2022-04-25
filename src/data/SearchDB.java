@@ -20,6 +20,7 @@ public class SearchDB implements SearchDataCtrl {
     PreparedStatement insert;
     PreparedStatement delete;
     PreparedStatement selectRecent;
+    PreparedStatement select;
 
     private SearchDB(){
         try {
@@ -27,6 +28,7 @@ public class SearchDB implements SearchDataCtrl {
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             insert = conn.prepareStatement("REPLACE INTO LastSearches(idUser, idStation, instant) VALUES (?, ?, ?)");
             selectRecent = conn.prepareStatement("SELECT * FROM LastSearches WHERE idUser = ? ORDER BY instant DESC LIMIT 3");
+            select = conn.prepareStatement("SELECT * FROM LastSearches WHERE idUser = ? and idStation = ?");
             delete = conn.prepareStatement("DELETE FROM LastSearches WHERE idUser = ? and idStation = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -84,5 +86,27 @@ public class SearchDB implements SearchDataCtrl {
             e.printStackTrace();
         }
         return ret;
+    }
+
+    public Search select(int userId, int stationId){
+        try {
+            select.setInt(1, userId);
+            select.setInt(2, stationId);
+            ResultSet r = select.executeQuery();
+            if (r.next()) {
+                int UserId = r.getInt("idUser");
+                int StationId = r.getInt("idStation");
+                Timestamp ts = r.getTimestamp("instant");
+                Date date = new Date(ts.getTime());
+
+                User user = UserDB.getInstance().select(UserId);
+                StationStub station = StationDB.getInstance().select(StationId);
+                Search s = new Search(user, station, date);
+                return s;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
