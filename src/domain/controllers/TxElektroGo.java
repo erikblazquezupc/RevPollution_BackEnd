@@ -15,8 +15,8 @@ public class TxElektroGo {
     private String result;
 
     public TxElektroGo(double lat, double lon){
-        this.lat = Math.toRadians(lat);
-        this.lon = Math.toRadians(lon);
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public void execute(){
@@ -32,15 +32,15 @@ public class TxElektroGo {
         double EarthRadius = 6371;
 
         for (int i = 0; i < stats.size(); ++i) {
-            StationStub current = stats.get(i);
 
+            StationStub current = stats.get(i);
             double dLat = Math.toRadians(lat - current.getLat());
             double dLon = Math.toRadians(lon - current.getLon());
 
             double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + 
                 Math.sin(dLon / 2) * Math.sin(dLon / 2) *
-                Math.cos(this.lat) * Math.cos(this.lon);
-            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                Math.cos(Math.toRadians(lat)) * Math.cos(Math.toRadians(current.getLat()));
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             distance = c * EarthRadius;
 
             if (i == 0) {
@@ -59,7 +59,6 @@ public class TxElektroGo {
             Integer idStation = closer.getId();
 
             ArrayList<Concentration> concs = cdc.selectMostRecentFromStation(idStation);
-            if (concs.size() > 0) System.out.println("Mas de una concentracion");
 
             double IPSO2, IPNO2, IPPM10, IPCO, IPO3;
             IPSO2 = IPNO2 = IPPM10 = IPCO = IPO3 = -1.0;
