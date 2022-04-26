@@ -90,8 +90,14 @@ public class UserTest {
     }
 
     @Test
+    public void testSetToken(){
+        u.setToken("ads6asc");
+        assertEquals("ads6asc", u.getToken());
+    }
+
+    @Test
     public void testToString() {
-        String expected = "User [id=1, username=username, name=name, email=email, password=password, tel=123, img=img]";
+        String expected = "User [id=1, username=username, name=name, email=email, password=password, tel=123, img=img, token=null]";
         assertEquals(expected, u.toString());
     }
 }

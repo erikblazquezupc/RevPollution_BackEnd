@@ -17,16 +17,18 @@ public class UserDB implements UserDataCtrl{
     PreparedStatement delete;
     PreparedStatement select;
     PreparedStatement selectByUsername;
+    PreparedStatement selectByToken;
 
     private UserDB(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
-            insert = conn.prepareStatement("INSERT INTO User(username, password, email, name, tel, img) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            insert = conn.prepareStatement("INSERT INTO User(username, password, email, name, tel, img, token) VALUES (?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             selectByUsername = conn.prepareStatement("SELECT * FROM User WHERE username = ?");
+            selectByToken = conn.prepareStatement("SELECT * FROM User WHERE token = ?");
             select = conn.prepareStatement("SELECT * FROM User WHERE idUser = ?");
             delete = conn.prepareStatement("DELETE FROM User WHERE idUser = ?");
-            update = conn.prepareStatement("UPDATE User SET username = ?, password = ?, email = ?, name = ?, tel = ?, img = ? WHERE idUser = ?");
+            update = conn.prepareStatement("UPDATE User SET username = ?, password = ?, email = ?, name = ?, tel = ?, img = ?, token = ? WHERE idUser = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -39,7 +41,7 @@ public class UserDB implements UserDataCtrl{
         return instance;
     }
 
-    public void insert(User u){
+    public boolean insert(User u){
         try {
             insert.setString(1, u.getUsername());
             insert.setString(2, u.getPassword());
@@ -47,13 +49,17 @@ public class UserDB implements UserDataCtrl{
             insert.setString(4, u.getName());
             insert.setString(5, u.getTel());
             insert.setString(6, u.getImg());
+            insert.setString(7, u.getToken());
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
-            if (r.next())
+            if (r.next()) {
                 u.setId(r.getInt(1));
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public void delete(int id){
@@ -73,7 +79,8 @@ public class UserDB implements UserDataCtrl{
             update.setString(4, u.getName());
             update.setString(5, u.getTel());
             update.setString(6, u.getImg());
-            update.setInt(7, u.getId());
+            update.setString(7, u.getToken());
+            update.setInt(8, u.getId());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,7 +98,9 @@ public class UserDB implements UserDataCtrl{
                 String password = r.getString("password");
                 String tel = r.getString("tel");
                 String img = r.getString("img");
+                String token = r.getString("token");
                 User u = new User(id, username, name, email, password, tel, img);
+                u.setToken(token);
                 return u;
             }
         } catch (SQLException e) {
@@ -112,7 +121,31 @@ public class UserDB implements UserDataCtrl{
                 String password = r.getString("password");
                 String tel = r.getString("tel");
                 String img = r.getString("img");
+                String token = r.getString("token");
                 User u = new User(id, username, name, email, password, tel, img);
+                u.setToken(token);
+                return u;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User selectByToken(String token){
+        try {
+            selectByToken.setString(1, token);
+            ResultSet r = selectByToken.executeQuery();
+            while(r.next()) {
+                int id = r.getInt("idUser");
+                String username = r.getString("username");
+                String name = r.getString("name");
+                String email = r.getString("email");
+                String password = r.getString("password");
+                String tel = r.getString("tel");
+                String img = r.getString("img");
+                User u = new User(id, username, name, email, password, tel, img);
+                u.setToken(token);
                 return u;
             }
         } catch (SQLException e) {

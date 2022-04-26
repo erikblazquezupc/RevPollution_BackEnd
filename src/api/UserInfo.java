@@ -8,19 +8,19 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import domain.controllers.TxLogIn;
+import domain.controllers.TxUserInfo;
 
-@Path("/login")
-public class LogIn {
+@Path("/userinfo")
+public class UserInfo {
 	
 	@GET
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/login")
-	public Response login(@QueryParam("username") String username, @QueryParam("password") String password) {
-		TxLogIn tx = new TxLogIn(username, password);
+	@Path("/")
+	public Response userinfo(@QueryParam("token") String token) { //token solo o token + username?
+		TxUserInfo tx = new TxUserInfo(token);
 		tx.execute();
-		String result = tx.getResult();
-		return Response.ok(result).build();
+		String username = tx.getResult();
+		return Response.ok(username).build();
 	}
 }

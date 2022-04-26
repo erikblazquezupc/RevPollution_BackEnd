@@ -8,6 +8,7 @@ public class User{
     String password;
     String tel;
     String img;
+    String token;
 
     public User(){
     }
@@ -93,9 +94,17 @@ public class User{
         this.img = img;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + ", name=" + name + ", email=" + email + ", password=" + password + ", tel=" + tel + ", img=" + img +  
+        return "User [id=" + id + ", username=" + username + ", name=" + name + ", email=" + email + ", password=" + password + ", tel=" + tel + ", img=" + img + ", token=" + token + 
                 "]" ;
     }
 
