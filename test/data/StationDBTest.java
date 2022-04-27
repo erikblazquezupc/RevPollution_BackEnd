@@ -38,9 +38,22 @@ public class StationDBTest {
     public void testSelect() {
         assertEquals(s, sdb.select(s.getId()));
     }
+
+    @Test
+    public void testSelectAdmin() {
+        assertEquals(s, sdb.select(s.getId()));
+    }
     
     @Test
     public void testSelectAll() {
+        ArrayList<StationStub> expected = new ArrayList<StationStub>();
+        expected.add(s);
+        expected.add(s2);
+        assertTrue(sdb.selectAll().containsAll(expected));
+    }
+
+    @Test
+    public void testSelectAllAdmin() {
         ArrayList<StationStub> expected = new ArrayList<StationStub>();
         expected.add(s);
         expected.add(s2);
@@ -53,9 +66,21 @@ public class StationDBTest {
     }
 
     @Test
+    public void testSelectByNameAdmin() {
+        assertEquals(s2, sdb.selectByName("Stub2"));
+    }
+
+    @Test
     public void testUpdate() {
         s.setName("Stub1_c");
         sdb.update(s);
-        assertEquals(s, sdb.selectByName("Stub1_c"));
+        assertEquals(s, sdb.selectByName("Stub1_c")); 
+    }
+
+    @Test
+    public void testSwitchActivation() {
+        s.setActivated(false);
+        sdb.switchActivation(s.getId());
+        assertEquals(s, sdb.selectAdmin(s.getId())); 
     }
 }

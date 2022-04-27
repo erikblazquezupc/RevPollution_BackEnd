@@ -1,7 +1,7 @@
 package domain.controllers;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,15 +11,16 @@ import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
-public class TxCreateStationTest {
+public class TxGetStationAdminTest {
     StationStub s;
     StationDataCtrl sdc;
 
     @Before
     public void setUp(){
+        s = new StationStub("test", "Test Rd, 1", 0, 0);
         DataCtrl dataCtrl = DataCtrl.getInstance();
         sdc = dataCtrl.getStationDataCtrl();
-        s = new StationStub("nametx", "addrestx", 0.0, 0.0);
+        sdc.insert(s);
     }
     
     @After
@@ -28,11 +29,10 @@ public class TxCreateStationTest {
     }
 
     @Test
-    public void testTxCreateStation() {
-        TxCreateStation tx = new TxCreateStation("nametx", "addrestx", 0.0, 0.0);
+    public void testTxGetStationAdmin() {
+        TxGetStationAdmin tx = new TxGetStationAdmin(s.getId());
         tx.execute();
-        s = sdc.selectByName("nametx");
-        assertNotNull(s);
-        assertTrue(tx.getResult());
+        assertNotNull(tx.getResult());
+        assertEquals(tx.getResult(), s);
     }
 }
