@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import domain.Logros;
+import domain.Logro;
 import domain.dataCtrl.LogroDataCtrl;
 
 public class LogroDB implements LogroDataCtrl{
@@ -42,19 +42,19 @@ public class LogroDB implements LogroDataCtrl{
         return instance;
     }
 
-    public boolean insert(Logro l){
+    public void insert(Logro l){
         try {
             insert.setString(1, l.getName());
             insert.setTier(2, l.getTier());
             insert.setString(3, l.getCondition());
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
-            if (r.next())
-                return true;
+            //if (r.next())
+                //return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+       // return false;
     }
 
     public void delete(String name, Tier tier){
@@ -70,8 +70,8 @@ public class LogroDB implements LogroDataCtrl{
     public void update(Logro l){
         try {
             update.setString(1, l.getName());
-            update.setString(2, l.getTier());
-            update.setDouble(3, l.getCondition());
+            update.setTier(2, l.getTier());
+            update.setString(3, l.getCondition());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,8 +84,8 @@ public class LogroDB implements LogroDataCtrl{
             select.setTier(2, tier);
             ResultSet r = select.executeQuery();
             while(r.next()) {
-                String name = r.getString("name");
-                Tier tier = r.getTier("tier");
+                //String name = r.getString("name");
+                //Tier tier = r.getTier("tier");
                 String condition = r.getString("condition");
                 Logro l = new Logro(name, tier, condition);
                 return l;
