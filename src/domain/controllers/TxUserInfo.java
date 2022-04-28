@@ -7,7 +7,7 @@ import domain.dataCtrl.UserDataCtrl;
 
 public class TxUserInfo {
     private String token;
-    private String result;
+    private User result;
 
     public TxUserInfo(String token){
         this.token = token;
@@ -18,10 +18,10 @@ public class TxUserInfo {
         DataCtrl dataCtrl = DataCtrl.getInstance();
         UserDataCtrl userCtrl = dataCtrl.getUserDataCtrl();
         User u = userCtrl.selectByToken(token);
-        result = u.getUsername();
+        result = u;
     }
 
-    public String getResult(){
+    public User getResult(){
         return result;
     }
 }
