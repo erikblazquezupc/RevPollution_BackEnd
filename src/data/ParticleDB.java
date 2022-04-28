@@ -24,11 +24,11 @@ public class ParticleDB implements ParticleDataCtrl{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
-            insert = conn.prepareStatement("INSERT INTO Particle(name, unit) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            insert = conn.prepareStatement("INSERT INTO Particle(name, unit, activated) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             select = conn.prepareStatement("SELECT * FROM Particle WHERE name = ?");
             selectAll = conn.prepareStatement("SELECT * FROM Particle");
             delete = conn.prepareStatement("DELETE FROM Particle WHERE name = ?");
-            update = conn.prepareStatement("UPDATE Particle SET name = ?, unit = ? WHERE name = ?");
+            update = conn.prepareStatement("UPDATE Particle SET name = ?, unit = ?, activated = ? WHERE name = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -45,6 +45,7 @@ public class ParticleDB implements ParticleDataCtrl{
         try {
             insert.setString(1, p.getName());
             insert.setString(2, p.getUnit());
+            insert.setBoolean(3, p.isActivated());
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
             if (r.next()) {
@@ -69,7 +70,8 @@ public class ParticleDB implements ParticleDataCtrl{
         try {
             update.setString(1, p.getName());
             update.setString(2, p.getUnit());
-            update.setString(3, p.getName());
+            update.setBoolean(3, p.isActivated());
+            update.setString(4, p.getName());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,7 +85,8 @@ public class ParticleDB implements ParticleDataCtrl{
             while(r.next()) {
                 String name = r.getString("name");
                 String unit = r.getString("unit");
-                Particle s = new Particle(name, unit);
+                Boolean activated = r.getBoolean("activated");
+                Particle s = new Particle(name, unit, activated);
                 return s;
             }
         } catch (SQLException e) {
@@ -99,7 +102,8 @@ public class ParticleDB implements ParticleDataCtrl{
             while(r.next()) {
                 String name = r.getString("name");
                 String unit = r.getString("unit");
-                Particle s = new Particle(name, unit);
+                Boolean activated = r.getBoolean("activated");
+                Particle s = new Particle(name, unit, activated);
                 ret.add(s);
             }
             return ret;

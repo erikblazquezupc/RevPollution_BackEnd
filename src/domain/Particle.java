@@ -30,17 +30,27 @@ public class Particle {
 
     String name;
     Units unit;
+    boolean activated;
 
     public Particle () {
+        this.activated = true;
     }
 
     public Particle(String name) {
         this.name = name;
+        this.activated = true;
     }
 
     public Particle (String name, String u) {
         this.name = name;
         this.unit = Units.get(u);
+        this.activated = true;
+    }
+
+    public Particle(String name, String unit, Boolean activated) {
+        this.name = name;
+        this.unit = Units.get(unit);
+        this.activated = activated;
     }
 
     public String getName() {
@@ -90,5 +100,17 @@ public class Particle {
         if (unit != other.unit)
             return false;
         return true;
+    }
+
+    public void activate(){
+        this.activated = true;
+    }
+
+    public void deactivate(){
+        this.activated = false;
+    }
+
+    public boolean isActivated() {
+        return activated;
     }
 }

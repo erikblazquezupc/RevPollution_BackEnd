@@ -3,6 +3,7 @@ package domain.dataCtrl;
 import data.StationDB;
 import data.UserDB;
 import data.ConcentrationDB;
+import data.ParticleDB;
 
 public class DataCtrl{
     static DataCtrl instance;
@@ -22,5 +23,9 @@ public class DataCtrl{
 
     public ConcentrationDataCtrl getConcentrationDataCtrl(){
         return ConcentrationDB.getInstance();
+    }
+
+    public ParticleDataCtrl getParticleDataCtrl(){
+        return ParticleDB.getInstance();
     }
 }
