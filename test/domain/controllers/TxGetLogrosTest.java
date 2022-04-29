@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import domain.Logro;
+import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.LogroDataCtrl;
 
@@ -17,10 +18,11 @@ public class TxGetLogrosTest {
 
     @Before
     public void setUp(){
-        l = new Logro("logro1", bronce, "condicion");
+        String tier = "bronce";
+        l = new Logro("logro1", Tier.valueOf(tier), "condicion");
         DataCtrl dataCtrl = DataCtrl.getInstance();
         ldc = dataCtrl.getLogroDataCtrl();
-        ldc.insert(s);
+        ldc.insert(l);
     }
     
     @After

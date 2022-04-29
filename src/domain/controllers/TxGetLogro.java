@@ -1,8 +1,9 @@
 package domain.controllers;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 import domain.Logro;
+import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.LogroDataCtrl;
 

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import domain.Logro;
+import domain.Logro.Tier;
 import domain.dataCtrl.LogroDataCtrl;
 
 public class LogroDB implements LogroDataCtrl{
@@ -24,12 +25,12 @@ public class LogroDB implements LogroDataCtrl{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
-            insert = conn.prepareStatement("INSERT INTO Logro(name, tier, condition) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            insert = conn.prepareStatement("INSERT INTO Logro(name, tier, cond) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             //selectByName = conn.prepareStatement("SELECT * FROM Logro WHERE name = ?");
             select = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
             selectAll = conn.prepareStatement("SELECT * FROM Logro");
             delete = conn.prepareStatement("DELETE FROM Logro WHERE name = ? AND tier = ?");
-            update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, condition = ? WHERE name = ? AND tier = ?");
+            update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, cond = ? WHERE name = ? AND tier = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -42,25 +43,27 @@ public class LogroDB implements LogroDataCtrl{
         return instance;
     }
 
-    public void insert(Logro l){
+    public boolean insert(Logro l){
         try {
             insert.setString(1, l.getName());
-            insert.setTier(2, l.getTier());
+            insert.setString(2, l.getTier().toString());
+            //insert.setTier(2, l.getTier());
             insert.setString(3, l.getCondition());
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
-            //if (r.next())
-                //return true;
+            if (r.next())
+                return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-       // return false;
+        return false;
     }
 
     public void delete(String name, Tier tier){
         try {
             delete.setString(1, name);
-            delete.setTier(2, tier);
+            delete.setString(2, tier.toString());
+            //delete.setTier(2, tier);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,7 +73,8 @@ public class LogroDB implements LogroDataCtrl{
     public void update(Logro l){
         try {
             update.setString(1, l.getName());
-            update.setTier(2, l.getTier());
+            update.setString(2, l.getTier().toString());
+            //update.setTier(2, l.getTier());
             update.setString(3, l.getCondition());
             update.executeUpdate();
         } catch (SQLException e) {
@@ -81,13 +85,13 @@ public class LogroDB implements LogroDataCtrl{
     public Logro select(String name, Tier tier){
         try {
             select.setString(1, name);
-            select.setTier(2, tier);
+            select.setString(2, tier.toString());
             ResultSet r = select.executeQuery();
             while(r.next()) {
                 //String name = r.getString("name");
                 //Tier tier = r.getTier("tier");
-                String condition = r.getString("condition");
-                Logro l = new Logro(name, tier, condition);
+                String cond = r.getString("cond");
+                Logro l = new Logro(name, tier, cond);
                 return l;
             }
         } catch (SQLException e) {
@@ -102,9 +106,12 @@ public class LogroDB implements LogroDataCtrl{
             ResultSet r = selectAll.executeQuery();
             while(r.next()) {
                 String name = r.getString("name");
-                Tier tier = r.getTier("tier");
-                String condition = r.getString("condition");
-                Logro l = new Logro(name, tier, condition);
+                //String tier = r.getString("tier");
+                //Tier tier = r.getString(tier);
+                String tierString = r.getString("tier");
+                Tier tier = Tier.valueOf(tierString);
+                String cond = r.getString("cond");
+                Logro l = new Logro(name, tier, cond);
                 ret.add(l);
             }
             return ret;

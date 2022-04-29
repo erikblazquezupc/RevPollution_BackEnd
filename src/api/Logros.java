@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import domain.Logro;
+import domain.Logro.Tier;
 import domain.controllers.TxGetLogro;
 import domain.controllers.TxGetLogros;
 

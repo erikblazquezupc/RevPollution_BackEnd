@@ -4,13 +4,17 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import domain.Logro.Tier;
+
 
 public class LogroTest {
     Logro l;
+    String tier;
 
     @Before
     public void setUp(){
-        l = new Logro("logro1", oro, "testeando");
+        tier = "oro";
+        l = new Logro("logro1", Tier.valueOf(tier), "testeando");
     }
 
     @Test
@@ -20,7 +24,7 @@ public class LogroTest {
 
     @Test
     public void testGetTier() {
-        assertEquals(oro, l.getTier());
+        assertEquals(Tier.valueOf(tier), l.getTier());
     }
 
     @Test
@@ -36,13 +40,13 @@ public class LogroTest {
 
     @Test
     public void testSetTier() {
-        l.setTier(plata);
-        assertEquals(plata, l.getTier());
+        l.setTier(Tier.valueOf("plata"));
+        assertEquals(Tier.valueOf("plata"), l.getTier());
     }
 
     @Test
     public void testSetCondition() {
-        l.setTier("condicionNueva");
+        l.setCondition("condicionNueva");
         assertEquals("condicionNueva", l.getCondition());
     }
 
