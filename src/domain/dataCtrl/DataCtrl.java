@@ -4,6 +4,7 @@ import data.StationDB;
 import data.UserDB;
 import data.ConcentrationDB;
 import data.SearchDB;
+import data.ExpoDB;
 
 public class DataCtrl{
     static DataCtrl instance;
@@ -27,5 +28,9 @@ public class DataCtrl{
 
     public ConcentrationDataCtrl getConcentrationDataCtrl(){
         return ConcentrationDB.getInstance();
+    }
+
+    public ExpoDataCtrl getExpoDataCtrl(){
+        return ExpoDB.getInstance();
     }
 }
