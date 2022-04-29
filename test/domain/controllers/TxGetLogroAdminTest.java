@@ -15,7 +15,7 @@ import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.LogroDataCtrl;
 
-public class txGetLogroAdminTest {
+public class TxGetLogroAdminTest {
     Logro l;
     LogroDataCtrl ldc;
 
