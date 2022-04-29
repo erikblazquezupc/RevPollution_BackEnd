@@ -1,7 +1,7 @@
 package data;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -49,9 +49,22 @@ public class LogroDBTest {
     public void testSelect() {
         assertEquals(l, ldb.select(l.getName(), l.getTier()));
     }
+
+    @Test
+    public void testSelectAdmin() {
+        assertEquals(l, ldb.selectAdmin(l.getName(), l.getTier()));
+    }
     
     @Test
     public void testSelectAll() {
+        ArrayList<Logro> expected = new ArrayList<Logro>();
+        expected.add(l);
+        expected.add(l2);
+        assertTrue(ldb.selectAll().containsAll(expected));
+    }
+
+    @Test
+    public void testSelectAllAdmin() {
         ArrayList<Logro> expected = new ArrayList<Logro>();
         expected.add(l);
         expected.add(l2);
@@ -67,4 +80,11 @@ public class LogroDBTest {
         ldb.update(l);
         assertEquals(l, ldb.select("logro1", Tier.valueOf("plata")));
     }*/
+
+    @Test
+    public void testSwitchActivation() {
+        l.setActivated(false);
+        ldb.switchActivation(l.getName(), l.getTier());
+        assertEquals(l, ldb.selectAdmin(l.getName(), l.getTier())); 
+    }
 }

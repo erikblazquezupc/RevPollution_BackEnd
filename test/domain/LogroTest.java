@@ -33,6 +33,11 @@ public class LogroTest {
     }
 
     @Test
+    public void testGetActivated() {
+        assertEquals("testeando", l.getActivated());
+    }
+
+    @Test
     public void testSetName() {
         l.setName("logro2");
         assertEquals("logro2", l.getName());
@@ -48,6 +53,17 @@ public class LogroTest {
     public void testSetCondition() {
         l.setCondition("condicionNueva");
         assertEquals("condicionNueva", l.getCondition());
+    }
+
+    @Test
+    public void testSetActivated() {
+        l.setActivated(false);
+        assertEquals(false, l.getActivated());
+    }
+
+    @Test
+    public void testToStringActivated() {
+        assertEquals("Logro [name=logro1, tier=oro, cond=testeando, activated=1]", l.toStringActivated());
     }
 
     @Test

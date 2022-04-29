@@ -9,6 +9,7 @@ public class Logro {
     String name;
     Tier tier;
     String cond;
+    boolean activated;
 
     public Logro() {
 
@@ -23,6 +24,13 @@ public class Logro {
         this.name = name;
         this.tier = tier;
         this.cond = cond;
+    }
+
+    public Logro(String name, Tier tier, String cond, boolean activated) {
+        this.name = name;
+        this.tier = tier;
+        this.cond = cond;
+        this.activated = activated;
     }
 
     public Logro (String name, String tier, String cond) {
@@ -47,6 +55,10 @@ public class Logro {
         return cond;
     }
 
+    public boolean getActivated() {
+        return activated;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -57,6 +69,18 @@ public class Logro {
 
     public void setCondition(String cond) {
         this.cond = cond;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+
+    public String toStringActivated() {
+        int act;
+        if (activated) act = 1;
+        else act = 0;
+        return "Logro [name=" + name + ", tier=" + tier + ", cond=" + cond + ", activated=" + act + "]";
     }
 
     @Override
