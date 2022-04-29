@@ -466,4 +466,76 @@ else {
 }
 ```
 
+## DailyExpo
 
+### Get the average daily exposition to pollution of a user in the last 7 days
+
+#### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/dailyExpo?token=token
+
+#### Query parameters
+
+|Name | Type | Description |
+|---|---|---|
+| token | String | Token of the user we want to get the data from. |
+
+#### Examples
+
+Curl:
+
+``` bash
+curl -X GET "http://10.4.41.56/RevPollution/services/dailyExpo?token=token"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/dailyExpo?token=token'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
+
+### Add an exposition value with the user location
+
+#### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/dailyExpo/addExpo?token=token&lat=lat&lon=lon
+
+#### Query parameters
+
+|Name | Type | Description |
+|---|---|---|
+| token | String | Token of the user we want to add the data to. |
+| lat | Double | Current latitude of the location of the user. |
+| lon | Double | Current longitude of the location of the user. |
+
+#### Examples
+
+Curl:
+
+``` bash
+curl -X POST "http://10.4.41.56/RevPollution/services/dailyExpo/addExpo?token=token&lat=lat&lon=lon"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('POST', Uri.parse('http://10.4.41.56/RevPollution/services/dailyExpo/addExpo?token=token&lat=lat&lon=lon'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
