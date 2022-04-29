@@ -82,14 +82,15 @@ public class LogroDB implements LogroDataCtrl{
         }
     }
 
-    public Logro select(String name, Tier tier){
+    public Logro select(String n, Tier t){
         try {
-            select.setString(1, name);
-            select.setString(2, tier.toString());
+            select.setString(1, n);
+            select.setString(2, t.toString());
             ResultSet r = select.executeQuery();
             while(r.next()) {
-                //String name = r.getString("name");
-                //Tier tier = r.getTier("tier");
+                String name = r.getString("name");
+                String tierString = r.getString("tier");
+                Tier tier = Tier.valueOf(tierString);
                 String cond = r.getString("cond");
                 Logro l = new Logro(name, tier, cond);
                 return l;

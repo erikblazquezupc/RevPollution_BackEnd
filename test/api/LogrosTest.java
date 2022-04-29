@@ -42,5 +42,6 @@ public class LogrosTest {
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
         assertTrue(r.getEntity().toString().contains(l.toString()));
+        //assertTrue(r.getEntity().toString().contains(l.getName()));
     }
 }
