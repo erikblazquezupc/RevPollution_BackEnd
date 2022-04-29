@@ -398,27 +398,27 @@ else {
 
 #### Endpoint URL
 
-http://10.4.41.56/RevPollution/services/userSearches/addSearch?token=token&idStation=idStation
+http://10.4.41.56/RevPollution/services/userSearches/addSearch?token=token&name=name
 
 #### Query parameters
 
 |Name | Type | Description |
 |---|---|---|
 | token | String | Token of the user we want to add a search from. |
-| idStation | Integer | ID of the station that the user has searched. |
+| name | String | Name of the place in the search that wants to be added. |
 
 #### Examples
 
 Curl:
 
 ``` bash
-curl -X POST "http://10.4.41.56/RevPollution/services/userSearches/addSearch?token=token&idStation=idStation"
+curl -X POST "http://10.4.41.56/RevPollution/services/userSearches/addSearch?token=token&name=name"
 ```
 
 Dart:
 
 ``` Dart
-var request = http.Request('POST', Uri.parse('http://10.4.41.56/RevPollution/services/userSearches/addSearch?token=token&idStation=idStation'));
+var request = http.Request('POST', Uri.parse('http://10.4.41.56/RevPollution/services/userSearches/addSearch?token=token&name=name'));
 
 http.StreamedResponse response = await request.send();
 
@@ -434,27 +434,27 @@ else {
 
 #### Endpoint URL
 
-http://10.4.41.56/RevPollution/services/userSearches/deleteSearch?token=token&idStation=idStation
+http://10.4.41.56/RevPollution/services/userSearches/deleteSearch?token=token&name=name
 
 #### Query parameters
 
 |Name | Type | Description |
 |---|---|---|
 | token | String | Token of the user we want to delete a search from. |
-| idStation | Integer | ID of the station in the search that wants to be deleted. |
+| name | String | Name of the place in the search that wants to be deleted. |
 
 #### Examples
 
 Curl:
 
 ``` bash
-curl -X DELETE "http://10.4.41.56/RevPollution/services/userSearches/deleteSearch?token=token&idStation=idStation"
+curl -X DELETE "http://10.4.41.56/RevPollution/services/userSearches/deleteSearch?token=token&name=name"
 ```
 
 Dart:
 
 ``` Dart
-var request = http.Request('DELETE', Uri.parse('http://10.4.41.56/RevPollution/services/userSearches/deleteSearch?token=token&idStation=idStation'));
+var request = http.Request('DELETE', Uri.parse('http://10.4.41.56/RevPollution/services/userSearches/deleteSearch?token=token&name=name'));
 
 http.StreamedResponse response = await request.send();
 
