@@ -25,6 +25,12 @@ public class Logro {
         this.cond = cond;
     }
 
+    public Logro (String name, String tier, String cond) {
+        this.name = name;
+        this.tier = Tier.valueOf(tier);
+        this.cond = cond;
+    }
+
     public String getName() {
         return name;
     }
