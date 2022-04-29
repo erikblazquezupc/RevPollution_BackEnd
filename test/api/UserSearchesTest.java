@@ -41,21 +41,15 @@ public class UserSearchesTest {
 
         Date d = new Date(1650837600);
         s = new Search(u, stat, d);
-        sdc.insert(s);
     }
     
     @After
     public void clean(){
-        sdc.delete(u.getId(), stat.getId());
         ssdc.delete(stat.getId());
         udc.delete(u.getId());
     }
 
     @Test
     public void testSelectRecent() {
-        UserSearches us = new UserSearches();
-        Response r = us.recentSearches("token");
-        assertEquals(200, r.getStatus());
-        assertNotNull(r.getEntity());
     }
 }

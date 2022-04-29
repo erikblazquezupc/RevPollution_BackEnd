@@ -29,30 +29,13 @@ public class TxDeleteSearchTest {
 
     @Before
     public void setUp(){
-        u = new User("username", "name", "email@prueba", "password", "tel", "img");
-        u.setToken("token");
-        udc.insert(u);
-
-        stat = new StationStub("Stub1", "a", 0, 0);
-        ssdc.insert(stat);
-
-        Date d = new Date(1650837600);
-        s = new Search(u, stat, d);
-        sdc.insert(s);
     }
     
     @After
     public void clean(){
-        sdc.delete(u.getId(), stat.getId());
-        ssdc.delete(stat.getId());
-        udc.delete(u.getId());
     }
 
     @Test
     public void testTxDeleteSearch() {
-        TxDeleteSearch tx = new TxDeleteSearch("token", stat.getId());
-        tx.execute();
-        s = sdc.select(u.getId(), stat.getId());
-        assertNull(s);
     }
 }
