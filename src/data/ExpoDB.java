@@ -26,7 +26,7 @@ public class ExpoDB implements ExpoDataCtrl {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
-            selectRecent = conn.prepareStatement("SELECT * FROM DailyExposition WHERE idUser = ? LIMIT 7");
+            selectRecent = conn.prepareStatement("SELECT * FROM DailyExposition WHERE idUser = ? LIMIT 30");
             insert = conn.prepareStatement("CALL InsertLocation(?, ?, ?)");
             delete = conn.prepareStatement("DELETE FROM Location WHERE idUser = ?");
             select = conn.prepareStatement("SELECT * FROM Location WHERE idUser = ?");
