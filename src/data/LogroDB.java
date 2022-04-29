@@ -30,7 +30,7 @@ public class LogroDB implements LogroDataCtrl{
             select = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
             selectAll = conn.prepareStatement("SELECT * FROM Logro");
             delete = conn.prepareStatement("DELETE FROM Logro WHERE name = ? AND tier = ?");
-            update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, cond = ? WHERE name = ? AND tier = ?");
+            //update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, cond = ? WHERE name = ? AND tier = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class LogroDB implements LogroDataCtrl{
         }
     }
 
-    public void update(Logro l){
+    /*public void update(Logro l){
         try {
             update.setString(1, l.getName());
             update.setString(2, l.getTier().toString());
@@ -80,7 +80,7 @@ public class LogroDB implements LogroDataCtrl{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public Logro select(String n, Tier t){
         try {

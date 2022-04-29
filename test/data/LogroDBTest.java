@@ -58,7 +58,7 @@ public class LogroDBTest {
         assertTrue(ldb.selectAll().containsAll(expected));
     }
 
-    @Test
+    /*@Test
     public void testUpdate() {
         //l.setName("logro3");
         //l.setTier(Tier.valueOf("oro"));
@@ -66,5 +66,5 @@ public class LogroDBTest {
         //assertEquals("nueva", l.getCondition());
         ldb.update(l);
         assertEquals(l, ldb.select("logro1", Tier.valueOf("plata")));
-    }
+    }*/
 }
