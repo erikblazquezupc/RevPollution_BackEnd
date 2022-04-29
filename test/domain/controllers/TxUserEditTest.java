@@ -1,12 +1,9 @@
-package api;
+package domain.controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AbstractDocument.Content;
-import javax.ws.rs.core.Response;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,13 +13,13 @@ import domain.User;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.UserDataCtrl;
 
-public class UserEditTest {
+public class TxUserEditTest {
     User u;
     UserDataCtrl udc;
 
     @Before
     public void setUp(){
-        u = new User(1, "username", "name", "email@prueba", "password", "tel", "img");
+        u = new User(0,"usernametx", "nametx", "emailtx", "passwordtx", "telftx", "imagetx");
         u.setToken("token");
         DataCtrl dataCtrl = DataCtrl.getInstance();
         udc = dataCtrl.getUserDataCtrl();
@@ -35,11 +32,11 @@ public class UserEditTest {
     }
 
     @Test
-    public void testUserEdit() {
-        UserEdit ue = new UserEdit();
-        Response r = ue.useredit("usernamechanged", "password", "email@prueba", "name", "tel", "img", "token");
-        assertEquals(200, r.getStatus());
+    public void testTxUserEdit() {
+        TxUserEdit tx = new TxUserEdit("usernametxchanged", "nametx", "passwordtx", "emailtx", "telftx", "imagetx", "token");
+        tx.execute();
+        //assertTrue(tx.getResult());
         u = udc.selectByToken("token");
-        assertEquals(u.getUsername(), "usernamechanged");
+        assertEquals(u.getUsername(), "usernametxchanged");
     }
 }

@@ -55,4 +55,12 @@ public class UserDBTest {
         User u2 = udb.select(u.getId());
         assertEquals(u, u2);
     }
+
+    @Test
+    public void testEditUserInfo() {
+        u.setUsername("testUsername");
+        udb.editInfo(u);
+        User u2 = udb.select(u.getId());
+        assertEquals(u, u2);
+    }
 }
