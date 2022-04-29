@@ -38,9 +38,9 @@ public class UserSearches {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/addSearch")
 	public Response addSearch (@QueryParam("token") String token, 
-		@QueryParam("idStation") int idStation) {
+		@QueryParam("name") String name) {
 		Date date = new Date();
-		TxAddSearch tx = new TxAddSearch(token, idStation, date);
+		TxAddSearch tx = new TxAddSearch(token, name, date);
 		tx.execute();
 		boolean result = tx.getResult();
 		return Response.ok(result).build();
@@ -51,8 +51,8 @@ public class UserSearches {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/deleteSearch")
 	public Response deleteSearch (@QueryParam("token") String token, 
-		@QueryParam("idStation") int idStation) {
-		TxDeleteSearch tx = new TxDeleteSearch(token, idStation);
+		@QueryParam("name") String name) {
+		TxDeleteSearch tx = new TxDeleteSearch(token, name);
 		tx.execute();
 		return Response.ok().build();
 	}

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface SearchDataCtrl {
     public boolean insert(Search s);
-    public Search select(int userId, int stationId);
-    public void delete(int userId, int stationId);
+    public Search select(int userId, String name);
+    public void delete(int userId, String name);
     public ArrayList<Search> selectRecent (int userId);
-}
+} 

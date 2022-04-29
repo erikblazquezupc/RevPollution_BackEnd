@@ -10,15 +10,15 @@ import org.junit.Test;
 public class SearchTest {
     Search s;
     User u;
-    StationStub stat;
+    String name;
 
     @Before
     public void setUp(){
-        stat = new StationStub("Name", "a", 1, 1);
+        name = "Calafell";
         u = new User("username", "name", "email@prueba", "password", "tel", "img");
         u.setToken("token");
         Date d = new Date(200000);
-        s = new Search(u, stat, d);
+        s = new Search(u, name, d);
     }
 
 
@@ -33,8 +33,8 @@ public class SearchTest {
     }
 
     @Test
-    public void testGetStation() {
-        assertEquals(stat, s.getStation());
+    public void testGetName() {
+        assertEquals(name, s.getName());
     }
 
     @Test
@@ -51,14 +51,14 @@ public class SearchTest {
     }
 
     @Test
-    public void testSetStation() {
-        StationStub s2 = new StationStub("Station", "a", 2, 2);
-        s.setStation(s2);
-        assertEquals(s2, s.getStation());
+    public void testSetName() {
+        String name2 = "Girona";
+        s.setName(name2);
+        assertEquals(name2, s.getName());
     }
 
     @Test
     public void testToString() {
-        assertEquals("Search [user=name, station=Name, instant="+ new Date(200000) +"]", s.toString());
+        assertEquals("Search [user=name, name=Calafell, instant="+ new Date(200000) +"]", s.toString());
     }
 }
