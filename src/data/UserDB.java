@@ -71,7 +71,7 @@ public class UserDB implements UserDataCtrl{
         }
     }
 
-    public void update(User u){
+    public boolean update(User u){
         try {
             update.setString(1, u.getUsername());
             update.setString(2, u.getPassword());
@@ -82,9 +82,16 @@ public class UserDB implements UserDataCtrl{
             update.setString(7, u.getToken());
             update.setInt(8, u.getId());
             update.executeUpdate();
+            insert.executeUpdate();
+            ResultSet r = insert.getGeneratedKeys();
+            if (r.next()) {
+                u.setId(r.getInt(1));
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public User select(int id){
