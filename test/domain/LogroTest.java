@@ -52,6 +52,6 @@ public class LogroTest {
 
     @Test
     public void testToString() {
-        assertEquals("Logro [name=logro1, tier=oro, condition=testeando]", l.toString());
+        assertEquals("Logro [name=logro1, tier=oro, cond=testeando]", l.toString());
     }
 }
