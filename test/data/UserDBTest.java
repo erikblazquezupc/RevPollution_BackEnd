@@ -9,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import domain.User;
-import domain.dataCtrl.DataCtrl;
-import domain.dataCtrl.UserDataCtrl;
 
 public class UserDBTest {
     User u;
@@ -24,12 +22,27 @@ public class UserDBTest {
         udb.insert(u);
         assertNotNull(u.getId());
     }
+    
+    @After
+    public void clean() {
+        udb.delete(u.getId());
+        u = udb.select(u.getId());
+        assertNull(u);
+    }
+
+    @Test
+    public void deleteUser(){
+        User toBeDeleted = new User(1, "deletename", "delete", "delete@email.com", "pwd", "tel", "img");
+        toBeDeleted.setToken("deletoken");
+        assertNotNull(toBeDeleted.getId());
+        udb.delete(toBeDeleted.getId());
+        toBeDeleted = udb.select(toBeDeleted.getId());
+        assertNull(toBeDeleted);
+    }
 
     @Test
     public void testSelectByUsername() {
         User u2 = udb.selectByUsername("username");
-        System.out.println(u);
-        System.out.println(u2);
         assertEquals(u, u2);
     }
 
@@ -59,12 +72,5 @@ public class UserDBTest {
         udb.editInfo(u);
         User u2 = udb.select(u.getId());
         assertEquals(u, u2);
-    }
-
-    @Test
-    public void testDeleteUser() {
-        udb.delete(u.getId());
-        u = udb.select(u.getId());
-        assertNull(u);
     }
 }
