@@ -68,7 +68,7 @@ public class LogroDBTest {
         ArrayList<Logro> expected = new ArrayList<Logro>();
         expected.add(l);
         expected.add(l2);
-        assertTrue(ldb.selectAll().containsAll(expected));
+        assertTrue(ldb.selectAllAdmin().containsAll(expected));
     }
 
     /*@Test
