@@ -27,7 +27,7 @@ public class LogrosAdminTest {
     @Before
     public void setUp(){
         ls = new LogrosAdmin();
-        l = new Logro("test", Tier.valueOf("plata"), "más de 100 tests");
+        l = new Logro("test", Tier.valueOf("plata"), "más de 100 tests"/*, false*/);
         DataCtrl dataCtrl = DataCtrl.getInstance();
         ldc = dataCtrl.getLogroDataCtrl();
         ldc.insert(l);
@@ -43,8 +43,8 @@ public class LogrosAdminTest {
         Response r = ls.getLogrosAdmin();
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
-        assertTrue(r.getEntity().toString().contains(l.toStringActivated()));
-        //assertTrue(r.getEntity().toString().contains(l.getName()));
+        //assertTrue(r.getEntity().toString().contains(l.toStringActivated()));
+        assertTrue(r.getEntity().toString().contains(l.toString()));
     }
 
     @Test
@@ -52,7 +52,8 @@ public class LogrosAdminTest {
         Response r = ls.getLogroAdmin(l.getName(), l.getTier());
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
-        assertTrue(r.getEntity().toString().contains(l.toStringActivated()));
+        //assertTrue(r.getEntity().toString().contains(l.toStringActivated()));
+        assertTrue(r.getEntity().toString().contains(l.toString()));
         //assertTrue(r.getEntity().toString().contains(l.getName()));
     }
 
@@ -63,7 +64,9 @@ public class LogrosAdminTest {
         assertEquals(200, r1.getStatus());
         assertEquals(200, r2.getStatus());
         assertNotNull(r2.getEntity());
-        assertTrue(r2.getEntity().toString().contains(l.toStringActivated()));
+        //assertTrue(r2.getEntity().toString().contains(l.toStringActivated()));
+        assertTrue(r2.getEntity().toString().contains(l.toString()));
+
     }
 
 

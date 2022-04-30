@@ -34,7 +34,7 @@ public class LogroTest {
 
     @Test
     public void testGetActivated() {
-        assertEquals("testeando", l.getActivated());
+        assertEquals(false, l.getActivated());
     }
 
     @Test
@@ -63,6 +63,7 @@ public class LogroTest {
 
     @Test
     public void testToStringActivated() {
+        l.setActivated(true);
         assertEquals("Logro [name=logro1, tier=oro, cond=testeando, activated=1]", l.toStringActivated());
     }
 
