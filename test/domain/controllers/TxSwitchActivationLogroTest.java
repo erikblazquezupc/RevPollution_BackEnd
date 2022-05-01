@@ -44,7 +44,8 @@ public class TxSwitchActivationLogroTest {
 
         TxGetLogro tx2 = new TxGetLogro(l.getName(), l.getTier());
         tx2.execute();
-        assertNull(tx2.getResult());
+        //check
+        assertNotNull(tx2.getResult());
 
         assertEquals(tx1.getResult(), l);
     }
