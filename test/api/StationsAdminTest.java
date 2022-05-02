@@ -14,16 +14,15 @@ import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
-public class StationsTest {
-    
+public class StationsAdminTest {
     StationStub s;
     StationDataCtrl sdc;
-    Stations st;
+    StationsAdmin st;
 
     @Before
     public void setUp(){
-        st = new Stations();
-        s = new StationStub("test", "Test Rd, 1", 0, 0);
+        st = new StationsAdmin();
+        s = new StationStub("test", "Test Rd, 1", 2, 2);
         DataCtrl dataCtrl = DataCtrl.getInstance();
         sdc = dataCtrl.getStationDataCtrl();
         sdc.insert(s);
@@ -35,18 +34,28 @@ public class StationsTest {
     }
 
     @Test
-    public void testGetStations() {
-        Response r = st.getStations();
+    public void testGetStationsAdmin() {
+        Response r = st.getStationsAdmin();
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
         assertTrue(r.getEntity().toString().contains(s.toString()));
     }
 
     @Test
-    public void testGetStation() {
-        Response r = st.getStation(s.getId());
+    public void testGetStationAdmin() {
+        Response r = st.getStationAdmin(s.getId());
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
         assertTrue(r.getEntity().toString().contains(s.toString()));
+    }
+
+    @Test
+    public void testSwitchActivation() {
+        Response r1 = st.switchActivation(s.getId());
+        Response r2 = st.getStationAdmin(s.getId());
+        assertEquals(200, r1.getStatus());
+        assertEquals(200, r2.getStatus());
+        assertNotNull(r2.getEntity());
+        assertTrue(r2.getEntity().toString().contains(s.toString()));
     }
 }

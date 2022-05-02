@@ -1,15 +1,18 @@
 package domain.controllers;
 
 import domain.User;
+import domain.Search;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.UserDataCtrl;
+import domain.dataCtrl.SearchDataCtrl;
 
+import java.util.ArrayList;
 
-public class TxUserInfo {
+public class TxRecentSearches {
     private String token;
-    private User result;
+    private ArrayList<Search> result;
 
-    public TxUserInfo(String token){
+    public TxRecentSearches(String token){
         this.token = token;
         this.result = null;
     }
@@ -18,10 +21,11 @@ public class TxUserInfo {
         DataCtrl dataCtrl = DataCtrl.getInstance();
         UserDataCtrl userCtrl = dataCtrl.getUserDataCtrl();
         User u = userCtrl.selectByToken(token);
-        result = u;
+        SearchDataCtrl recentSearchesCtrl = dataCtrl.getSearchDataCtrl();
+        result = recentSearchesCtrl.selectRecent(u.getId());
     }
 
-    public User getResult(){
+    public ArrayList<Search> getResult(){
         return result;
     }
 }
