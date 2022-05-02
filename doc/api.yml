@@ -5,6 +5,7 @@ info:
   description: "Versió OpenAPI del la solució publicada a <https://atenea.upc.edu/mod/resource/view.php?id=2158292>. Suposem que totes les crides necessiten autentificació via una api_key que indentifica un usuari determinat. Només es poc accedir als missatges de l'usuari autentificat."
 servers:
   - url: 'http://localhost:8080/RevPollution/services'
+
 paths:
   /login/login:
     get:
@@ -56,7 +57,71 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/concentration.yml'
+                  $ref: './components/schemas/concentration.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /dailyExpo:
+    get:
+      tags:
+      - exposicion
+      summary: Obtener la exposición diaria.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/expo.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /dailyExpo/addExpo:
+    post:
+      tags:
+      - exposicion
+      summary: Añadir la exposición en una ubicación.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: lat
+        in: query
+        required: true
+        schema:
+          type: number
+      - name: lon
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
         404:
           description: 'Error: Not Found'
         401:

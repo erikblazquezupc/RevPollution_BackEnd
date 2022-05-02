@@ -3,7 +3,6 @@ package domain.controllers;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,11 +37,5 @@ public class TxGetLogrosTest {
         tx.execute();
         assertNotNull(tx.getResult());
         assertTrue(tx.getResult().contains(l));
-
-/*        ArrayList<Logro> result = tx.getResult();
-        for (Logro logro : result) {
-            System. out. println(logro.getName());
-        }*/
-
     }
 }
