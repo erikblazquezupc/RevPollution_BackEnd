@@ -61,6 +61,13 @@ public class StationsTest {
     }
 
     @Test
+    public void testGetStation() {
+        Response r = st.getStation(s.getId());
+        assertEquals(200, r.getStatus());
+        assertNotNull(r.getEntity());
+        assertTrue(r.getEntity().toString().contains(s.toString()));
+    }
+
     public void testGetQuality() {
         Stations eg = new Stations();
         Response r = eg.getQuality(5.0, 5.0);
