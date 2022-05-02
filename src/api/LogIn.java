@@ -21,6 +21,6 @@ public class LogIn {
 		TxLogIn tx = new TxLogIn(username, password);
 		tx.execute();
 		String result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 }
