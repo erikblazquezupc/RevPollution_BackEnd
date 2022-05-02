@@ -11,15 +11,16 @@ import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
-public class TxCreateStationTest {
+public class TxGetStationsAdminTest {
     StationStub s;
     StationDataCtrl sdc;
 
     @Before
     public void setUp(){
+        s = new StationStub("test", "Test Rd, 1", 0, 0);
         DataCtrl dataCtrl = DataCtrl.getInstance();
         sdc = dataCtrl.getStationDataCtrl();
-        s = new StationStub("nametx", "addrestx", 0.0, 0.0);
+        sdc.insert(s);
     }
     
     @After
@@ -28,11 +29,10 @@ public class TxCreateStationTest {
     }
 
     @Test
-    public void testTxCreateStation() {
-        TxCreateStation tx = new TxCreateStation("nametx", "addrestx", 0.0, 0.0);
+    public void testTxGetStationsAdmin() {
+        TxGetStationsAdmin tx = new TxGetStationsAdmin();
         tx.execute();
-        s = sdc.selectByName("nametx");
-        assertNotNull(s);
-        assertTrue(tx.getResult());
+        assertNotNull(tx.getResult());
+        assertTrue(tx.getResult().contains(s));
     }
 }

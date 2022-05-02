@@ -4,18 +4,18 @@ import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
-public class TxGetStation {
+public class TxGetStationAdmin {
     private int id;
     private StationStub result;
 
-    public TxGetStation(int id){
+    public TxGetStationAdmin(int id){
         this.id = id;
     }
 
     public void execute(){
         DataCtrl dataCtrl = DataCtrl.getInstance();
         StationDataCtrl sdc = dataCtrl.getStationDataCtrl();
-        result = sdc.select(id);
+        result = sdc.selectAdmin(id);
     }
 
     public StationStub getResult(){
