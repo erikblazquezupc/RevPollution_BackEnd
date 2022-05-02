@@ -11,7 +11,6 @@ import java.util.Date;
 
 import domain.Search;
 import domain.User;
-import domain.StationStub;
 import domain.dataCtrl.SearchDataCtrl;
 
 public class SearchDB implements SearchDataCtrl {
@@ -26,10 +25,10 @@ public class SearchDB implements SearchDataCtrl {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
-            insert = conn.prepareStatement("REPLACE INTO LastSearches(idUser, idStation, instant) VALUES (?, ?, ?)");
+            insert = conn.prepareStatement("REPLACE INTO LastSearches(idUser, name, instant) VALUES (?, ?, ?)");
             selectRecent = conn.prepareStatement("SELECT * FROM LastSearches WHERE idUser = ? ORDER BY instant DESC LIMIT 3");
-            select = conn.prepareStatement("SELECT * FROM LastSearches WHERE idUser = ? and idStation = ?");
-            delete = conn.prepareStatement("DELETE FROM LastSearches WHERE idUser = ? and idStation = ?");
+            select = conn.prepareStatement("SELECT * FROM LastSearches WHERE idUser = ? and name = ?");
+            delete = conn.prepareStatement("DELETE FROM LastSearches WHERE idUser = ? and name = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -41,11 +40,11 @@ public class SearchDB implements SearchDataCtrl {
         if(instance == null) instance = new SearchDB();
         return instance;
     }
-
+ 
     public boolean insert(Search s){
         try {
             insert.setInt(1, s.getUser().getId());
-            insert.setInt(2, s.getStationId());
+            insert.setString(2, s.getName());
             Timestamp ts = new Timestamp(s.getInstant().getTime());
             insert.setTimestamp(3, ts);
             int n = insert.executeUpdate();
@@ -56,10 +55,10 @@ public class SearchDB implements SearchDataCtrl {
         return false;
     }
 
-    public void delete(int userId, int stationId){
+    public void delete(int userId, String name){
         try {
             delete.setInt(1, userId);
-            delete.setInt(2, stationId);
+            delete.setString(2, name);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,13 +72,12 @@ public class SearchDB implements SearchDataCtrl {
             ResultSet r = selectRecent.executeQuery();
             while (r.next()) {
                 int UserId = r.getInt("idUser");
-                int StationId = r.getInt("idStation");
+                String name = r.getString("name");
                 Timestamp ts = r.getTimestamp("instant");
                 Date date = new Date(ts.getTime());
 
                 User user = UserDB.getInstance().select(UserId);
-                StationStub station = StationDB.getInstance().select(StationId);
-                Search s = new Search(user, station, date);
+                Search s = new Search(user, name, date);
                 ret.add(s);
             }
         } catch (SQLException e) {
@@ -88,20 +86,19 @@ public class SearchDB implements SearchDataCtrl {
         return ret;
     }
 
-    public Search select(int userId, int stationId){
+    public Search select(int userId, String n){
         try {
             select.setInt(1, userId);
-            select.setInt(2, stationId);
+            select.setString(2, n);
             ResultSet r = select.executeQuery();
             if (r.next()) {
                 int UserId = r.getInt("idUser");
-                int StationId = r.getInt("idStation");
+                String name = r.getString("name");
                 Timestamp ts = r.getTimestamp("instant");
                 Date date = new Date(ts.getTime());
 
                 User user = UserDB.getInstance().select(UserId);
-                StationStub station = StationDB.getInstance().select(StationId);
-                Search s = new Search(user, station, date);
+                Search s = new Search(user, name, date);
                 return s;
             }
         } catch (SQLException e) {

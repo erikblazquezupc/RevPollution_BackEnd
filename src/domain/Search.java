@@ -4,29 +4,29 @@ import java.util.Date;
 
 public class Search {
     User user;
-    StationStub station;
+    String name;
     Date instant;
 
     public Search() {
-
+ 
     }
 
-    public Search(User user, StationStub station, Date date) {
+    public Search(User user, String name, Date date) {
         this.user = user;
-        this.station = station;
+        this.name = name;
         this.instant = date;
     }
 
-    public StationStub getStation() {
-        return station;
+    public String getName() {
+        return name;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setStation(StationStub station) {
-        this.station = station;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setUser(User user) {
@@ -43,12 +43,8 @@ public class Search {
 
     @Override
     public String toString() {
-        return "Search [user=" + user.getName() + ", station=" + station.getName() + ", instant=" + instant + 
+        return "Search [user=" + user.getName() + ", name=" + name + ", instant=" + instant + 
                 "]" ;
-    }
-
-    public int getStationId() {
-        return station.getId();
     }
 
     public String getUsername() {
@@ -64,7 +60,7 @@ public class Search {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((instant == null) ? 0 : instant.hashCode());
-        result = prime * result + ((station == null) ? 0 : station.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
         return result;
     }
@@ -83,10 +79,10 @@ public class Search {
                 return false;
         } else if (!instant.equals(other.instant))
             return false;
-        if (station == null) {
-            if (other.station != null)
+        if (name == null) {
+            if (other.name != null)
                 return false;
-        } else if (!station.equals(other.station))
+        } else if (!name.equals(other.name))
             return false;
         if (user == null) {
             if (other.user != null)
