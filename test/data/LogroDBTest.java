@@ -88,3 +88,4 @@ public class LogroDBTest {
         assertEquals(l, ldb.selectAdmin(l.getName(), l.getTier())); 
     }
 }
+

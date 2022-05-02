@@ -177,8 +177,8 @@ public class LogroDB implements LogroDataCtrl{
     public void switchActivation(String name, Tier tier) {
         try {
             switchActivation.setString(1, name);
-            switchActivation.setString(2, tier.toString());
-            switchActivation.executeUpdate();
+            switchActivation.setString(2, tier.name());
+            switchActivation.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
