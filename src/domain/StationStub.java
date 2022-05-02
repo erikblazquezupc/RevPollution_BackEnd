@@ -6,6 +6,7 @@ public class StationStub {
     String address;
     double lat;
     double lon;
+    boolean activated;
 
     public StationStub(){
         this.id = -1;
@@ -17,6 +18,16 @@ public class StationStub {
         this.address = address;
         this.lat = lat;
         this.lon = lon;
+        this.activated = true;
+    }
+
+    public StationStub(String name, String address, double lat, double lon, boolean activated) {
+        this.id = -1;
+        this.name = name;
+        this.address = address;
+        this.lat = lat;
+        this.lon = lon;
+        this.activated = activated;
     }
 
     public StationStub(int id, String name, String address, double lat, double lon) {
@@ -25,6 +36,16 @@ public class StationStub {
         this.address = address;
         this.lat = lat;
         this.lon = lon;
+        this.activated = true;
+    }
+
+    public StationStub(int id, String name, String address, double lat, double lon, boolean activated) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.lat = lat;
+        this.lon = lon;
+        this.activated = activated;
     }
 
     public int getId() {
@@ -67,9 +88,25 @@ public class StationStub {
         this.lon = lon;
     }
 
+    public boolean getActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
     @Override
     public String toString() {
         return "StationStub [id=" + id + ", name=" + name + ", address=" + address + ", lat=" + lat + ", lon=" + lon + "]";
+    }
+
+    public String toStringActivated() {
+        int act;
+        if (activated) act = 1;
+        else act = 0;
+        return "StationStub [id=" + id + ", name=" + name + ", address=" + address 
+            + ", lat=" + lat + ", lon=" + lon + ", activated=" + act + "]";
     }
 
     @Override
