@@ -3,6 +3,7 @@ package domain.dataCtrl;
 import data.StationDB;
 import data.UserDB;
 import data.ConcentrationDB;
+import data.LogroDB;
 import data.SearchDB;
 import data.ExpoDB;
 import data.ParticleDB;
@@ -35,6 +36,10 @@ public class DataCtrl{
         return ConcentrationDB.getInstance();
     }
 
+    public LogroDataCtrl getLogroDataCtrl() {
+        return LogroDB.getInstance();
+    }
+    
     public ExpoDataCtrl getExpoDataCtrl(){
         return ExpoDB.getInstance();
     }
