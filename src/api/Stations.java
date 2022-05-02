@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import domain.StationStub;
+import domain.controllers.TxGetQuality;
 import domain.controllers.TxGetStation;
 import domain.controllers.TxGetStations;
 
@@ -36,6 +37,17 @@ public class Stations {
 		TxGetStation tx = new TxGetStation(id);
 		tx.execute();
 		StationStub result = tx.getResult();
+		return Response.ok(result).build();
+	}
+
+	@GET
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/quality")
+	public Response getQuality(@QueryParam("lat") double lat, @QueryParam("lon") double lon) {
+		TxGetQuality tx = new TxGetQuality(lat, lon);
+		tx.execute();
+		String result = tx.getResult();
 		return Response.ok(result).build();
 	}
 }

@@ -7,11 +7,11 @@ import domain.dataCtrl.SearchDataCtrl;
 
 public class TxDeleteSearch {
     private String token;
-    private Integer idStation;
+    private String name; 
 
-    public TxDeleteSearch(String token, int idStation){
+    public TxDeleteSearch(String token, String name){
         this.token = token;
-        this.idStation = idStation;
+        this.name = name;
     }
 
     public void execute(){
@@ -20,6 +20,6 @@ public class TxDeleteSearch {
         User user = userCtrl.selectByToken(token);
 
         SearchDataCtrl recentSearchesCtrl = dataCtrl.getSearchDataCtrl();
-        recentSearchesCtrl.delete(user.getId(), idStation);
+        recentSearchesCtrl.delete(user.getId(), name);
     }
 }

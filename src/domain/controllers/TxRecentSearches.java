@@ -8,7 +8,7 @@ import domain.dataCtrl.SearchDataCtrl;
 
 import java.util.ArrayList;
 
-public class TxRecentSearches {
+public class TxRecentSearches { 
     private String token;
     private ArrayList<Search> result;
 
