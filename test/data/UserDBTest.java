@@ -24,10 +24,20 @@ public class UserDBTest {
     }
     
     @After
-    public void clean(){
+    public void clean() {
         udb.delete(u.getId());
         u = udb.select(u.getId());
         assertNull(u);
+    }
+
+    @Test
+    public void deleteUser(){
+        User toBeDeleted = new User(1, "deletename", "delete", "delete@email.com", "pwd", "tel", "img");
+        toBeDeleted.setToken("deletoken");
+        assertNotNull(toBeDeleted.getId());
+        udb.delete(toBeDeleted.getId());
+        toBeDeleted = udb.select(toBeDeleted.getId());
+        assertNull(toBeDeleted);
     }
 
     @Test
