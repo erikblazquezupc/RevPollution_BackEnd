@@ -38,7 +38,7 @@ public class TxRecentSearchesTest {
         sdc.insert(s);
     }
     
-    @After
+    @After 
     public void clean(){
         sdc.delete(u.getId(), name);
         udc.delete(u.getId());

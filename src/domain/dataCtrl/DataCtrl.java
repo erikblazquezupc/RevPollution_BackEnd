@@ -5,6 +5,7 @@ import data.UserDB;
 import data.ConcentrationDB;
 import data.LogroDB;
 import data.SearchDB;
+import data.ExpoDB;
 import data.ParticleDB;
 
 public class DataCtrl{
@@ -39,4 +40,7 @@ public class DataCtrl{
         return LogroDB.getInstance();
     }
     
+    public ExpoDataCtrl getExpoDataCtrl(){
+        return ExpoDB.getInstance();
+    }
 }
