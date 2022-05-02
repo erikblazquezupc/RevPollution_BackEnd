@@ -39,7 +39,6 @@ public class SearchesDBTest {
     
     @After
     public void clean(){
-
         sdb.delete(u.getId(), name);
         s = sdb.select(u.getId(), name);
         assertNull(s);
@@ -48,7 +47,7 @@ public class SearchesDBTest {
         u = udb.select(u.getId());
         assertNull(u);
     }
-
+ 
     @Test
     public void testSelectRecent() {
         ArrayList<Search> s2 = sdb.selectRecent(u.getId());

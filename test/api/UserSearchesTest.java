@@ -1,10 +1,5 @@
 package api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import javax.ws.rs.core.Response;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,9 +41,5 @@ public class UserSearchesTest {
 
     @Test
     public void testSelectRecent() {
-        UserSearches us = new UserSearches();
-        Response r = us.recentSearches("token");
-        assertEquals(200, r.getStatus());
-        assertNotNull(r.getEntity());
     }
 }

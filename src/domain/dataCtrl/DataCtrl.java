@@ -4,6 +4,7 @@ import data.StationDB;
 import data.UserDB;
 import data.ConcentrationDB;
 import data.SearchDB;
+import data.ExpoDB;
 import data.ParticleDB;
 
 public class DataCtrl{
@@ -32,5 +33,9 @@ public class DataCtrl{
 
     public ConcentrationDataCtrl getConcentrationDataCtrl(){
         return ConcentrationDB.getInstance();
+    }
+
+    public ExpoDataCtrl getExpoDataCtrl(){
+        return ExpoDB.getInstance();
     }
 }
