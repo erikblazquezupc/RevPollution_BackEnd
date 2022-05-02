@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Exercise 5.4
+  description: "Versió OpenAPI del la solució publicada a <https://atenea.upc.edu/mod/resource/view.php?id=2158292>. Suposem que totes les crides necessiten autentificació via una api_key que indentifica un usuari determinat. Només es poc accedir als missatges de l'usuari autentificat."
+servers:
+  - url: 'http://localhost:8080/RevPollution/services'
+paths:
+  /login/login:
+    get:
+      tags:
+      - users
+      summary: Iniciar sesión.
+      parameters:
+      - name: username
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /concentrations:
+    get:
+      tags:
+      - missatges
+      summary: Obtenir Missatges Usuari
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/concentration.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
