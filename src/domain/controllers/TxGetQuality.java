@@ -9,12 +9,12 @@ import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.ConcentrationDataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
-public class TxElektroGo {
+public class TxGetQuality {
     private double lat;
     private double lon;
     private String result;
 
-    public TxElektroGo(double lat, double lon){
+    public TxGetQuality(double lat, double lon){
         this.lat = lat;
         this.lon = lon;
     }

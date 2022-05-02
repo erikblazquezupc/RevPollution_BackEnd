@@ -18,12 +18,13 @@ import domain.dataCtrl.StationDataCtrl;
 import domain.dataCtrl.ParticleDataCtrl;
 import domain.dataCtrl.ConcentrationDataCtrl;
 
-public class TxElektroGoTest {
+public class TxGetQualityTest {
     StationStub s;
-    StationDataCtrl sdc = DataCtrl.getInstance().getStationDataCtrl();
     Particle p;
-    ParticleDataCtrl pdc = DataCtrl.getInstance().getParticleDataCtrl();
     Concentration c;
+
+    StationDataCtrl sdc = DataCtrl.getInstance().getStationDataCtrl();
+    ParticleDataCtrl pdc = DataCtrl.getInstance().getParticleDataCtrl();
     ConcentrationDataCtrl cdc = DataCtrl.getInstance().getConcentrationDataCtrl();
 
     @Before
@@ -45,8 +46,7 @@ public class TxElektroGoTest {
 
     @Test
     public void testTxElektroGo() {
-
-        TxElektroGo tx = new TxElektroGo(5.0, 5.1);
+        TxGetQuality tx = new TxGetQuality(5.0, 5.1);
         tx.execute();
         assertNotNull(tx.getResult());
         assertEquals(tx.getResult(), "Mid");
