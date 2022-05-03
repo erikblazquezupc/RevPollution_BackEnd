@@ -14,7 +14,7 @@ import domain.Concentration;
 import domain.controllers.TxGetConcentrationsFromStation;
 
 @Path("/concentrations")
-public class ConcentrationsFromStation {
+public class Concentrations {
 	
 	@GET
 	@Consumes({MediaType.APPLICATION_JSON})

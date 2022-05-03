@@ -130,3 +130,58 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /logros:
+    get:
+      tags:
+      - logros
+      summary: Obtener la lista de logros completa.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logros/info:
+    get:
+      tags:
+      - logros
+      summary: Obtener información de un logro.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
