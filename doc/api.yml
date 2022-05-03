@@ -514,3 +514,29 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /userdelete:
+    delete:
+      tags:
+      - users
+      summary: Borrar usuario.
+      parameters:
+      - name: idUser
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
