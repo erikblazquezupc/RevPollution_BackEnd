@@ -396,3 +396,29 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /userinfo:
+    get:
+      tags:
+      - users
+      summary: Obtener la informaciñón de una estación.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
