@@ -25,11 +25,11 @@ public class PostDB implements PostDataCtrl{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
-            insert = conn.prepareStatement("INSERT INTO Posts(text, idCreator, postedOn) VALUES (?, ?, ?)");
-            selectAll = conn.prepareStatement("SELECT * FROM Posts");
-            selectByDateBigger = conn.prepareStatement("SELECT * FROM Posts WHERE timestamp > ?");
-            selectByDateSmaller = conn.prepareStatement("SELECT * FROM Posts WHERE timestamp < ?");
-            selectByDateBoth = conn.prepareStatement("SELECT * FROM Posts WHERE timestamp > ? AND timestamp < ?");
+            insert = conn.prepareStatement("INSERT INTO Post(text, idCreator, postedOn) VALUES (?, ?, ?)");
+            selectAll = conn.prepareStatement("SELECT * FROM Post");
+            selectByDateBigger = conn.prepareStatement("SELECT * FROM Post WHERE timestamp > ?");
+            selectByDateSmaller = conn.prepareStatement("SELECT * FROM Post WHERE timestamp < ?");
+            selectByDateBoth = conn.prepareStatement("SELECT * FROM Post WHERE timestamp > ? AND timestamp < ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
