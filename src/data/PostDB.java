@@ -27,9 +27,9 @@ public class PostDB implements PostDataCtrl{
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             insert = conn.prepareStatement("INSERT INTO Post(text, idCreator, postedOn) VALUES (?, ?, ?)");
             selectAll = conn.prepareStatement("SELECT * FROM Post");
-            selectByDateBigger = conn.prepareStatement("SELECT * FROM Post WHERE timestamp > ?");
-            selectByDateSmaller = conn.prepareStatement("SELECT * FROM Post WHERE timestamp < ?");
-            selectByDateBoth = conn.prepareStatement("SELECT * FROM Post WHERE timestamp > ? AND timestamp < ?");
+            selectByDateBigger = conn.prepareStatement("SELECT * FROM Post WHERE postedOn > ?");
+            selectByDateSmaller = conn.prepareStatement("SELECT * FROM Post WHERE postedOn < ?");
+            selectByDateBoth = conn.prepareStatement("SELECT * FROM Post WHERE postedOn > ? AND postedOn < ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -76,12 +76,12 @@ public class PostDB implements PostDataCtrl{
         return null;
     }
 
-    public List<Post> selectByDateBigger(Integer firstDate) {
+    public List<Post> selectByDateBigger(Long firstDate) {
         ArrayList<Post> ret = new ArrayList<Post> ();
         try {
+            selectByDateBigger.setLong(1, firstDate);
             ResultSet r = selectByDateBigger.executeQuery();
             while(r.next()) {
-                selectByDateBigger.setInt(1, firstDate);
 
                 int idCreator = r.getInt("idCreator");
                 String text = r.getString("text");
@@ -99,12 +99,12 @@ public class PostDB implements PostDataCtrl{
         return null;
     }
 
-    public List<Post> selectByDateSmaller(Integer lastDate) {
+    public List<Post> selectByDateSmaller(Long lastDate) {
         ArrayList<Post> ret = new ArrayList<Post> ();
         try {
+            selectByDateSmaller.setLong(1, lastDate);
             ResultSet r = selectByDateSmaller.executeQuery();
             while(r.next()) {
-                selectByDateSmaller.setInt(1, lastDate);
 
                 int idCreator = r.getInt("idCreator");
                 String text = r.getString("text");
@@ -122,14 +122,13 @@ public class PostDB implements PostDataCtrl{
         return null;
     }
 
-    public List<Post> selectByDateBoth(Integer firstDate, Integer lastDate) {
+    public List<Post> selectByDateBoth(Long firstDate, Long lastDate) {
         ArrayList<Post> ret = new ArrayList<Post> ();
         try {
+            selectByDateBoth.setLong(1, firstDate);
+            selectByDateBoth.setLong(2, lastDate);
             ResultSet r = selectByDateBoth.executeQuery();
-            while(r.next()) {
-                selectByDateBoth.setInt(1, firstDate);
-                selectByDateBoth.setInt(2, lastDate);
-
+            while(r.next()) {              
                 int idCreator = r.getInt("idCreator");
                 String text = r.getString("text");
                 long postedOn = r.getLong("postedOn");

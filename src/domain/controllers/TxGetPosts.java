@@ -7,12 +7,12 @@ import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.PostDataCtrl;
 
 public class TxGetPosts {
-    Integer firstDate;
-    Integer lastDate;
+    Long firstDate;
+    Long lastDate;
     
     List<Post> result;
 
-    public TxGetPosts(Integer firstDate, Integer lastDate) {
+    public TxGetPosts(Long firstDate, Long lastDate) {
         this.firstDate = firstDate;
         this.lastDate = lastDate;
     }

@@ -23,7 +23,7 @@ public class Posts {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/")
-	public Response getPosts(@QueryParam("firstDate") Integer firstDate, @QueryParam("lastDate") Integer lastDate) {
+	public Response getPosts(@QueryParam("firstDate") Long firstDate, @QueryParam("lastDate") Long lastDate) {
 		List<Post> result;
 		if (firstDate == null && lastDate == null){
 			TxGetAllPosts tx = new TxGetAllPosts();
