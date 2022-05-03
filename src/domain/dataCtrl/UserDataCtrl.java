@@ -9,4 +9,5 @@ public interface UserDataCtrl {
     public User select(int id);
     public User selectByUsername(String un);
     public User selectByToken(String Token);
+    public void editInfo(User u);
 }

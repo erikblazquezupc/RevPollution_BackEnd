@@ -4,6 +4,9 @@ import data.StationDB;
 import data.UserDB;
 import data.ConcentrationDB;
 import data.LogroDB;
+import data.SearchDB;
+import data.ExpoDB;
+import data.ParticleDB;
 
 public class DataCtrl{
     static DataCtrl instance;
@@ -17,8 +20,16 @@ public class DataCtrl{
         return UserDB.getInstance();
     }
 
+    public SearchDataCtrl getSearchDataCtrl(){
+        return SearchDB.getInstance();
+    }
+
     public StationDataCtrl getStationDataCtrl(){
         return StationDB.getInstance();
+    }
+
+    public ParticleDataCtrl getParticleDataCtrl(){
+        return ParticleDB.getInstance();
     }
 
     public ConcentrationDataCtrl getConcentrationDataCtrl(){
@@ -29,4 +40,7 @@ public class DataCtrl{
         return LogroDB.getInstance();
     }
     
+    public ExpoDataCtrl getExpoDataCtrl(){
+        return ExpoDB.getInstance();
+    }
 }

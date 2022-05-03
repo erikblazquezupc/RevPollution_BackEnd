@@ -8,6 +8,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import domain.User;
 import domain.controllers.TxUserInfo;
 
 @Path("/userinfo")
@@ -20,7 +21,7 @@ public class UserInfo {
 	public Response userinfo(@QueryParam("token") String token) { //token solo o token + username?
 		TxUserInfo tx = new TxUserInfo(token);
 		tx.execute();
-		String username = tx.getResult();
-		return Response.ok(username).build();
+		User user = tx.getResult();
+		return Response.ok(user).build();
 	}
 }

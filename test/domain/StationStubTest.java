@@ -39,6 +39,11 @@ public class StationStubTest {
     }
 
     @Test
+    public void testGetActivated() {
+        assertEquals(true, s.getActivated());
+    }
+
+    @Test
     public void testSetAddress() {
         s.setAddress("new Address");
         assertEquals("new Address", s.getAddress());
@@ -69,7 +74,18 @@ public class StationStubTest {
     }
 
     @Test
+    public void testSetActivated() {
+        s.setActivated(false);
+        assertEquals(false, s.getActivated());
+    }
+
+    @Test
     public void testToString() {
         assertEquals("StationStub [id=1, name=name, address=address, lat=0.0, lon=0.0]", s.toString());
+    }
+
+    @Test
+    public void testToStringActivated() {
+        assertEquals("StationStub [id=1, name=name, address=address, lat=0.0, lon=0.0, activated=1]", s.toStringActivated());
     }
 }

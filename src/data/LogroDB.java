@@ -37,7 +37,6 @@ public class LogroDB implements LogroDataCtrl{
             selectAdmin = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
             selectAllAdmin = conn.prepareStatement("SELECT * FROM Logro");
             switchActivation = conn.prepareStatement("UPDATE Logro SET activated = NOT activated WHERE name = ? AND tier = ?");
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -54,7 +53,6 @@ public class LogroDB implements LogroDataCtrl{
         try {
             insert.setString(1, l.getName());
             insert.setString(2, l.getTier().toString());
-            //insert.setTier(2, l.getTier());
             insert.setString(3, l.getCondition());
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
@@ -70,24 +68,22 @@ public class LogroDB implements LogroDataCtrl{
         try {
             delete.setString(1, name);
             delete.setString(2, tier.toString());
-            //delete.setTier(2, tier);
             delete.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    /*public void update(Logro l){
+    public void update(Logro l){
         try {
-            update.setString(1, l.getName());
-            update.setString(2, l.getTier().toString());
-            //update.setTier(2, l.getTier());
-            update.setString(3, l.getCondition());
+            update.setString(1, l.getCondition());
+            update.setString(2, l.getName());
+            update.setString(3, l.getTier().toString());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public Logro select(String n, Tier t){
         try {
@@ -114,10 +110,7 @@ public class LogroDB implements LogroDataCtrl{
             ResultSet r = selectAll.executeQuery();
             while(r.next()) {
                 String name = r.getString("name");
-                //String tier = r.getString("tier");
-                //Tier tier = r.getString(tier);
-                String tierString = r.getString("tier");
-                Tier tier = Tier.valueOf(tierString);
+                Tier tier = Tier.valueOf(r.getString("tier"));
                 String cond = r.getString("cond");
                 Logro l = new Logro(name, tier, cond);
                 ret.add(l);
@@ -128,7 +121,6 @@ public class LogroDB implements LogroDataCtrl{
         }
         return null;
     }
-
     @Override
     public Logro selectAdmin(String n, Tier t) {
         try {
@@ -172,7 +164,6 @@ public class LogroDB implements LogroDataCtrl{
         }
         return null;
     }
-
     @Override
     public void switchActivation(String name, Tier tier) {
         try {
