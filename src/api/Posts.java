@@ -42,7 +42,7 @@ public class Posts {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/new")
-	public Response signup(@QueryParam("text") String text, @QueryParam("userToken") String userToken) {
+	public Response newPost(@QueryParam("text") String text, @QueryParam("userToken") String userToken) {
 		TxNewPost tx = new TxNewPost(text, userToken);
 		tx.execute();
 		Boolean result = tx.getResult();
