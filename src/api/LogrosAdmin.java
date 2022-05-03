@@ -51,7 +51,7 @@ public class LogrosAdmin {
 	public Response switchActivation(@QueryParam("name") String name, @QueryParam("tier") Tier tier) {
 		TxSwitchActivationLogro tx = new TxSwitchActivationLogro(name, tier);
 		tx.execute();
-		return Response.ok().build();
+		return Response.ok(true).build();
 	}
 
 	@PUT
@@ -61,6 +61,6 @@ public class LogrosAdmin {
 	public Response createLogro(@QueryParam("name") String name, @QueryParam("tier") Tier tier, @QueryParam("cond") String cond, @QueryParam("activated") boolean activated) {
 		TxCreateLogro tx = new TxCreateLogro(name, tier, cond, activated);
 		tx.execute();
-		return Response.ok().build();
+		return Response.ok(true).build();
 	}
 }
