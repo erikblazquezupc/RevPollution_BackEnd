@@ -5,7 +5,7 @@ public class Post {
     String text;
     long postedOn;
 
-    public Post(User creator, String text, Integer postedOn) {
+    public Post(User creator, String text, long postedOn) {
         this.creator = creator;
         this.text = text;
         this.postedOn = postedOn;
