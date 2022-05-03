@@ -422,3 +422,93 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /userSearches/recentSearches:
+    get:
+      tags:
+      - searches
+      summary: Obtener las busquedas mas recientes.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/search.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /userSearches/addSearch:
+    post:
+      tags:
+      - searches
+      summary: Añadir una busqueda.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /userSearches/deleteSearch:
+    delete:
+      tags:
+      - searches
+      summary: Borrar una busqueda.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
