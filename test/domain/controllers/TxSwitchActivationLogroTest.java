@@ -1,7 +1,8 @@
 package domain.controllers;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 
 //import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.LogroDataCtrl;
 
-public class TxGetLogrosTest {
+public class TxSwitchActivationLogroTest {
     Logro l;
     LogroDataCtrl ldc;
 
@@ -33,10 +34,19 @@ public class TxGetLogrosTest {
     }
 
     @Test
-    public void testTxGetLogros() {
-        TxGetLogros tx = new TxGetLogros();
+    public void testTxSwitchActivation() {
+        TxSwitchActivationLogro tx = new TxSwitchActivationLogro(l.getName(), l.getTier());
         tx.execute();
-        assertNotNull(tx.getResult());
-        assertTrue(tx.getResult().contains(l));
+
+        TxGetLogroAdmin tx1 = new TxGetLogroAdmin(l.getName(), l.getTier());
+        tx1.execute();
+        assertNotNull(tx1.getResult());
+
+        TxGetLogro tx2 = new TxGetLogro(l.getName(), l.getTier());
+        tx2.execute();
+        //check
+        assertNotNull(tx2.getResult());
+
+        assertEquals(tx1.getResult(), l);
     }
 }

@@ -1,8 +1,11 @@
 package api;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AbstractDocument.Content;
 import javax.ws.rs.core.Response;
 
 import org.junit.After;
@@ -13,13 +16,13 @@ import domain.User;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.UserDataCtrl;
 
-public class UserInfoTest {
+public class UserEditTest {
     User u;
     UserDataCtrl udc;
 
     @Before
     public void setUp(){
-        u = new User("username", "name", "email@prueba", "password", "tel", "img");
+        u = new User(1, "username", "name", "email@prueba", "password", "tel", "img");
         u.setToken("token");
         DataCtrl dataCtrl = DataCtrl.getInstance();
         udc = dataCtrl.getUserDataCtrl();
@@ -31,11 +34,12 @@ public class UserInfoTest {
         udc.delete(u.getId());
     }
 
-    //@Test
-    public void testGetInfo() {
-        UserInfo uf = new UserInfo();
-        Response r = uf.userinfo("token");
+    @Test
+    public void testUserEdit() {
+        UserEdit ue = new UserEdit();
+        Response r = ue.useredit("usernamechanged", "password", "email@prueba", "name", "tel", "img", "token");
         assertEquals(200, r.getStatus());
-        assertNotNull(r.getEntity());
+        u = udc.selectByToken("token");
+        assertEquals(u.getUsername(), "usernamechanged");
     }
 }
