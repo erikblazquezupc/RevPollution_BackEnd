@@ -1,7 +1,5 @@
 package domain.controllers;
 
-import java.util.ArrayList;
-
 import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;

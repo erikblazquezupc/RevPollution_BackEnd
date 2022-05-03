@@ -1,0 +1,16 @@
+type: object
+properties:
+  name:
+    type: string
+  username:
+    type: string
+  email:
+    type: string
+  token:
+    type: string
+  id:
+    type: number
+  tel:
+    type: string
+  img:
+    type: string

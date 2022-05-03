@@ -37,6 +37,6 @@ public class ParticleTest {
 
     @Test
     public void testToString() {
-        assertEquals("Particle [name=03, unit=ug/m3]", p.toString());
+        assertEquals("Particle [activated=true, name=03, unit=ug/m3]", p.toString());
     }
 }
