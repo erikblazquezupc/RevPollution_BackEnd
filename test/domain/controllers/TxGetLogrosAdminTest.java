@@ -14,7 +14,7 @@ import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.LogroDataCtrl;
 
-public class TxGetLogrosTest {
+public class TxGetLogrosAdminTest {
     Logro l;
     LogroDataCtrl ldc;
 
@@ -34,7 +34,7 @@ public class TxGetLogrosTest {
 
     @Test
     public void testTxGetLogros() {
-        TxGetLogros tx = new TxGetLogros();
+        TxGetLogrosAdmin tx = new TxGetLogrosAdmin();
         tx.execute();
         assertNotNull(tx.getResult());
         assertTrue(tx.getResult().contains(l));
