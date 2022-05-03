@@ -46,9 +46,7 @@ public class ParticleDB implements ParticleDataCtrl{
             insert.setString(1, p.getName());
             insert.setString(2, p.getUnit());
             insert.setBoolean(3, p.isActivated());
-            insert.executeUpdate();
-            ResultSet r = insert.getGeneratedKeys();
-            if (r.next()) {
+            if (insert.executeUpdate() == 1) {
                 return true;
             }
         } catch (SQLException e) {
