@@ -15,7 +15,7 @@ public class LogroDB implements LogroDataCtrl{
     static LogroDB instance;
     Connection conn;
     PreparedStatement insert;
-    //PreparedStatement update;
+    PreparedStatement update;
     PreparedStatement delete;
     PreparedStatement select;
     PreparedStatement selectAll;
@@ -33,7 +33,7 @@ public class LogroDB implements LogroDataCtrl{
             select = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ? AND activated = 1");
             selectAll = conn.prepareStatement("SELECT * FROM Logro WHERE activated = 1");
             delete = conn.prepareStatement("DELETE FROM Logro WHERE name = ? AND tier = ?");
-            //update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, cond = ? WHERE name = ? AND tier = ?");
+            update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, cond = ? WHERE name = ? AND tier = ?");
             selectAdmin = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
             selectAllAdmin = conn.prepareStatement("SELECT * FROM Logro");
             switchActivation = conn.prepareStatement("UPDATE Logro SET activated = NOT activated WHERE name = ? AND tier = ?");
@@ -124,9 +124,9 @@ public class LogroDB implements LogroDataCtrl{
     @Override
     public Logro selectAdmin(String n, Tier t) {
         try {
-            select.setString(1, n);
-            select.setString(2, t.toString());
-            ResultSet r = select.executeQuery();
+            selectAdmin.setString(1, n);
+            selectAdmin.setString(2, t.toString());
+            ResultSet r = selectAdmin.executeQuery();
             while(r.next()) {
                 String name = r.getString("name");
                 String tierString = r.getString("tier");
@@ -146,7 +146,7 @@ public class LogroDB implements LogroDataCtrl{
     public ArrayList<Logro> selectAllAdmin() {
         ArrayList<Logro> ret = new ArrayList<Logro> ();
         try {
-            ResultSet r = selectAll.executeQuery();
+            ResultSet r = selectAllAdmin.executeQuery();
             while(r.next()) {
                 String name = r.getString("name");
                 //String tier = r.getString("tier");
