@@ -320,3 +320,79 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /stationsAdmin:
+    get:
+      tags:
+      - estaciones
+      summary: Obtener todas las estaciones.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stationsAdmin/info:
+    get:
+      tags:
+      - estaciones
+      summary: Obtener la informaciñón de una estación.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stationsAdmin/switchActivation:
+    put:
+      tags:
+      - estaciones
+      summary: Activar o desactivar una estación.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
