@@ -1,7 +1,5 @@
 package api;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,7 +9,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import domain.Post;
+import org.codehaus.jettison.json.JSONArray;
+
 import domain.controllers.TxGetAllPosts;
 import domain.controllers.TxGetPosts;
 import domain.controllers.TxNewPost;
@@ -24,7 +23,7 @@ public class Posts {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/")
 	public Response getPosts(@QueryParam("firstDate") Long firstDate, @QueryParam("lastDate") Long lastDate) {
-		List<Post> result;
+		JSONArray result;
 		if (firstDate == null && lastDate == null){
 			TxGetAllPosts tx = new TxGetAllPosts();
 			tx.execute();
@@ -35,7 +34,7 @@ public class Posts {
 			tx.execute();
 			result = tx.getResult();
 		}
-		return Response.ok(result).build();
+		return Response.ok(result.toString()).build();
 	}
 
 	@POST
