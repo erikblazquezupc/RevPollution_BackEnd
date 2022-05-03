@@ -3,6 +3,7 @@ package domain.controllers;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 //import java.util.ArrayList;
 
@@ -17,14 +18,11 @@ import domain.dataCtrl.LogroDataCtrl;
 
 public class TxSwitchActivationLogroTest {
     Logro l;
-    LogroDataCtrl ldc;
+    LogroDataCtrl ldc = DataCtrl.getInstance().getLogroDataCtrl();
 
     @Before
     public void setUp(){
-        String tier = "bronce";
-        l = new Logro("logro1", Tier.valueOf(tier), "condicion");
-        DataCtrl dataCtrl = DataCtrl.getInstance();
-        ldc = dataCtrl.getLogroDataCtrl();
+        l = new Logro("logro1", Tier.valueOf("bronce"), "condicion", true);
         ldc.insert(l);
     }
     
@@ -37,16 +35,9 @@ public class TxSwitchActivationLogroTest {
     public void testTxSwitchActivation() {
         TxSwitchActivationLogro tx = new TxSwitchActivationLogro(l.getName(), l.getTier());
         tx.execute();
-
-        TxGetLogroAdmin tx1 = new TxGetLogroAdmin(l.getName(), l.getTier());
-        tx1.execute();
-        assertNotNull(tx1.getResult());
-
-        TxGetLogro tx2 = new TxGetLogro(l.getName(), l.getTier());
-        tx2.execute();
-        //check
-        assertNotNull(tx2.getResult());
-
-        assertEquals(tx1.getResult(), l);
+        Logro l2 = ldc.select(l.getName(), l.getTier());
+        l.setActivated(false);
+        assertEquals(l, l2);
+        assertFalse(l2.getActivated());
     }
 }

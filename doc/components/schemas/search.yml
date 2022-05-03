@@ -1,0 +1,8 @@
+type: object
+properties:
+  name:
+    $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/user.yml'
+  unit:
+    type: name
+  date:
+    type: date

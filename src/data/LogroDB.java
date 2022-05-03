@@ -15,7 +15,7 @@ public class LogroDB implements LogroDataCtrl{
     static LogroDB instance;
     Connection conn;
     PreparedStatement insert;
-    //PreparedStatement update;
+    PreparedStatement update;
     PreparedStatement delete;
     PreparedStatement select;
     PreparedStatement selectAll;
@@ -30,10 +30,10 @@ public class LogroDB implements LogroDataCtrl{
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             insert = conn.prepareStatement("INSERT INTO Logro(name, tier, cond) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             //selectByName = conn.prepareStatement("SELECT * FROM Logro WHERE name = ?");
-            select = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ? AND activated = 1");
+            select = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
             selectAll = conn.prepareStatement("SELECT * FROM Logro WHERE activated = 1");
             delete = conn.prepareStatement("DELETE FROM Logro WHERE name = ? AND tier = ?");
-            //update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, cond = ? WHERE name = ? AND tier = ?");
+            update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, cond = ?, activated = ? WHERE name = ? AND tier = ?");
             selectAdmin = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
             selectAllAdmin = conn.prepareStatement("SELECT * FROM Logro");
             switchActivation = conn.prepareStatement("UPDATE Logro SET activated = NOT activated WHERE name = ? AND tier = ?");
@@ -74,16 +74,19 @@ public class LogroDB implements LogroDataCtrl{
         }
     }
 
-    /*public void update(Logro l){
+    public void update(Logro l){
         try {
-            update.setString(1, l.getCondition());
-            update.setString(2, l.getName());
-            update.setString(3, l.getTier().toString());
+            update.setString(1, l.getName());
+            update.setString(2, l.getTier().toString());
+            update.setString(3, l.getCondition());
+            update.setBoolean(4, l.getActivated());
+            update.setString(5, l.getName());
+            update.setString(6, l.getTier().toString());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public Logro select(String n, Tier t){
         try {
@@ -95,7 +98,8 @@ public class LogroDB implements LogroDataCtrl{
                 String tierString = r.getString("tier");
                 Tier tier = Tier.valueOf(tierString);
                 String cond = r.getString("cond");
-                Logro l = new Logro(name, tier, cond);
+                boolean activated = r.getBoolean("activated");
+                Logro l = new Logro(name, tier, cond, activated);
                 return l;
             }
         } catch (SQLException e) {
@@ -149,8 +153,6 @@ public class LogroDB implements LogroDataCtrl{
             ResultSet r = selectAll.executeQuery();
             while(r.next()) {
                 String name = r.getString("name");
-                //String tier = r.getString("tier");
-                //Tier tier = r.getString(tier);
                 String tierString = r.getString("tier");
                 Tier tier = Tier.valueOf(tierString);
                 String cond = r.getString("cond");
@@ -165,14 +167,14 @@ public class LogroDB implements LogroDataCtrl{
         return null;
     }
     @Override
-    public void switchActivation(String name, Tier tier) {
+    public int switchActivation(String name, Tier tier) {
         try {
             switchActivation.setString(1, name);
-            switchActivation.setString(2, tier.name());
-            switchActivation.executeQuery();
+            switchActivation.setString(2, tier.toString());
+            return switchActivation.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+        return -1;
     }
 }

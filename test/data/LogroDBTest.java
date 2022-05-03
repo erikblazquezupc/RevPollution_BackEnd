@@ -1,7 +1,6 @@
 package data;
 
 import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -22,9 +21,9 @@ public class LogroDBTest {
 
     @Before
     public void setUp(){
-        l = new Logro("Testlogro1", Tier.valueOf("plata"), "testeando");
-        l2 = new Logro("Testlogro2", Tier.valueOf("plata"), "testeando");
-        l3 = new Logro("Testlogro1", Tier.valueOf("oro"), "testeando");
+        l = new Logro("Testlogro1", Tier.valueOf("plata"), "testeando", true);
+        l2 = new Logro("Testlogro2", Tier.valueOf("plata"), "testeando", true);
+        l3 = new Logro("Testlogro1", Tier.valueOf("oro"), "testeando", true);
         ldb = LogroDB.getInstance();
         ldb.insert(l);
         ldb.insert(l2);
@@ -62,17 +61,17 @@ public class LogroDBTest {
         assertTrue(ldb.selectAllAdmin().containsAll(expected));
     }
 
-    /*@Test
+    @Test
     public void testUpdate() {
         l.setCondition("Nueva condicion");
         ldb.update(l);
-        assertEquals(l, ldb.select("logro1", Tier.valueOf("plata")));
-    }*/
+        assertEquals(l, ldb.select("Testlogro1", Tier.valueOf("plata")));
+    }
 
     @Test
     public void testSwitchActivation() {
         l.setActivated(false);
         ldb.switchActivation(l.getName(), l.getTier());
-        assertEquals(l, ldb.selectAdmin(l.getName(), l.getTier())); 
+        assertEquals(l, ldb.select(l.getName(), l.getTier())); 
     }
 }
