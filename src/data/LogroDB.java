@@ -74,7 +74,7 @@ public class LogroDB implements LogroDataCtrl{
         }
     }
 
-    public void update(Logro l){
+    /*public void update(Logro l){
         try {
             update.setString(1, l.getCondition());
             update.setString(2, l.getName());
@@ -83,7 +83,7 @@ public class LogroDB implements LogroDataCtrl{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public Logro select(String n, Tier t){
         try {
