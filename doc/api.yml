@@ -413,7 +413,9 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/user.yml'
         404:
           description: 'Error: Not Found'
         401:
