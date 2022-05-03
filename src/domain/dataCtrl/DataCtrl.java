@@ -3,6 +3,9 @@ package domain.dataCtrl;
 import data.StationDB;
 import data.UserDB;
 import data.ConcentrationDB;
+import data.LogroDB;
+import data.SearchDB;
+import data.ExpoDB;
 import data.ParticleDB;
 
 public class DataCtrl{
@@ -17,15 +20,27 @@ public class DataCtrl{
         return UserDB.getInstance();
     }
 
+    public SearchDataCtrl getSearchDataCtrl(){
+        return SearchDB.getInstance();
+    }
+
     public StationDataCtrl getStationDataCtrl(){
         return StationDB.getInstance();
+    }
+
+    public ParticleDataCtrl getParticleDataCtrl(){
+        return ParticleDB.getInstance();
     }
 
     public ConcentrationDataCtrl getConcentrationDataCtrl(){
         return ConcentrationDB.getInstance();
     }
 
-    public ParticleDataCtrl getParticleDataCtrl(){
-        return ParticleDB.getInstance();
+    public LogroDataCtrl getLogroDataCtrl() {
+        return LogroDB.getInstance();
+    }
+    
+    public ExpoDataCtrl getExpoDataCtrl(){
+        return ExpoDB.getInstance();
     }
 }

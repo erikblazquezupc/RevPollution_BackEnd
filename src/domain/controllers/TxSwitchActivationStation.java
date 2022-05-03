@@ -1,24 +1,18 @@
 package domain.controllers;
 
-import domain.StationStub;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
-public class TxGetStation {
+public class TxSwitchActivationStation {
     private int id;
-    private StationStub result;
 
-    public TxGetStation(int id){
+    public TxSwitchActivationStation(int id){
         this.id = id;
     }
 
     public void execute(){
         DataCtrl dataCtrl = DataCtrl.getInstance();
         StationDataCtrl sdc = dataCtrl.getStationDataCtrl();
-        result = sdc.select(id);
-    }
-
-    public StationStub getResult(){
-        return result;
+        sdc.switchActivation(id);
     }
 }
