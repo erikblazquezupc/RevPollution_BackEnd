@@ -185,3 +185,57 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /signup:
+    post:
+      tags:
+      - users
+      summary: Obtener información de un logro.
+      parameters:
+      - name: username
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: telf
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Foto de perfil
+        required: false
+        content:
+          text/plain:
+              schema:
+                type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
