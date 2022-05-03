@@ -26,7 +26,7 @@ public class Logros {
 		TxGetLogros tx = new TxGetLogros();
 		tx.execute();
 		ArrayList<Logro> result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@GET
@@ -37,6 +37,6 @@ public class Logros {
 		TxGetLogro tx = new TxGetLogro(name, tier);
 		tx.execute();
 		Logro result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 }

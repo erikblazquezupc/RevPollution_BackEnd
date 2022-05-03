@@ -23,6 +23,6 @@ public class SignUp {
 		TxSignUp tx = new TxSignUp(username, name, password, email, telf, image);
 		tx.execute();
 		boolean result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 }

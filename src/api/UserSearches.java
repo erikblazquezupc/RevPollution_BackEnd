@@ -2,6 +2,7 @@ package api;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
@@ -30,7 +31,7 @@ public class UserSearches {
 		TxRecentSearches tx = new TxRecentSearches(token);
 		tx.execute();
 		ArrayList<Search> result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@POST
@@ -43,7 +44,7 @@ public class UserSearches {
 		TxAddSearch tx = new TxAddSearch(token, name, date);
 		tx.execute();
 		boolean result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@DELETE
@@ -54,6 +55,12 @@ public class UserSearches {
 		@QueryParam("name") String name) {
 		TxDeleteSearch tx = new TxDeleteSearch(token, name);
 		tx.execute();
-		return Response.ok().build();
+		return Response.ok(true).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@OPTIONS
+	@Path("/deleteSearch")
+	public Response options(){
+		return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").header("Access-Control-Allow-Methods", "OPTIONS,GET,PUT,DELETE,POST").build();
 	}
 }

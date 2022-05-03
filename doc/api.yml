@@ -1,0 +1,516 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Exercise 5.4
+  description: "Versió OpenAPI del la solució publicada a <https://atenea.upc.edu/mod/resource/view.php?id=2158292>. Suposem que totes les crides necessiten autentificació via una api_key que indentifica un usuari determinat. Només es poc accedir als missatges de l'usuari autentificat."
+servers:
+  - url: 'http://localhost:8080/RevPollution/services'
+
+paths:
+  /login/login:
+    get:
+      tags:
+      - users
+      summary: Iniciar sesión.
+      parameters:
+      - name: username
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /concentrations:
+    get:
+      tags:
+      - missatges
+      summary: Obtenir Missatges Usuari
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './components/schemas/concentration.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /dailyExpo:
+    get:
+      tags:
+      - exposicion
+      summary: Obtener la exposición diaria.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/expo.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /dailyExpo/addExpo:
+    post:
+      tags:
+      - exposicion
+      summary: Añadir la exposición en una ubicación.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: lat
+        in: query
+        required: true
+        schema:
+          type: number
+      - name: lon
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logros:
+    get:
+      tags:
+      - logros
+      summary: Obtener la lista de logros completa.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logros/info:
+    get:
+      tags:
+      - logros
+      summary: Obtener información de un logro.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /signup:
+    post:
+      tags:
+      - users
+      summary: Obtener información de un logro.
+      parameters:
+      - name: username
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: telf
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Foto de perfil
+        required: false
+        content:
+          text/plain:
+              schema:
+                type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations:
+    get:
+      tags:
+      - estaciones
+      summary: Obtener todas las estaciones.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/info:
+    get:
+      tags:
+      - estaciones
+      summary: Obtener la informaciñón de una estación.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/quality:
+    get:
+      tags:
+      - estaciones
+      summary: Devuelve la calidad del aire en un punto.
+      parameters:
+      - name: lat
+        in: query
+        required: true
+        schema:
+          type: number
+      - name: lon
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stationsAdmin:
+    get:
+      tags:
+      - estaciones
+      summary: Obtener todas las estaciones.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stationsAdmin/info:
+    get:
+      tags:
+      - estaciones
+      summary: Obtener la informaciñón de una estación.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stationsAdmin/switchActivation:
+    put:
+      tags:
+      - estaciones
+      summary: Activar o desactivar una estación.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /userinfo:
+    get:
+      tags:
+      - users
+      summary: Obtener la informaciñón de una estación.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/user.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /userSearches/recentSearches:
+    get:
+      tags:
+      - searches
+      summary: Obtener las busquedas mas recientes.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/search.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /userSearches/addSearch:
+    post:
+      tags:
+      - searches
+      summary: Añadir una busqueda.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /userSearches/deleteSearch:
+    delete:
+      tags:
+      - searches
+      summary: Borrar una busqueda.
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []

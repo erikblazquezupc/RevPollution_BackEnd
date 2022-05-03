@@ -2,6 +2,7 @@ package api;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -19,17 +20,13 @@ import domain.dataCtrl.LogroDataCtrl;
 public class LogrosAdminTest {
         
     Logro l;
-    //Tier tier;
-    LogroDataCtrl ldc;
-    //Logros ls;
+    LogroDataCtrl ldc = DataCtrl.getInstance().getLogroDataCtrl();
     LogrosAdmin ls;
 
     @Before
     public void setUp(){
         ls = new LogrosAdmin();
         l = new Logro("test", Tier.valueOf("plata"), "más de 100 tests"/*, false*/);
-        DataCtrl dataCtrl = DataCtrl.getInstance();
-        ldc = dataCtrl.getLogroDataCtrl();
         ldc.insert(l);
     }
     
@@ -43,8 +40,15 @@ public class LogrosAdminTest {
         Response r = ls.getLogrosAdmin();
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
-        //assertTrue(r.getEntity().toString().contains(l.toStringActivated()));
         assertTrue(r.getEntity().toString().contains(l.toString()));
+        
+        l.setActivated(false);
+        ldc.update(l);
+        l.setActivated(true);
+        r = ls.getLogrosAdmin();
+        assertEquals(200, r.getStatus());
+        assertNotNull(r.getEntity());
+        assertFalse(r.getEntity().toString().contains(l.toString()));
     }
 
     @Test
@@ -52,22 +56,24 @@ public class LogrosAdminTest {
         Response r = ls.getLogroAdmin(l.getName(), l.getTier());
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
-        //assertTrue(r.getEntity().toString().contains(l.toStringActivated()));
         assertTrue(r.getEntity().toString().contains(l.toString()));
-        //assertTrue(r.getEntity().toString().contains(l.getName()));
+        
+        l.setActivated(false);
+        ldc.update(l);
+        l.setActivated(true);
+        r = ls.getLogroAdmin(l.getName(), l.getTier());
+        assertEquals(200, r.getStatus());
+        assertNotNull(r.getEntity());
+        assertFalse(r.getEntity().toString().contains(l.toString()));
     }
 
     @Test
     public void testSwitchActivation() {
-        Response r1 = ls.switchActivation(l.getName(), l.getTier());
-        Response r2 = ls.getLogroAdmin(l.getName(), l.getTier());
-        assertEquals(200, r1.getStatus());
-        assertEquals(200, r2.getStatus());
-        assertNotNull(r2.getEntity());
-        //assertTrue(r2.getEntity().toString().contains(l.toStringActivated()));
-        assertTrue(r2.getEntity().toString().contains(l.toString()));
-
+        Response r = ls.switchActivation(l.getName(), l.getTier());
+        l.setActivated(false);
+        assertEquals(l, ldc.select(l.getName(), l.getTier()));
+        assertEquals(200, r.getStatus());
+        assertNotNull(r.getEntity());
+        assertTrue(r.getEntity().toString().contains("true"));
     }
-
-
 }

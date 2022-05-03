@@ -22,6 +22,6 @@ public class UserInfo {
 		TxUserInfo tx = new TxUserInfo(token);
 		tx.execute();
 		User user = tx.getResult();
-		return Response.ok(user).build();
+		return Response.ok(user).header("Access-Control-Allow-Origin", "*").build();
 	}
 }

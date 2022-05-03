@@ -1,0 +1,142 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+      "title":"RevPollution API",
+      "version":"1.0"
+    },
+    "servers": [
+      {"url":"http://10.4.41.56/RevPollution/services"}
+    ],
+    "paths": {
+        "/login/login": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "username",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "password",
+                        "type": "string",
+                        "required": true,
+                        "format": "password"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/signup": {
+            "post": {
+                "description": "Create new user",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "telf",
+                        "in": "formData",
+                        "type": "number"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/stations": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/stations/info": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "idStation",
+                        "type": "integer",
+                        "required": "true",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/concentrations": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/userinfo": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+  }

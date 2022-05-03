@@ -1,6 +1,7 @@
 package domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class LogroTest {
     @Before
     public void setUp(){
         tier = "oro";
-        l = new Logro("logro1", Tier.valueOf(tier), "testeando");
+        l = new Logro("logro1", Tier.valueOf(tier), "testeando", true);
     }
 
     @Test
@@ -34,7 +35,7 @@ public class LogroTest {
 
     @Test
     public void testGetActivated() {
-        assertEquals(false, l.getActivated());
+        assertTrue(l.getActivated());
     }
 
     @Test
@@ -69,6 +70,6 @@ public class LogroTest {
 
     @Test
     public void testToString() {
-        assertEquals("Logro [name=logro1, tier=oro, cond=testeando]", l.toString());
+        assertEquals("Logro [activated=true, cond=testeando, name=logro1, tier=oro]", l.toString());
     }
 }
