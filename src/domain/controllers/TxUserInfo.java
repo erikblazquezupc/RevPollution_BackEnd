@@ -17,7 +17,7 @@ public class TxUserInfo {
     public void execute(){
         DataCtrl dataCtrl = DataCtrl.getInstance();
         UserDataCtrl userCtrl = dataCtrl.getUserDataCtrl();
-        User result = userCtrl.selectByToken(token);
+        result = userCtrl.selectByToken(token);
     }
 
     public User getResult(){
