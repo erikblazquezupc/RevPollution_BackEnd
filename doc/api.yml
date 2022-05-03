@@ -239,3 +239,84 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /stations:
+    get:
+      tags:
+      - estaciones
+      summary: Obtener todas las estaciones.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/info:
+    get:
+      tags:
+      - estaciones
+      summary: Obtener la informaciñón de una estación.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/quality:
+    get:
+      tags:
+      - estaciones
+      summary: Devuelve la calidad del aire en un punto.
+      parameters:
+      - name: lat
+        in: query
+        required: true
+        schema:
+          type: number
+      - name: lon
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []

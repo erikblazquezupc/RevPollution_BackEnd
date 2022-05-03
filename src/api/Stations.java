@@ -26,7 +26,7 @@ public class Stations {
 		TxGetStations tx = new TxGetStations();
 		tx.execute();
 		ArrayList<StationStub> result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@GET
@@ -37,7 +37,7 @@ public class Stations {
 		TxGetStation tx = new TxGetStation(id);
 		tx.execute();
 		StationStub result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@GET
@@ -48,6 +48,6 @@ public class Stations {
 		TxGetQuality tx = new TxGetQuality(lat, lon);
 		tx.execute();
 		String result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 }
