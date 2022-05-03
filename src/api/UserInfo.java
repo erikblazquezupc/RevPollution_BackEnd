@@ -21,7 +21,7 @@ public class UserInfo {
 	public Response userinfo(@QueryParam("token") String token) { //token solo o token + username?
 		TxUserInfo tx = new TxUserInfo(token);
 		tx.execute();
-		User username = tx.getResult();
-		return Response.ok(username).build();
+		User user = tx.getResult();
+		return Response.ok(user).build();
 	}
 }
