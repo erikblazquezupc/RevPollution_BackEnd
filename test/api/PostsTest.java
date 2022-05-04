@@ -16,7 +16,6 @@ import data.PostDB;
 import data.UserDB;
 import domain.Post;
 import domain.User;
-import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.PostDataCtrl;
 import domain.dataCtrl.UserDataCtrl;
 
