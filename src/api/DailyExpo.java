@@ -26,7 +26,7 @@ public class DailyExpo {
 		TxGetDailyExpo tx = new TxGetDailyExpo(token);
 		tx.execute();
 		ArrayList<Expo> result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
  
     @POST
@@ -38,6 +38,6 @@ public class DailyExpo {
 		TxAddDailyExpo tx = new TxAddDailyExpo(token, lat, lon);
 		tx.execute();
 		boolean result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 }

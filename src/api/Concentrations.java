@@ -14,7 +14,7 @@ import domain.Concentration;
 import domain.controllers.TxGetConcentrationsFromStation;
 
 @Path("/concentrations")
-public class ConcentrationsFromStation {
+public class Concentrations {
 	
 	@GET
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -24,6 +24,6 @@ public class ConcentrationsFromStation {
 		TxGetConcentrationsFromStation tx = new TxGetConcentrationsFromStation(idStation);
 		tx.execute();
 		ArrayList<Concentration> result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 }

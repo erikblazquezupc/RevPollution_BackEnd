@@ -20,7 +20,7 @@ public class ExpoDB implements ExpoDataCtrl {
     PreparedStatement selectRecent;
     PreparedStatement insert;
     PreparedStatement delete;
-    PreparedStatement select;
+    PreparedStatement selectAll;
 
     private ExpoDB(){
         try {
@@ -29,7 +29,7 @@ public class ExpoDB implements ExpoDataCtrl {
             selectRecent = conn.prepareStatement("SELECT * FROM DailyExposition WHERE idUser = ? LIMIT 30");
             insert = conn.prepareStatement("CALL InsertLocation(?, ?, ?)");
             delete = conn.prepareStatement("DELETE FROM Location WHERE idUser = ?");
-            select = conn.prepareStatement("SELECT * FROM Location WHERE idUser = ?");
+            selectAll = conn.prepareStatement("SELECT * FROM Location WHERE idUser = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -49,18 +49,13 @@ public class ExpoDB implements ExpoDataCtrl {
             ResultSet r = selectRecent.executeQuery();
             while (r.next()) {
                 int idUser = r.getInt("idUser");
-
                 Date dat = r.getDate("dat");
                 LocalDate localDate = dat.toLocalDate();
-
                 int day = localDate.getDayOfMonth();
                 int month = localDate.getMonthValue();
                 int year = localDate.getYear();
-
                 double value = r.getDouble("value");
-
                 User u = UserDB.getInstance().select(idUser);
-
                 Expo e = new Expo(u, day, month, year, value);
                 ret.add(e);
             }
@@ -70,6 +65,30 @@ public class ExpoDB implements ExpoDataCtrl {
         return ret;
     }
 
+    public ArrayList<Expo> selectAll(int idUser){
+        ArrayList<Expo> expos = new ArrayList<Expo>();
+        try {
+            selectAll.setInt(1, idUser);
+            ResultSet r = selectAll.executeQuery();
+            if (r.next()) {
+                int id = r.getInt("idUser");
+                LocalDate date = r.getDate("instant").toLocalDate();
+                int day = date.getDayOfMonth();
+                int month = date.getMonthValue();
+                int year = date.getYear();
+                double value = r.getDouble("value");
+                UserDB udb = UserDB.getInstance();
+                User user = udb.select(id);
+                Expo e = new Expo(user, day, month, year, value);
+                expos.add(e);
+            }
+            return expos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return expos;
+    }
+    
     public boolean insert(int idUser, double value){
         try {
             insert.setInt(1, idUser);
@@ -92,16 +111,4 @@ public class ExpoDB implements ExpoDataCtrl {
             e.printStackTrace();
         }
     }
-
-    public boolean select(int idUser){
-        try {
-            select.setInt(1, idUser);
-            ResultSet r = select.executeQuery();
-            if (r.next()) return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    
 }

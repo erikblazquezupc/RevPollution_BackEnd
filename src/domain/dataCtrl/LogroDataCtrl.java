@@ -11,5 +11,8 @@ public interface LogroDataCtrl {
     public void update(Logro l);
     public Logro select(String name, Tier tier);
     public ArrayList<Logro> selectAll();
-    public ArrayList<Logro> selectByName(String name);
+    //public Logro selectByName(String name);
+    public Logro selectAdmin(String name, Tier tier);
+    public ArrayList<Logro> selectAllAdmin();
+    public int switchActivation(String name, Tier tier);
 }

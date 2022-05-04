@@ -1,0 +1,20 @@
+schemas:
+  expo:
+    type: object
+    properties:
+      user:
+        type: integer
+      day:
+        type: integer
+        minimun: 1
+        maximun: 31
+      month:
+        type: integer
+        minumun: 1
+        maximun: 12
+      year:
+        type: integer
+        minumun: 1
+      value:
+        type: double
+        minimun: 0

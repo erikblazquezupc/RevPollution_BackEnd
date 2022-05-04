@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -27,7 +28,7 @@ public class StationsAdmin {
 		TxGetStationsAdmin tx = new TxGetStationsAdmin();
 		tx.execute();
 		ArrayList<StationStub> result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@GET
@@ -38,7 +39,7 @@ public class StationsAdmin {
 		TxGetStationAdmin tx = new TxGetStationAdmin(id);
 		tx.execute();
 		StationStub result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@PUT
@@ -48,7 +49,13 @@ public class StationsAdmin {
 	public Response switchActivation(@QueryParam("idStation") int id) {
 		TxSwitchActivationStation tx = new TxSwitchActivationStation(id);
 		tx.execute();
-		return Response.ok().build();
+		return Response.ok(true).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@OPTIONS
+	@Path("/switchActivation")
+	public Response options(){
+		return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").header("Access-Control-Allow-Methods", "OPTIONS,GET,PUT,DELETE,POST").build();
 	}
 }
 

@@ -19,18 +19,24 @@ public class LogroDB implements LogroDataCtrl{
     PreparedStatement delete;
     PreparedStatement select;
     PreparedStatement selectAll;
-    PreparedStatement selectByName;
+    //PreparedStatement selectByName;
+    PreparedStatement selectAdmin;
+    PreparedStatement selectAllAdmin;
+    PreparedStatement switchActivation;
 
     private LogroDB(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
-            insert = conn.prepareStatement("INSERT INTO Logro(name, tier, cond) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-            selectByName = conn.prepareStatement("SELECT * FROM Logro WHERE name = ?");
+            insert = conn.prepareStatement("INSERT INTO Logro(name, tier, cond, activated) VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            //selectByName = conn.prepareStatement("SELECT * FROM Logro WHERE name = ?");
             select = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
-            selectAll = conn.prepareStatement("SELECT * FROM Logro");
+            selectAll = conn.prepareStatement("SELECT * FROM Logro WHERE activated = 1");
             delete = conn.prepareStatement("DELETE FROM Logro WHERE name = ? AND tier = ?");
-            update = conn.prepareStatement("UPDATE Logro SET cond = ? WHERE name = ? AND tier = ?");
+            update = conn.prepareStatement("UPDATE Logro SET name = ?, tier = ?, cond = ?, activated = ? WHERE name = ? AND tier = ?");
+            selectAdmin = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
+            selectAllAdmin = conn.prepareStatement("SELECT * FROM Logro");
+            switchActivation = conn.prepareStatement("UPDATE Logro SET activated = NOT activated WHERE name = ? AND tier = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -48,6 +54,7 @@ public class LogroDB implements LogroDataCtrl{
             insert.setString(1, l.getName());
             insert.setString(2, l.getTier().toString());
             insert.setString(3, l.getCondition());
+            insert.setBoolean(4, l.getActivated());
             insert.executeUpdate();
             ResultSet r = insert.getGeneratedKeys();
             if (r.next())
@@ -70,9 +77,12 @@ public class LogroDB implements LogroDataCtrl{
 
     public void update(Logro l){
         try {
-            update.setString(1, l.getCondition());
-            update.setString(2, l.getName());
-            update.setString(3, l.getTier().toString());
+            update.setString(1, l.getName());
+            update.setString(2, l.getTier().toString());
+            update.setString(3, l.getCondition());
+            update.setBoolean(4, l.getActivated());
+            update.setString(5, l.getName());
+            update.setString(6, l.getTier().toString());
             update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,7 +99,8 @@ public class LogroDB implements LogroDataCtrl{
                 String tierString = r.getString("tier");
                 Tier tier = Tier.valueOf(tierString);
                 String cond = r.getString("cond");
-                Logro l = new Logro(name, tier, cond);
+                boolean activated = r.getBoolean("activated");
+                Logro l = new Logro(name, tier, cond, activated);
                 return l;
             }
         } catch (SQLException e) {
@@ -115,18 +126,39 @@ public class LogroDB implements LogroDataCtrl{
         }
         return null;
     }
-    
     @Override
-    public ArrayList<Logro> selectByName(String name) {
+    public Logro selectAdmin(String n, Tier t) {
+        try {
+            selectAdmin.setString(1, n);
+            selectAdmin.setString(2, t.toString());
+            ResultSet r = selectAdmin.executeQuery();
+            while(r.next()) {
+                String name = r.getString("name");
+                String tierString = r.getString("tier");
+                Tier tier = Tier.valueOf(tierString);
+                String cond = r.getString("cond");
+                Boolean activated = r.getBoolean("activated");
+                Logro l = new Logro(name, tier, cond, activated);
+                return l;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Logro> selectAllAdmin() {
         ArrayList<Logro> ret = new ArrayList<Logro> ();
         try {
-            selectByName.setString(1, name);
-            ResultSet r = selectByName.executeQuery();
+            ResultSet r = selectAllAdmin.executeQuery();
             while(r.next()) {
-                String names = r.getString("name");
-                Tier tier = Tier.valueOf(r.getString("tier"));
+                String name = r.getString("name");
+                String tierString = r.getString("tier");
+                Tier tier = Tier.valueOf(tierString);
                 String cond = r.getString("cond");
-                Logro l = new Logro(names, tier, cond);
+                Boolean activated = r.getBoolean("activated");
+                Logro l = new Logro(name, tier, cond, activated);
                 ret.add(l);
             }
             return ret;
@@ -134,5 +166,16 @@ public class LogroDB implements LogroDataCtrl{
             e.printStackTrace();
         }
         return null;
+    }
+    @Override
+    public int switchActivation(String name, Tier tier) {
+        try {
+            switchActivation.setString(1, name);
+            switchActivation.setString(2, tier.toString());
+            return switchActivation.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
