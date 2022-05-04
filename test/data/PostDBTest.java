@@ -32,7 +32,7 @@ public class PostDBTest {
         udb.insert(u);
         assertNotNull(u.getId());
 
-        p = new Post(u, "testGeneral", 100);
+        p = new Post(u, "testDB", 100);
         pdb = PostDB.getInstance();
         assertTrue(pdb.insert(p));
     }
