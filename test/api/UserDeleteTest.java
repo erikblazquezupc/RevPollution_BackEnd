@@ -1,15 +1,9 @@
 package api;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AbstractDocument.Content;
 import javax.ws.rs.core.Response;
-
-import com.mysql.fabric.xmlrpc.base.Data;
 
 import org.junit.After;
 import org.junit.Before;

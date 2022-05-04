@@ -8,6 +8,7 @@ import data.LogroDB;
 import data.SearchDB;
 import data.ExpoDB;
 import data.ParticleDB;
+import data.PostDB;
 
 public class DataCtrl{
     static DataCtrl instance;
@@ -45,6 +46,10 @@ public class DataCtrl{
         return ExpoDB.getInstance();
     }
 
+    public PostDataCtrl getPostDataCtrl(){
+        return PostDB.getInstance();
+    }
+    
     public UserLogroDataCtrl getUserLogroDataCtrl(){
         return UserLogroDB.getInstance();
     }

@@ -83,7 +83,7 @@ public class UserLogroDB implements UserLogroDataCtrl {
         ArrayList<UserLogro> ret = new ArrayList<UserLogro>();
         try {
             ResultSet r = selectAll.executeQuery();
-            if (r.next()) {
+            while (r.next()) {
                 int idUser = r.getInt("idUser");
                 String name = r.getString("nameLogro");
                 Tier tier = Tier.valueOf(r.getString("tier"));

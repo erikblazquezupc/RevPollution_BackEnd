@@ -1,0 +1,10 @@
+type: object
+properties:
+  username:
+    type: string
+  profilepic:
+    type: string
+  text:
+    type: string
+  timestamp:
+    type: number
