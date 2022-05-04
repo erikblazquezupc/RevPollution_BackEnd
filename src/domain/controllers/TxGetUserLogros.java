@@ -11,18 +11,18 @@ import domain.dataCtrl.UserDataCtrl;
 import domain.dataCtrl.UserLogroDataCtrl;
 
 public class TxGetUserLogros {
-    private String token;
+    private String username;
     private ArrayList<UserLogro> result;
 
-    public TxGetUserLogros(String token){
-        this.token = token;
+    public TxGetUserLogros(String username){
+        this.username = username;
     }
 
     public void execute(){
         DataCtrl dataCtrl = DataCtrl.getInstance();
         UserLogroDataCtrl uldc = dataCtrl.getUserLogroDataCtrl();
         UserDataCtrl udc = dataCtrl.getUserDataCtrl();
-        User u = udc.selectByToken(token);
+        User u = udc.selectByUsername(username);
         result = uldc.selectByUser(u.getId());
     }
 
