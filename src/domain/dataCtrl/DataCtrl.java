@@ -2,6 +2,7 @@ package domain.dataCtrl;
 
 import data.StationDB;
 import data.UserDB;
+import data.UserLogroDB;
 import data.ConcentrationDB;
 import data.LogroDB;
 import data.SearchDB;
@@ -42,5 +43,9 @@ public class DataCtrl{
     
     public ExpoDataCtrl getExpoDataCtrl(){
         return ExpoDB.getInstance();
+    }
+
+    public UserLogroDataCtrl getUserLogroDataCtrl(){
+        return UserLogroDB.getInstance();
     }
 }

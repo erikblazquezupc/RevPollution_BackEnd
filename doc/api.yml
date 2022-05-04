@@ -697,7 +697,7 @@ paths:
         required: true
         schema:
           type: string
-      - name: condition
+      - name: cond
         in: query
         required: true
         schema:

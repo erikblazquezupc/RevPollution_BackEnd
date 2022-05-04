@@ -8,11 +8,12 @@ import domain.Logro;
 import domain.User;
 import domain.UserLogro;
 import domain.Logro.Tier;
+import domain.dataCtrl.UserLogroDataCtrl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class UserLogroDB {
+public class UserLogroDB implements UserLogroDataCtrl {
     private static UserLogroDB instance;
     Connection conn;
     PreparedStatement select;
