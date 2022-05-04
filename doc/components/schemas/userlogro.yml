@@ -1,7 +1,0 @@
-userlogro:
-  type: object
-  properties:
-    user:
-      $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/user.yml'
-    logro:
-      $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'

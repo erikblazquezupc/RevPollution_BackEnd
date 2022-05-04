@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,7 +29,7 @@ public class Particles {
         TxGetParticles tx = new TxGetParticles();
         tx.execute();
         ArrayList<Particle> result = tx.getResult();
-        return Response.ok(result).build();
+        return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@PUT
@@ -39,7 +40,7 @@ public class Particles {
         TxActivateParticle tx = new TxActivateParticle(particleName);
         tx.execute();
         boolean result = tx.getResult();
-        return Response.ok(result).build();
+        return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@PUT
@@ -50,6 +51,24 @@ public class Particles {
         TxDeactivateParticle tx = new TxDeactivateParticle(particleName);
         tx.execute();
         boolean result = tx.getResult();
-        return Response.ok(result).build();
+        return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@OPTIONS
+	@Path("/")
+	public Response options(){
+		return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").header("Access-Control-Allow-Methods", "OPTIONS,GET,PUT,DELETE,POST").build();
+	}
+
+	@OPTIONS
+	@Path("/{particleName}/activate")
+	public Response options2(){
+		return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").header("Access-Control-Allow-Methods", "OPTIONS,GET,PUT,DELETE,POST").build();
+	}
+
+	@OPTIONS
+	@Path("/{particleName}/deactivate")
+	public Response options3(){
+		return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Headers", "*").header("Access-Control-Allow-Methods", "OPTIONS,GET,PUT,DELETE,POST").build();
 	}
 }
