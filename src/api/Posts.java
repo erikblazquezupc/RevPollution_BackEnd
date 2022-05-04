@@ -34,7 +34,7 @@ public class Posts {
 			tx.execute();
 			result = tx.getResult();
 		}
-		return Response.ok(result.toString()).build();
+		return Response.ok(result.toString()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@POST
@@ -45,6 +45,6 @@ public class Posts {
 		TxNewPost tx = new TxNewPost(text, userToken);
 		tx.execute();
 		Long result = tx.getResult();
-		return Response.ok(result).build();
+		return Response.ok(result).header("Access-Control-Allow-Origin", "*").build();
 	}
 }
