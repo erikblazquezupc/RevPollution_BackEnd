@@ -16,10 +16,12 @@ public class PostDB implements PostDataCtrl{
     private static PostDB instance;
     Connection conn;
     PreparedStatement insert;
+    PreparedStatement select;
     PreparedStatement selectAll;
     PreparedStatement selectByDateBigger;
     PreparedStatement selectByDateSmaller;
     PreparedStatement selectByDateBoth;
+    PreparedStatement delete;
 
     private PostDB(){
         try {
@@ -27,9 +29,11 @@ public class PostDB implements PostDataCtrl{
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             insert = conn.prepareStatement("INSERT INTO Post(text, idCreator, postedOn) VALUES (?, ?, ?)");
             selectAll = conn.prepareStatement("SELECT * FROM Post");
-            selectByDateBigger = conn.prepareStatement("SELECT * FROM Post WHERE postedOn > ?");
-            selectByDateSmaller = conn.prepareStatement("SELECT * FROM Post WHERE postedOn < ?");
-            selectByDateBoth = conn.prepareStatement("SELECT * FROM Post WHERE postedOn > ? AND postedOn < ?");
+            select = conn.prepareStatement("SELECT * FROM Post WHERE idCreator = ? AND postedOn = ?");
+            selectByDateBigger = conn.prepareStatement("SELECT * FROM Post WHERE postedOn >= ?");
+            selectByDateSmaller = conn.prepareStatement("SELECT * FROM Post WHERE postedOn <= ?");
+            selectByDateBoth = conn.prepareStatement("SELECT * FROM Post WHERE postedOn >= ? AND postedOn <= ?");
+            delete = conn.prepareStatement("DELETE FROM Post WHERE idCreator = ? AND postedOn = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -53,6 +57,29 @@ public class PostDB implements PostDataCtrl{
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Post select(Integer idCreator, Long postedOn) {
+        Post ret = null;
+        try {
+            select.setInt(1, idCreator);
+            select.setLong(2, postedOn);
+            ResultSet r = select.executeQuery();
+            while(r.next()) {
+
+                int newIdCreator = r.getInt("idCreator");
+                String newText = r.getString("text");
+                long newPostedOn = r.getLong("postedOn");
+                
+                User user = UserDB.getInstance().select(newIdCreator);
+
+                Post s = new Post(user, newText, newPostedOn);
+                ret = s;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
     public List<Post> selectAll(){
@@ -143,5 +170,17 @@ public class PostDB implements PostDataCtrl{
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Integer delete(Integer idCreator, Long postedOn) {
+        try {
+            delete.setInt(1, idCreator);
+            delete.setLong(2, postedOn);
+            Integer result = delete.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
