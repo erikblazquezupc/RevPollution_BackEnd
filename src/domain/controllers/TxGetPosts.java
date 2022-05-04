@@ -1,10 +1,8 @@
 package domain.controllers;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 import domain.Post;
 import domain.dataCtrl.DataCtrl;
@@ -25,25 +23,14 @@ public class TxGetPosts {
         DataCtrl dataCtrl = DataCtrl.getInstance();
         PostDataCtrl pdc = dataCtrl.getPostDataCtrl();
 
-        List<Post> tmp;
+        ArrayList<Post> tmp;
         if (firstDate == null && lastDate == null) tmp = null;
         else if (lastDate == null) tmp = pdc.selectByDateBigger(firstDate);
         else if (firstDate == null) tmp = pdc.selectByDateSmaller(lastDate);
         else tmp = pdc.selectByDateBoth(firstDate, lastDate);
 
         result = new JSONArray();
-        for (int i = 0; i < tmp.size(); ++i){
-            try {
-                JSONObject item = new JSONObject();
-                item.put("username", tmp.get(i).getCreator().getUsername());
-                item.put("profilepic", tmp.get(i).getCreator().getImg());
-                item.put("text", tmp.get(i).getText());
-                item.put("timestamp", tmp.get(i).getPostedOn());
-                result.put(item);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        for (int i = 0; i < tmp.size(); ++i) result.put(tmp.get(i).toJSON());
     }
 
     public JSONArray getResult(){

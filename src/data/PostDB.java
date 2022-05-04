@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import domain.Post;
 import domain.User;
@@ -82,7 +81,7 @@ public class PostDB implements PostDataCtrl{
         return ret;
     }
 
-    public List<Post> selectAll(){
+    public ArrayList<Post> selectAll(){
         ArrayList<Post> ret = new ArrayList<Post> ();
         try {
             ResultSet r = selectAll.executeQuery();
@@ -103,7 +102,7 @@ public class PostDB implements PostDataCtrl{
         return null;
     }
 
-    public List<Post> selectByDateBigger(Long firstDate) {
+    public ArrayList<Post> selectByDateBigger(Long firstDate) {
         ArrayList<Post> ret = new ArrayList<Post> ();
         try {
             selectByDateBigger.setLong(1, firstDate);
@@ -126,7 +125,7 @@ public class PostDB implements PostDataCtrl{
         return null;
     }
 
-    public List<Post> selectByDateSmaller(Long lastDate) {
+    public ArrayList<Post> selectByDateSmaller(Long lastDate) {
         ArrayList<Post> ret = new ArrayList<Post> ();
         try {
             selectByDateSmaller.setLong(1, lastDate);
@@ -149,7 +148,7 @@ public class PostDB implements PostDataCtrl{
         return null;
     }
 
-    public List<Post> selectByDateBoth(Long firstDate, Long lastDate) {
+    public ArrayList<Post> selectByDateBoth(Long firstDate, Long lastDate) {
         ArrayList<Post> ret = new ArrayList<Post> ();
         try {
             selectByDateBoth.setLong(1, firstDate);

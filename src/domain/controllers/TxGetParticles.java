@@ -7,7 +7,6 @@ import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.ParticleDataCtrl;
 
 public class TxGetParticles {
-    private int id;
     private ArrayList<Particle> result;
 
     public TxGetParticles(){

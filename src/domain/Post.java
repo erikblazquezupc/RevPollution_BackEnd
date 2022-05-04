@@ -1,5 +1,8 @@
 package domain;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
 public class Post {
     User creator;
     String text;
@@ -67,6 +70,18 @@ public class Post {
             return false;
         return true;
     }
-    
-    
+
+    public JSONObject toJSON(){
+        try {
+            JSONObject item = new JSONObject();
+            item.put("username", creator.getUsername());
+            item.put("profilepic", creator.getImg());
+            item.put("text", text);
+            item.put("timestamp", postedOn);
+            return item;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

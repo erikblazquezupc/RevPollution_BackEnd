@@ -7,15 +7,17 @@ import org.junit.Test;
 
 public class PostTest {
     Post p;
+    User u;
 
     @Before
     public void setUp(){
-        p = new Post(new User(1, "testPost", "testPost", "testPost@prueba", "testPost", "testPost", "testPost"), "test", 1);
+        u = new User(1, "testPost", "testPost", "testPost@prueba", "testPost", "testPost", "testPost");
+        p = new Post(u, "test", 1);
     }
 
     @Test
     public void testGetCreator() {
-        assertEquals(new User(1, "testPost", "testPost", "testPost@prueba", "testPost", "testPost", "testPost"), p.getCreator());
+        assertEquals(u, p.getCreator());
     }
 
     @Test
@@ -30,6 +32,12 @@ public class PostTest {
 
     @Test
     public void testToString() {
-        assertEquals("Post [creator=" + new User(1, "testPost", "testPost", "testPost@prueba", "testPost", "testPost", "testPost").toString() + ", postedOn=" + "1" + ", text=" + "test" + "]", p.toString());
+        assertEquals("Post [creator=" + u + ", postedOn=" + "1" + ", text=" + "test" + "]", p.toString());
+    }
+
+    @Test
+    public void testToJSON(){
+        String expected = "{\"username\":\"testPost\",\"profilepic\":\"testPost\",\"text\":\"test\",\"timestamp\":1}";
+        assertEquals(expected, p.toJSON().toString());
     }
 }

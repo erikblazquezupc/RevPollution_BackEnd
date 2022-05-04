@@ -10,32 +10,27 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.PostDB;
-import data.UserDB;
 import domain.Post;
 import domain.User;
+import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.PostDataCtrl;
 import domain.dataCtrl.UserDataCtrl;
 
 public class TxGetPostsTest {
     Post p;
-    PostDataCtrl pdb;
-
     User u;
-    UserDataCtrl udb;
-
-    String expectedJSON = "{\"username\":\"testTxGetPosts\",\"profilepic\":\"testTxGetPosts\",\"text\":\"testTxGetPosts\",\"timestamp\":100}";
     
+    PostDataCtrl pdb = DataCtrl.getInstance().getPostDataCtrl();
+    UserDataCtrl udb = DataCtrl.getInstance().getUserDataCtrl();
+
     @Before
     public void setUp() {
         u = new User("testTxGetPosts", "testTxGetPosts", "testTxGetPosts@test", "testTxGetPosts", "1234", "testTxGetPosts");
         u.setToken("testTxGetPosts");
-        udb = UserDB.getInstance();
         udb.insert(u);
         assertNotNull(u.getId());
 
         p = new Post(u, "testTxGetPosts", 100);
-        pdb = PostDB.getInstance();
         assertTrue(pdb.insert(p));
     }
 
@@ -55,55 +50,55 @@ public class TxGetPostsTest {
         TxGetPosts tx = new TxGetPosts((long) 1, null);
         tx.execute();
         JSONArray result = tx.getResult();
-        assertTrue("p is contained in the result", result.toString().contains(expectedJSON));
+        assertTrue(result.toString().contains(p.toJSON().toString()));
 
         tx = new TxGetPosts((long) 100, null);
         tx.execute();
         result = tx.getResult();
-        assertTrue("p is contained in the result", result.toString().contains(expectedJSON));
+        assertTrue(result.toString().contains(p.toJSON().toString()));
 
         tx = new TxGetPosts((long) 200, null);
         tx.execute();
         result = tx.getResult();
-        assertFalse("p is contained in the result", result.toString().contains(expectedJSON));
+        assertFalse(result.toString().contains(p.toJSON().toString()));
 
 
         tx = new TxGetPosts(null , (long) 200);
         tx.execute();
         result = tx.getResult();
-        assertTrue("p is contained in the result", result.toString().contains(expectedJSON));
+        assertTrue(result.toString().contains(p.toJSON().toString()));
 
         tx = new TxGetPosts(null , (long) 100);
         tx.execute();
         result = tx.getResult();
-        assertTrue("p is contained in the result", result.toString().contains(expectedJSON));
+        assertTrue(result.toString().contains(p.toJSON().toString()));
 
         tx = new TxGetPosts(null , (long) 99);
         tx.execute();
         result = tx.getResult();
-        assertFalse("p is contained in the result", result.toString().contains(expectedJSON));
+        assertFalse(result.toString().contains(p.toJSON().toString()));
 
 
 
         tx = new TxGetPosts((long) 1 , (long) 200);
         tx.execute();
         result = tx.getResult();
-        assertTrue("p is contained in the result", result.toString().contains(expectedJSON));
+        assertTrue(result.toString().contains(p.toJSON().toString()));
         
         tx = new TxGetPosts((long) 100 , (long) 100);
         tx.execute();
         result = tx.getResult();
-        assertTrue("p is contained in the result", result.toString().contains(expectedJSON));
+        assertTrue(result.toString().contains(p.toJSON().toString()));
 
         tx = new TxGetPosts((long) 1, (long) 99);
         tx.execute();
         result = tx.getResult();
-        assertFalse("p is contained in the result", result.toString().contains(expectedJSON));
+        assertFalse(result.toString().contains(p.toJSON().toString()));
 
         tx = new TxGetPosts((long) 101, (long) 200);
         tx.execute();
         result = tx.getResult();
-        assertFalse("p is contained in the result", result.toString().contains(expectedJSON));
+        assertFalse(result.toString().contains(p.toJSON().toString()));
 
     }
 }

@@ -12,33 +12,27 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.PostDB;
-import data.UserDB;
 import domain.Post;
 import domain.User;
+import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.PostDataCtrl;
 import domain.dataCtrl.UserDataCtrl;
 
 public class PostsTest {
     Post pGeneral;
-    Post pAPI;
-    PostDataCtrl pdb;
-
     User u;
-    UserDataCtrl udb;
-
-    String expectedJSON = "{\"username\":\"testAPIPosts\",\"profilepic\":\"testAPIPosts\",\"text\":\"testAPI\",\"timestamp\":100}";
+    
+    PostDataCtrl pdb = DataCtrl.getInstance().getPostDataCtrl();
+    UserDataCtrl udb = DataCtrl.getInstance().getUserDataCtrl();
 
     @Before
     public void setUp(){
         u = new User("testAPIPosts", "testAPIPosts", "testAPIPosts@test", "testAPIPosts", "1234", "testAPIPosts");
         u.setToken("testAPIPosts");
-        udb = UserDB.getInstance();
         udb.insert(u);
         assertNotNull(u.getId());
 
         pGeneral = new Post(u, "testAPI", 100);
-        pdb = PostDB.getInstance();
         assertTrue(pdb.insert(pGeneral));
     }
 
@@ -59,7 +53,7 @@ public class PostsTest {
         Response r = psAPI.newPost("testApi", u.getToken());
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
-        pAPI = pdb.select(u.getId(), Long.valueOf(r.getEntity().toString()));
+        Post pAPI = pdb.select(u.getId(), Long.valueOf(r.getEntity().toString()));
         assertNotNull(pAPI);
 
         pdb.delete(pAPI.getCreator().getId(), pAPI.getPostedOn());
@@ -73,7 +67,7 @@ public class PostsTest {
         Posts psAPI = new Posts();
         Response r = psAPI.getPosts(null, null);
         assertEquals(200, r.getStatus());
-        assertTrue("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertTrue(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
     }
 
     @Test
@@ -81,15 +75,15 @@ public class PostsTest {
         Posts psAPI = new Posts();
         Response r = psAPI.getPosts((long) 1, null);
         assertEquals(200, r.getStatus());
-        assertTrue("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertTrue(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
 
         r = psAPI.getPosts((long) 100, null);
         assertEquals(200, r.getStatus());
-        assertTrue("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertTrue(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
         
         r = psAPI.getPosts((long) 200, null);
         assertEquals(200, r.getStatus());
-        assertFalse("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertFalse(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
     }
 
     @Test
@@ -97,15 +91,15 @@ public class PostsTest {
         Posts psAPI = new Posts();
         Response r = psAPI.getPosts(null, (long) 200);
         assertEquals(200, r.getStatus());
-        assertTrue("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertTrue(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
 
         r = psAPI.getPosts(null, (long) 100);
         assertEquals(200, r.getStatus());
-        assertTrue("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertTrue(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
         
         r = psAPI.getPosts(null, (long) 99);
         assertEquals(200, r.getStatus());
-        assertFalse("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertFalse(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
     }
 
     @Test
@@ -113,19 +107,19 @@ public class PostsTest {
         Posts psAPI = new Posts();
         Response r = psAPI.getPosts((long) 1, (long) 200);
         assertEquals(200, r.getStatus());
-        assertTrue("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertTrue(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
 
         r = psAPI.getPosts((long) 100, (long) 100);
         assertEquals(200, r.getStatus());
-        assertTrue("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertTrue(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
         
         r = psAPI.getPosts((long) 1, (long) 99);
         assertEquals(200, r.getStatus());
-        assertFalse("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertFalse(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
 
         r = psAPI.getPosts((long) 101, (long) 200);
         assertEquals(200, r.getStatus());
-        assertFalse("pGeneral in JSON response", r.getEntity().toString().contains(expectedJSON));
+        assertFalse(r.getEntity().toString().contains(pGeneral.toJSON().toString()));
 
     }
 }

@@ -9,7 +9,6 @@ import domain.dataCtrl.UserDataCtrl;
 public class TxNewPost {
     String text;
     String userToken;
-
     Long result;
 
     public TxNewPost(String text, String userToken) {
