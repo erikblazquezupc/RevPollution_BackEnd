@@ -40,13 +40,13 @@ public class DailyExpoTest {
 
     @Before
     public void setUp(){
-        u = new User("username", "name", "email@prueba", "password", "tel", "img");
-        u.setToken("token");
+        u = new User("TestDailyExpo", "name", "DailyExpo@prueba", "password", "tel", "img");
+        u.setToken("DailyExpo");
         udc.insert(u);
         assertNotNull(u.getId());
         e = new Expo(u, 29, 4, 2022, 50.05);
 
-        s = new StationStub("TestStation", "address", 0.0, 0.0, true);
+        s = new StationStub("TestStationDayliExpo", "address", 0.0, 0.0, true);
         sdc.insert(s);
         Particle p = new Particle("O3", "mg/m3");
         c = new Concentration(s, p, Date.from(Instant.now()), 0);
