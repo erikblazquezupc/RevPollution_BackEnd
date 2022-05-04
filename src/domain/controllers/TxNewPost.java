@@ -10,12 +10,12 @@ public class TxNewPost {
     String text;
     String userToken;
 
-    Boolean result;
+    Long result;
 
     public TxNewPost(String text, String userToken) {
         this.text = text;
         this.userToken = userToken;
-        this.result = false;
+        this.result = null;
     }
 
     public void execute(){
@@ -25,11 +25,11 @@ public class TxNewPost {
         
         User u = udc.selectByToken(userToken);
         Post p = new Post(u, text);
-        pdc.insert(p);
-        result = true;
+        Boolean success = pdc.insert(p);
+        if (success) result = p.getPostedOn();
     }
 
-    public boolean getResult(){
+    public Long getResult(){
         return result;
     }
 }

@@ -44,7 +44,7 @@ public class Posts {
 	public Response newPost(@QueryParam("text") String text, @QueryParam("userToken") String userToken) {
 		TxNewPost tx = new TxNewPost(text, userToken);
 		tx.execute();
-		Boolean result = tx.getResult();
+		Long result = tx.getResult();
 		return Response.ok(result).build();
 	}
 }
