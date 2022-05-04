@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: Exercise 5.4
-  description: "Versió OpenAPI del la solució publicada a <https://atenea.upc.edu/mod/resource/view.php?id=2158292>. Suposem que totes les crides necessiten autentificació via una api_key que indentifica un usuari determinat. Només es poc accedir als missatges de l'usuari autentificat."
+  title: RevPollution API
+  description: "Documentación OpenAPI de RevPollution API"
 servers:
   - url: 'http://localhost:8080/RevPollution/services'
 
