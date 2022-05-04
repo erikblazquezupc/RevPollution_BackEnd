@@ -595,3 +595,130 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /logrosAdmin:
+    get:
+      tags:
+      - logros
+      summary: Ver todos los logros.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logrosAdmin/info:
+    get:
+      tags:
+      - logros
+      summary: Obtener la información de un logro.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logrosAdmin/switchActivation:
+    put:
+      tags:
+      - logros
+      summary: Activar o desactivar logro.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logrosAdmin/create:
+    put:
+      tags:
+      - logros
+      summary: Crear nuevo logro.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: condition
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: activated
+        in: query
+        required: true
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []

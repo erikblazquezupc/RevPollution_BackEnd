@@ -128,9 +128,9 @@ public class LogroDB implements LogroDataCtrl{
     @Override
     public Logro selectAdmin(String n, Tier t) {
         try {
-            select.setString(1, n);
-            select.setString(2, t.toString());
-            ResultSet r = select.executeQuery();
+            selectAdmin.setString(1, n);
+            selectAdmin.setString(2, t.toString());
+            ResultSet r = selectAdmin.executeQuery();
             while(r.next()) {
                 String name = r.getString("name");
                 String tierString = r.getString("tier");
@@ -150,7 +150,7 @@ public class LogroDB implements LogroDataCtrl{
     public ArrayList<Logro> selectAllAdmin() {
         ArrayList<Logro> ret = new ArrayList<Logro> ();
         try {
-            ResultSet r = selectAll.executeQuery();
+            ResultSet r = selectAllAdmin.executeQuery();
             while(r.next()) {
                 String name = r.getString("name");
                 String tierString = r.getString("tier");
