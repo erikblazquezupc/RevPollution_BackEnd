@@ -1,5 +1,6 @@
 package api;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 
 import domain.controllers.TxGetDailyExpo;
 import domain.controllers.TxAddDailyExpo;
-import domain.Expo;
+import domain.DailyExposition;
 
 @Path("/dailyExpo")
 public class DailyExpo {
@@ -25,7 +26,7 @@ public class DailyExpo {
 	public Response getDailyExpo(@QueryParam("token") String token) {
 		TxGetDailyExpo tx = new TxGetDailyExpo(token);
 		tx.execute();
-		ArrayList<Expo> result = tx.getResult();
+		ArrayList<DailyExposition> result = tx.getResult();
 		return Response.ok(result).build();
 	}
  
@@ -35,7 +36,8 @@ public class DailyExpo {
 	@Path("/addExpo")
 	public Response addDailyExpo(@QueryParam("token") String token, @QueryParam("lat") Double lat, 
     @QueryParam("lon") Double lon) {
-		TxAddDailyExpo tx = new TxAddDailyExpo(token, lat, lon);
+		Date dat = new Date(System.currentTimeMillis());
+		TxAddDailyExpo tx = new TxAddDailyExpo(token, lat, lon, dat);
 		tx.execute();
 		boolean result = tx.getResult();
 		return Response.ok(result).build();

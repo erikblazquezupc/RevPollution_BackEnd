@@ -22,7 +22,7 @@ public class TxLogIn {
         DataCtrl dataCtrl = DataCtrl.getInstance();
         UserDataCtrl userCtrl = dataCtrl.getUserDataCtrl();
         User u = userCtrl.selectByUsername(username);
-        String hash = hash(username, password);
+        //String hash = hash(username, password);
         if(u == null) return;
         if(!u.getPassword().equals(password)) return;
         String token = hash(Long.toString(System.currentTimeMillis()), username);

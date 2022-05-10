@@ -13,16 +13,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.Expo;
+import domain.Location;
 import domain.User;
 
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.UserDataCtrl;
-import domain.dataCtrl.ExpoDataCtrl;
+import domain.dataCtrl.LocationDataCtrl;
 
 public class DailyExpoTest {
-    Expo e;
-    ExpoDataCtrl edc = DataCtrl.getInstance().getExpoDataCtrl();
+    Location e;
+    LocationDataCtrl edc = DataCtrl.getInstance().getLocationDataCtrl();
     User u;
     UserDataCtrl udc = DataCtrl.getInstance().getUserDataCtrl();
 
@@ -32,13 +32,13 @@ public class DailyExpoTest {
         u.setToken("token");
         udc.insert(u);
         assertNotNull(u.getId());
-        e = new Expo(u, 29, 4, 2022, 50.05);
+        e = new Location(u, 29, 4, 2022, 50.05);
     }
 
     @After
     public void clean(){
         edc.delete(u.getId());
-        ArrayList<Expo> arrE = edc.selectRecent(u.getId());
+        ArrayList<Location> arrE = edc.select(u.getId());
         assertEquals(0, arrE.size());
         udc.delete(u.getId());
         u = udc.select(u.getId());
@@ -51,7 +51,15 @@ public class DailyExpoTest {
         Response r = de.addDailyExpo(e.getUser().getToken(), 43.0, 1.436);
         assertEquals(200, r.getStatus());
         assertEquals("true", r.getEntity().toString());
-        boolean b = edc.select(u.getId());
-        assertTrue(b);
+        ArrayList<Location> arrL = edc.select(u.getId());
+        assertEquals(arrL.size(), 1);
+        assertEquals(arrL.get(0).getUserId(), u.getId());
+    }
+
+    @Test
+    public void testGetDailyExpo() {
+        DailyExpo de = new DailyExpo();
+        Response r = de.getDailyExpo(e.getUser().getToken());
+        assertEquals(200, r.getStatus());
     }
 }

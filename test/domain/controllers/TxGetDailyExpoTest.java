@@ -2,6 +2,7 @@ package domain.controllers;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
@@ -12,17 +13,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import domain.User;
-import domain.Location;
 import domain.DailyExposition;
 
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.UserDataCtrl;
-import domain.dataCtrl.LocationDataCtrl;
 import domain.dataCtrl.DailyExpositionDataCtrl;
 
-public class TxAddDailyExpoTest {
-    Location l;
-    LocationDataCtrl ldc = DataCtrl.getInstance().getLocationDataCtrl();
+public class TxGetDailyExpoTest {
     DailyExposition e;
     DailyExpositionDataCtrl ddc = DataCtrl.getInstance().getDailyExpositionDataCtrl();
     User u;
@@ -34,17 +31,15 @@ public class TxAddDailyExpoTest {
         u.setToken("token");
         udc.insert(u);
         assertNotNull(u.getId());
-        l = new Location(u, 29, 4, 2022, 50.05);
+        Date dat = new Date(100);
+        ddc.insert(u.getId(), dat, 10.5);
     }
 
     @After
     public void clean(){
-        ldc.delete(u.getId());
         ddc.delete(u.getId());
         ArrayList<DailyExposition> arrD = ddc.selectRecent(u.getId());
-        ArrayList<Location> arrL = ldc.select(u.getId());
         assertEquals(0, arrD.size());
-        assertEquals(0, arrL.size());
         udc.delete(u.getId());
         u = udc.select(u.getId());
         assertNull(u);
@@ -52,22 +47,13 @@ public class TxAddDailyExpoTest {
 
 
     @Test
-    public void testTxAddDailyExpo() {
-        Date dat = new Date(90000);
-        TxAddDailyExpo tx = new TxAddDailyExpo("token", 43.0, 1.436, dat);
+    public void testTxGetDailyExpo() {
+        TxGetDailyExpo tx = new TxGetDailyExpo("token");
 		tx.execute();
-		ArrayList<Location> arrL = ldc.select(u.getId());
-        assertEquals(arrL.size(), 1);
+		ArrayList<DailyExposition> arrL = tx.getResult();
+        assertTrue(arrL.size() == 1);
         assertEquals(arrL.get(0).getUserId(), u.getId());
-
-        dat = new Date(90000000);
-        tx = new TxAddDailyExpo("token", 43.0, 1.436, dat);
-        tx.execute();
-        arrL = ldc.select(u.getId());
-        assertEquals(arrL.size(), 1);
-        assertEquals(arrL.get(0).getUserId(), u.getId());
-        ArrayList<DailyExposition> arrD = ddc.selectRecent(u.getId()); 
-        assertEquals(arrD.size(), 1);
-        assertEquals(arrD.get(0).getUserId(), u.getId());
-    }
+        Double d = 10.5;
+        assertEquals(arrL.get(0).getValue(), d);
+    } 
 }

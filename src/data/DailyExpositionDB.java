@@ -10,26 +10,24 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import domain.Expo;
+import domain.DailyExposition;
 import domain.User;
-import domain.dataCtrl.ExpoDataCtrl;
+import domain.dataCtrl.DailyExpositionDataCtrl;
 
-public class ExpoDB implements ExpoDataCtrl {
-    private static ExpoDB instance;
+public class DailyExpositionDB implements DailyExpositionDataCtrl {
+    private static DailyExpositionDB instance;
     Connection conn;
     PreparedStatement selectRecent;
     PreparedStatement insert;
     PreparedStatement delete;
-    PreparedStatement select;
 
-    private ExpoDB(){
+    private DailyExpositionDB(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://10.4.41.56:3306/RevPollution_Dev?allowPublicKeyRetrieval=true&useSSL=false", "dev", "aRqffCdBd9t!");
             selectRecent = conn.prepareStatement("SELECT * FROM DailyExposition WHERE idUser = ? LIMIT 30");
-            insert = conn.prepareStatement("CALL InsertLocation(?, ?, ?)");
-            delete = conn.prepareStatement("DELETE FROM Location WHERE idUser = ?");
-            select = conn.prepareStatement("SELECT * FROM Location WHERE idUser = ?");
+            insert = conn.prepareStatement("INSERT INTO DailyExposition VALUES (?, ?, ?)");
+            delete = conn.prepareStatement("DELETE FROM DailyExposition WHERE idUser = ?");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -37,31 +35,27 @@ public class ExpoDB implements ExpoDataCtrl {
         }
     }
 
-    static public ExpoDB getInstance(){
-        if(instance == null) instance = new ExpoDB();
+    static public DailyExpositionDB getInstance(){
+        if(instance == null) instance = new DailyExpositionDB();
         return instance;
     }
 
-    public ArrayList<Expo> selectRecent(int idU){
-        ArrayList<Expo> ret = new ArrayList<Expo> ();
+    public ArrayList<DailyExposition> selectRecent(int idU){
+        ArrayList<DailyExposition> ret = new ArrayList<DailyExposition> ();
         try {
             selectRecent.setInt(1, idU);
             ResultSet r = selectRecent.executeQuery();
             while (r.next()) {
                 int idUser = r.getInt("idUser");
-
                 Date dat = r.getDate("dat");
                 LocalDate localDate = dat.toLocalDate();
-
                 int day = localDate.getDayOfMonth();
                 int month = localDate.getMonthValue();
                 int year = localDate.getYear();
-
                 double value = r.getDouble("value");
 
                 User u = UserDB.getInstance().select(idUser);
-
-                Expo e = new Expo(u, day, month, year, value);
+                DailyExposition e = new DailyExposition(u, day, month, year, value);
                 ret.add(e);
             }
         } catch (SQLException e) {
@@ -70,10 +64,10 @@ public class ExpoDB implements ExpoDataCtrl {
         return ret;
     }
 
-    public boolean insert(int idUser, double value){
+    public boolean insert(int idUser, Date dat, double value){
         try {
             insert.setInt(1, idUser);
-            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            Timestamp ts = new Timestamp(dat.getTime());
             insert.setTimestamp(2, ts);
             insert.setDouble(3, value);
             int n = insert.executeUpdate();
@@ -84,24 +78,15 @@ public class ExpoDB implements ExpoDataCtrl {
         return false;
     }
 
-    public void delete(int idUser){
+    public boolean delete(int idUser){
         try {
             delete.setInt(1, idUser);
-            delete.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean select(int idUser){
-        try {
-            select.setInt(1, idUser);
-            ResultSet r = select.executeQuery();
-            if (r.next()) return true;
+            int n = delete.executeUpdate();
+            if (n >= 1) return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-    
 }
+

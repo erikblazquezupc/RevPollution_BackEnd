@@ -1,11 +1,12 @@
 package domain.controllers;
 
 import domain.dataCtrl.DataCtrl;
-import domain.dataCtrl.ExpoDataCtrl;
+import domain.dataCtrl.LocationDataCtrl;
 import domain.dataCtrl.UserDataCtrl;
 import domain.dataCtrl.ConcentrationDataCtrl;
 import domain.dataCtrl.StationDataCtrl;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import domain.Concentration;
@@ -17,16 +18,18 @@ public class TxAddDailyExpo {
     private Double lat;
     private Double lon;
     private boolean result;
+    private Date dat;
 
-    public TxAddDailyExpo(String token, Double lat, Double lon){
+    public TxAddDailyExpo(String token, Double lat, Double lon, Date dat){
         this.token = token;
         this.lat = lat;
         this.lon = lon;
+        this.dat = dat;
     }
 
     public void execute(){
         DataCtrl dataCtrl = DataCtrl.getInstance();
-        ExpoDataCtrl edc = dataCtrl.getExpoDataCtrl();
+        LocationDataCtrl edc = dataCtrl.getLocationDataCtrl();
         UserDataCtrl udc = dataCtrl.getUserDataCtrl();
         User u = udc.selectByToken(token);
 
@@ -86,7 +89,8 @@ public class TxAddDailyExpo {
             max = Math.max( Math.max( Math.max( Math.max(IPSO2, IPNO2), IPPM10 ), IPCO), IPO3);
             if (max == -1.0) max = 0;
         }
-        result = edc.insert(u.getId(), max);
+
+        result = edc.insert(u.getId(), dat, max);
     }
 
     public boolean getResult(){

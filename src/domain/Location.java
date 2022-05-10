@@ -1,17 +1,15 @@
 package domain;
 
-public class Expo {
+public class Location {
     User user;
     Integer day;
     Integer month;
     Integer year;
     Double value;
 
-    public Expo() {
+    public Location() {}
 
-    }
-
-    public Expo(User user, Integer day, Integer month, Integer year, double value) {
+    public Location(User user, Integer day, Integer month, Integer year, double value) {
         this.user = user;
         this.day = day;
         this.month = month;
@@ -61,7 +59,7 @@ public class Expo {
 
     @Override
     public String toString() {
-        return "Expo [user=" + user.getName() + ", day=" + day + ", month=" + month +  
+        return "Location [user=" + user.getName() + ", day=" + day + ", month=" + month +  
         ", year=" + year + ", value=" + value + "]" ;
     }
 
