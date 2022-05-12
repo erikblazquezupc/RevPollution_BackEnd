@@ -10,7 +10,7 @@ public class TxEditLogro {
     private Tier tier;
     private String condition;
     private boolean activated;
-    private Logro l;
+    //private Logro l;
 
     public TxEditLogro(String name, Tier tier, String condition, boolean activated){
         this.name = name;
