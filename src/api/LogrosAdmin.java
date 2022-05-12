@@ -3,6 +3,7 @@ package api;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -14,6 +15,8 @@ import javax.ws.rs.core.Response;
 import domain.Logro;
 import domain.Logro.Tier;
 import domain.controllers.TxCreateLogro;
+import domain.controllers.TxDeleteLogro;
+import domain.controllers.TxEditLogro;
 //import domain.controllers.TxGetLogro;
 import domain.controllers.TxGetLogroAdmin;
 //import domain.controllers.TxGetLogros;
@@ -60,6 +63,26 @@ public class LogrosAdmin {
 	@Path("/create")
 	public Response createLogro(@QueryParam("name") String name, @QueryParam("tier") Tier tier, @QueryParam("cond") String cond, @QueryParam("activated") boolean activated) {
 		TxCreateLogro tx = new TxCreateLogro(name, tier, cond, activated);
+		tx.execute();
+		return Response.ok(true).build();
+	}
+
+	@DELETE
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/delete")
+	public Response deleteLogro(@QueryParam("name") String name, @QueryParam("tier") Tier tier) {
+		TxDeleteLogro tx = new TxDeleteLogro(name, tier);
+		tx.execute();
+		return Response.ok(true).build();
+	}
+
+	@PUT
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/edit")
+	public Response editLogro(@QueryParam("name") String name, @QueryParam("tier") Tier tier, @QueryParam("cond") String cond, @QueryParam("activated") boolean activated) {
+		TxEditLogro tx = new TxEditLogro(name, tier, cond, activated);
 		tx.execute();
 		return Response.ok(true).build();
 	}

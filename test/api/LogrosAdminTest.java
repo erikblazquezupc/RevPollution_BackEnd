@@ -4,6 +4,7 @@ package api;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import javax.ws.rs.core.Response;
@@ -75,5 +76,22 @@ public class LogrosAdminTest {
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
         assertTrue(r.getEntity().toString().contains("true"));
+    }
+
+    @Test
+    public void testDeleteLogro() {
+        Response r = ls.deleteLogro(l.getName(), l.getTier());
+        assertNull(ldc.select(l.getName(), l.getTier()));
+        assertEquals(200, r.getStatus());
+        assertNotNull(r.getEntity());
+    }
+
+    @Test 
+    public void testEditLogro() {
+        l.setCondition("cambiando condicion");
+        Response r = ls.editLogro(l.getName(), l.getTier(), l.getCondition(), l.getActivated());
+        assertEquals(l, ldc.select(l.getName(), l.getTier()));
+        assertEquals(200, r.getStatus());
+        assertNotNull(r.getEntity());
     }
 }
