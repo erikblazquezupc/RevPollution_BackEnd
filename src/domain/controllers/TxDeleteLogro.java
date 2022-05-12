@@ -20,8 +20,4 @@ public class TxDeleteLogro {
         LogroDataCtrl ldc = dataCtrl.getLogroDataCtrl();
         ldc.delete(name, tier);
     }
-
-    public Object getResult() {
-        return null;
-    }
 }

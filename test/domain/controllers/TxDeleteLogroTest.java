@@ -34,7 +34,9 @@ public class TxDeleteLogroTest {
     public void testTxDeleteLogro() {
         TxDeleteLogro tx = new TxDeleteLogro(l.getName(), l.getTier());
         tx.execute();
-        assertNull(tx.getResult());
-        assertEquals(null, tx.getResult());
+        //assertNull(tx.getResult());
+        Logro l2 = ldc.select(l.getName(), l.getTier());
+        //assertEquals(null, tx.getResult());
+        assertNull(l2);
     }
 }
