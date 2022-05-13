@@ -180,6 +180,181 @@ else {
   print(response.reasonPhrase);
 }
 ```
+### Get current air quality
+
+#### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/stations/quality?lat=lat&lon=lon
+
+#### Query parameters
+
+|Name | Type | Description |
+|---|---|---|
+| lat | double | Latitude of the location we want to look up. |
+| lon | double | Longitude of the location we want to look up. |
+
+#### Examples
+
+Curl:
+
+``` bash
+curl -X GET "http://10.4.41.56/RevPollution/services/stations/quality?lat=lat&lon=lon"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/stations/quality?lat=lat&lon=lon'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
+
+### Get qualities from the last 72 hours
+
+#### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/stations/pastQualitiesByHours?idStation=idStation
+
+#### Query parameters
+
+|Name | Type | Description |
+|---|---|---|
+| idStation | integer | ID of the station we want to get the information about. |
+
+#### Examples
+
+Curl:
+
+``` bash
+curl -X GET "http://10.4.41.56/RevPollution/services/stations/pastQualitiesByHours?idStation=idStation"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/stations/pastQualitiesByHours?idStation=idStation'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
+
+### Get qualities from the last 3 days
+
+#### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/stations/pastQualities?idStation=idStation
+
+#### Query parameters
+
+|Name | Type | Description |
+|---|---|---|
+| idStation | integer | ID of the station we want to get the information about. |
+
+#### Examples
+
+Curl:
+
+``` bash
+curl -X GET "http://10.4.41.56/RevPollution/services/stations/pastQualities?idStation=idStation"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/stations/pastQualities?idStation=idStation'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
+
+### Get predicitions for the next 24 hours
+
+#### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/stations/futureQualitiesByHours?idStation=idStation
+
+#### Query parameters
+
+|Name | Type | Description |
+|---|---|---|
+| idStation | integer | ID of the station we want to get the information about. |
+
+#### Examples
+
+Curl:
+
+``` bash
+curl -X GET "http://10.4.41.56/RevPollution/services/stations/futureQualitiesByHours?idStation=idStation"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/stations/futureQualitiesByHours?idStation=idStation'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
+
+### Get predicitions for the next 3 days
+
+#### Endpoint URL
+
+http://10.4.41.56/RevPollution/services/stations/futureQualities?idStation=idStation
+
+#### Query parameters
+
+|Name | Type | Description |
+|---|---|---|
+| idStation | integer | ID of the station we want to get the information about. |
+
+#### Examples
+
+Curl:
+
+``` bash
+curl -X GET "http://10.4.41.56/RevPollution/services/stations/futureQualities?idStation=idStation"
+```
+
+Dart:
+
+``` Dart
+var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/stations/futureQualities?idStation=idStation'));
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
+```
 
 ## StationsAdmin
 
@@ -286,7 +461,7 @@ else {
 }
 ```
 
-## ConcentrationsFromStation
+## Concentrations
 
 ### Endpoint URL
 
@@ -310,42 +485,6 @@ Dart:
 
 ``` Dart
 var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/concentrations?idStation=idStation'));
-
-http.StreamedResponse response = await request.send();
-
-if (response.statusCode == 200) {
-  print(await response.stream.bytesToString());
-}
-else {
-  print(response.reasonPhrase);
-}
-```
-
-## ElektroGo
-
-### Endpoint URL
-
-http://10.4.41.56/RevPollution/services/elektrogo?lat=lat&lon=lon
-
-### Query parameters
-
-|Name | Type | Description |
-|---|---|---|
-| lat | double | Latitude of the location we want to look up. |
-| lon | double | Longitude of the location we want to look up. |
-
-### Examples
-
-Curl:
-
-``` bash
-curl -X GET "http://10.4.41.56/RevPollution/services/elektrogo?lat=lat&lon=lon"
-```
-
-Dart:
-
-``` Dart
-var request = http.Request('GET', Uri.parse('http://10.4.41.56/RevPollution/services/elektrogo?lat=lat&lon=lon'));
 
 http.StreamedResponse response = await request.send();
 
