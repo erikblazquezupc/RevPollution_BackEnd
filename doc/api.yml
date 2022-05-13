@@ -320,6 +320,110 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /stations/pastQualitiesByHours:
+    get:
+      tags:
+      - Stations
+      summary: Devuelve la calidad del aire por horas de las últimas 72 horas.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/pastQualities:
+    get:
+      tags:
+      - Stations
+      summary: Devuelve la calidad del aire por días de los últimos 3 días.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/futureQualitiesByHours:
+    get:
+      tags:
+      - Stations
+      summary: Devuelve la predicción de calidad del aire por horas de las próximas 24 horas.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/futureQualities:
+    get:
+      tags:
+      - Stations
+      summary: Devuelve la predicción de calidad del aire por días de los próximos 3 días.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
   /stationsAdmin:
     get:
       tags:
