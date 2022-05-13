@@ -9,6 +9,7 @@ import data.SearchDB;
 import data.ExpoDB;
 import data.ParticleDB;
 import data.PostDB;
+import data.QualityDB;
 
 public class DataCtrl{
     static DataCtrl instance;
@@ -52,5 +53,9 @@ public class DataCtrl{
     
     public UserLogroDataCtrl getUserLogroDataCtrl(){
         return UserLogroDB.getInstance();
+    }
+
+    public QualityDataCtrl getQualityDataCtrl(){
+        return QualityDB.getInstance();
     }
 }

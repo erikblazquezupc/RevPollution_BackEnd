@@ -38,7 +38,7 @@ public class ConcentrationDBTest {
         pdb.insert(p2);
         cdb.insert(c);
         cdb.insert(c2);
-    }
+    } 
 
     @After
     public void clean(){
