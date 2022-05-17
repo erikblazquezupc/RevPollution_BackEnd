@@ -108,17 +108,18 @@ public class TxGetPastQualitiesByHoursTest {
 
     @Test
     public void testTxGetPastQualitiesByHours() {
-        TxGetPastQualitiesByHours tx = new TxGetPastQualitiesByHours(s.getId());
-        tx.execute();
-        assertNotNull(tx.getResult());
-        assertEquals(3, tx.getResult().size());
-
         Date now = new Date();
         Calendar cNow = Calendar.getInstance();
         cNow.setTime(now);
         int h = cNow.get(Calendar.HOUR_OF_DAY);
 
-        if (h > 12) {
+        TxGetPastQualitiesByHours tx = new TxGetPastQualitiesByHours(s.getId());
+        tx.execute();
+        assertNotNull(tx.getResult());
+        if (h < 14) assertEquals(4, tx.getResult().size());
+        else if (h < 14) assertEquals(3, tx.getResult().size());
+
+        if (h > 14) {
             assertEquals(220.0, tx.getResult().get(0).getValue(), 0);
             assertEquals(210.0, tx.getResult().get(1).getValue(), 0);
             assertEquals(205.0, tx.getResult().get(2).getValue(), 0);

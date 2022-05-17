@@ -32,7 +32,7 @@ public class QualityDBTest {
         sdb = StationDB.getInstance();
 
         p = new Particle("PM10", "ug/m3");
-        s = new StationStub("stub1", "a", 0, 0);
+        s = new StationStub("QualityDBTest", "a", 0, 0);
         sdb.insert(s);
 
         Calendar cal = Calendar.getInstance();
@@ -136,15 +136,17 @@ public class QualityDBTest {
 
     @Test
     public void testSelectPastHours() {
-        ArrayList<Quality> quals = qdb.selectPastHours(s.getId());
-        assertEquals(3, quals.size());
-
         Date now = new Date();
         Calendar cNow = Calendar.getInstance();
         cNow.setTime(now);
         int h = cNow.get(Calendar.HOUR_OF_DAY);
 
-        if (h > 12) {
+        ArrayList<Quality> quals = qdb.selectPastHours(s.getId());
+        if (h < 14) assertEquals(4, quals.size());
+        else if (h < 14) assertEquals(3, quals.size());
+
+
+        if (h > 14) {
             assertEquals(220.0, quals.get(0).getValue(), 0);
             assertEquals(210.0, quals.get(1).getValue(), 0);
             assertEquals(205.0, quals.get(2).getValue(), 0);
