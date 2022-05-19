@@ -3,6 +3,7 @@ package domain.controllers;
 import java.util.ArrayList;
 
 import domain.Quality;
+import domain.SystemState;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.QualityDataCtrl;
 
@@ -15,9 +16,15 @@ public class TxGetFutureQualities {
     }
 
     public void execute(){
-        DataCtrl dataCtrl = DataCtrl.getInstance();
-        QualityDataCtrl qdc = dataCtrl.getQualityDataCtrl();
-        result = qdc.selectFuture(idStation);
+        SystemState sy = SystemState.getInstance();
+        if(!sy.existsStationFutureQuality(idStation)){
+            DataCtrl dataCtrl = DataCtrl.getInstance();
+            QualityDataCtrl qdc = dataCtrl.getQualityDataCtrl();
+            result = qdc.selectFuture(idStation);
+            sy.addStationFutureQualities(idStation, result);
+        } else {
+            result = sy.getStationFutureQualities(idStation);
+        }
     }
 
     public ArrayList<Quality> getResult(){
