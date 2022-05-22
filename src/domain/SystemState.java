@@ -10,10 +10,12 @@ public class SystemState {
     static SystemState instance;
     Map<Integer, Pair<Date, ArrayList<Quality>>> stationPastQualities;
     Map<Integer, Pair<Date, ArrayList<Quality>>> stationFutureQualities;
+    Map<Integer, Pair<Date, String>> stationActualQuality;
 
     SystemState(){
         stationPastQualities = new HashMap<Integer,Pair<Date, ArrayList<Quality>>>();
         stationFutureQualities = new HashMap<Integer,Pair<Date, ArrayList<Quality>>>();
+        stationActualQuality = new HashMap<Integer,Pair<Date, String>>();
     }
 
     static public SystemState getInstance(){
@@ -65,5 +67,28 @@ public class SystemState {
     public Date getFutureLastChangeDate(int id){
         if(!existsStationFutureQuality(id)) return null;
         return stationFutureQualities.get(id).getFirst();
+    }
+
+    // STATION QUALITY
+    
+    public String getStationActualQuality(int id){
+        return stationActualQuality.get(id).getSecond();
+    }
+    
+    public void addStationActualQuality(int id, String quality){
+        stationActualQuality.put(id, new Pair<Date, String>(new Date(), quality));
+    }
+
+    public void deleteStationActualQuality(int id){
+        stationActualQuality.remove(id);
+    }
+    
+    public boolean existsStationActualQuality(int id) {
+        return stationActualQuality.containsKey(id);
+    }
+    
+    public Date getActualLastChangeDate(int id){
+        if(!existsStationActualQuality(id)) return null;
+        return stationActualQuality.get(id).getFirst();
     }
 }
