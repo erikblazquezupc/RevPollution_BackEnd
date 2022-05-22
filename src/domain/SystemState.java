@@ -28,6 +28,10 @@ public class SystemState {
         stationPastQualities.putIfAbsent(id, array);
     }
 
+    public void deleteStationPastQualities(int id){
+        stationPastQualities.remove(id);
+    }
+
     public boolean existsStationPastQuality(int idStation) {
         return stationPastQualities.containsKey(idStation);
     }
@@ -38,6 +42,10 @@ public class SystemState {
 
     public void addStationFutureQualities(int id, ArrayList<Quality> array){
         stationFutureQualities.putIfAbsent(id, array);
+    }
+
+    public void deleteStationFutureQualities(int id){
+        stationFutureQualities.remove(id);
     }
 
     public boolean existsStationFutureQuality(int idStation) {

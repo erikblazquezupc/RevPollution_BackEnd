@@ -86,7 +86,7 @@ public class TxGetQuality {
 
             double max = Math.max( Math.max( Math.max( Math.max(IPSO2, IPNO2), IPPM10 ), IPCO), IPO3);
             if (max == -1.0) result = "No data available";
-            else if (max < 75) result = "Good";
+            else if (max < 45) result = "Good";
             else if (max > 100) result = "Bad";
             else result = "Mid";
         }
