@@ -1,7 +1,6 @@
 package domain.controllers;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import domain.Quality;
@@ -19,37 +18,15 @@ public class TxGetFutureQualities {
 
     public void execute(){
         SystemState sy = SystemState.getInstance();
-        if(!sy.existsStationFutureQuality(idStation)){
+        Date lastChangeDate = sy.getFutureLastChangeDate(idStation);
+        long now = (new Date()).toInstant().toEpochMilli();
+        if(!sy.existsStationFutureQuality(idStation) || (now - lastChangeDate.toInstant().toEpochMilli()) >= 120000 ){
             DataCtrl dataCtrl = DataCtrl.getInstance();
             QualityDataCtrl qdc = dataCtrl.getQualityDataCtrl();
             result = qdc.selectFuture(idStation);
             sy.addStationFutureQualities(idStation, result);
-        }
-        
-        else {
-
-            Date now = new Date(); 
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(now);
-
-            ArrayList<Quality> quals = sy.getStationFutureQualities(idStation);
-
-            if (quals.size() > 0) {
-                Date qDate = quals.get(0).getInstant();
-                Calendar cal2 = Calendar.getInstance();
-                cal2.setTime(qDate);
-                if ((cal.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH))
-                    && (cal.get(Calendar.HOUR_OF_DAY) < 5)) {
-                    DataCtrl dataCtrl = DataCtrl.getInstance();
-                    QualityDataCtrl qdc = dataCtrl.getQualityDataCtrl();
-
-                    sy.deleteStationFutureQualities(idStation);
-                    result = qdc.selectFuture(idStation);
-                    sy.addStationFutureQualities(idStation, result);
-                }
-                else result = sy.getStationFutureQualities(idStation);
-            }
-            else result = sy.getStationFutureQualities(idStation);
+        } else {
+            result = sy.getStationFutureQualities(idStation);
         }
     }
 

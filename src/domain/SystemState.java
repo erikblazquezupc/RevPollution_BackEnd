@@ -1,18 +1,19 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SystemState {
 
     static SystemState instance;
-    Map<Integer, ArrayList<Quality>> stationPastQualities;
-    Map<Integer, ArrayList<Quality>> stationFutureQualities;
+    Map<Integer, Pair<Date, ArrayList<Quality>>> stationPastQualities;
+    Map<Integer, Pair<Date, ArrayList<Quality>>> stationFutureQualities;
 
     SystemState(){
-        stationPastQualities = new HashMap<Integer,ArrayList<Quality>>();
-        stationFutureQualities = new HashMap<Integer,ArrayList<Quality>>();
+        stationPastQualities = new HashMap<Integer,Pair<Date, ArrayList<Quality>>>();
+        stationFutureQualities = new HashMap<Integer,Pair<Date, ArrayList<Quality>>>();
     }
 
     static public SystemState getInstance(){
@@ -20,36 +21,49 @@ public class SystemState {
         return instance;
     }
 
-    public ArrayList<Quality> getStationPastQualities(int id){
-        return stationPastQualities.get(id);
-    }
+    // PAST QUALITIES
 
+    public ArrayList<Quality> getStationPastQualities(int id){
+        return stationPastQualities.get(id).getSecond();
+    }
+    
     public void addStationPastQualities(int id, ArrayList<Quality> array){
-        stationPastQualities.putIfAbsent(id, array);
+        stationPastQualities.put(id, new Pair<Date, ArrayList<Quality>>(new Date(), array));
     }
 
     public void deleteStationPastQualities(int id){
         stationPastQualities.remove(id);
     }
-
-    public boolean existsStationPastQuality(int idStation) {
-        return stationPastQualities.containsKey(idStation);
+    
+    public boolean existsStationPastQuality(int id) {
+        return stationPastQualities.containsKey(id);
+    }
+    
+    public Date getPastLastChangeDate(int id){
+        if(!existsStationPastQuality(id)) return null;
+        return stationPastQualities.get(id).getFirst();
     }
 
+    // FUTURE QUALITIES
+    
     public ArrayList<Quality> getStationFutureQualities(int id){
-        return stationFutureQualities.get(id);
+        return stationFutureQualities.get(id).getSecond();
     }
-
+    
     public void addStationFutureQualities(int id, ArrayList<Quality> array){
-        stationFutureQualities.putIfAbsent(id, array);
+        stationFutureQualities.put(id, new Pair<Date, ArrayList<Quality>>(new Date(), array));
     }
 
     public void deleteStationFutureQualities(int id){
         stationFutureQualities.remove(id);
     }
-
-    public boolean existsStationFutureQuality(int idStation) {
-        return stationFutureQualities.containsKey(idStation);
+    
+    public boolean existsStationFutureQuality(int id) {
+        return stationFutureQualities.containsKey(id);
     }
-
+    
+    public Date getFutureLastChangeDate(int id){
+        if(!existsStationFutureQuality(id)) return null;
+        return stationFutureQualities.get(id).getFirst();
+    }
 }
