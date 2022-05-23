@@ -2,6 +2,7 @@ package domain.dataCtrl;
 
 import java.util.ArrayList;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.Logro.Tier;
 
@@ -15,4 +16,5 @@ public interface LogroDataCtrl {
     public Logro selectAdmin(String name, Tier tier);
     public ArrayList<Logro> selectAllAdmin();
     public int switchActivation(String name, Tier tier);
+    public int incrementStatistic(EnumStatistics statistic, String token);
 }

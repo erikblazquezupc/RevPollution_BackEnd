@@ -1,6 +1,11 @@
 CREATE TABLE Logro (
+	id int auto_increment,
 	name VARCHAR(20),
 	tier ENUM('bronce', 'plata', 'oro'),
-	condition VARCHAR(20),
-	PRIMARY KEY (nameLogro, tier)
+	cond TEXT,
+	min_value int,
+	statistic VARCHAR(30),
+	activated BOOL,
+	PRIMARY KEY (id),
+	UNIQUE (name, tier)
 )

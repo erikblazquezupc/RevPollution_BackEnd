@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.Logro.Tier;
 import domain.dataCtrl.LogroDataCtrl;
@@ -23,6 +24,7 @@ public class LogroDB implements LogroDataCtrl{
     PreparedStatement selectAdmin;
     PreparedStatement selectAllAdmin;
     PreparedStatement switchActivation;
+    PreparedStatement incrementStatistic;
 
     private LogroDB(){
         try {
@@ -37,6 +39,15 @@ public class LogroDB implements LogroDataCtrl{
             selectAdmin = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
             selectAllAdmin = conn.prepareStatement("SELECT * FROM Logro");
             switchActivation = conn.prepareStatement("UPDATE Logro SET activated = NOT activated WHERE name = ? AND tier = ?");
+            incrementStatistic = conn.prepareStatement("UPDATE UserLogros ul " +
+                                                        "SET ul.points = ul.points+1 " +
+                                                        "WHERE EXISTS (  SELECT * "  +
+                                                                        "FROM User u, Logro l " +
+                                                                        "WHERE l.activated = 1 "  +
+                                                                            "AND l.statistic = ? "  +
+                                                                            "AND u.token = ? "  +
+                                                                            "AND ul.idUser = u.idUser " +
+                                                                            "AND ul.nameLogro = l.name)");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -126,6 +137,7 @@ public class LogroDB implements LogroDataCtrl{
         }
         return null;
     }
+
     @Override
     public Logro selectAdmin(String n, Tier t) {
         try {
@@ -173,6 +185,18 @@ public class LogroDB implements LogroDataCtrl{
             switchActivation.setString(1, name);
             switchActivation.setString(2, tier.toString());
             return switchActivation.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int incrementStatistic(EnumStatistics statistic, String token){
+        try {
+            incrementStatistic.setString(1, statistic.toString());
+            incrementStatistic.setString(2, token);
+            System.out.println(incrementStatistic.toString());
+            return incrementStatistic.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
