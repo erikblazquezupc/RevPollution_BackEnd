@@ -14,6 +14,6 @@ public class StatisticsCollector {
     public void incrementStatistic(EnumStatistics st, String token){
         System.out.println("Recolectar estadistico " + st + " " + token);
         LogroDataCtrl ldc = DataCtrl.getInstance().getLogroDataCtrl();
-        System.out.println(ldc.incrementStatistic(st, token));
+        ldc.incrementStatistic(st, token);
     }
 }

@@ -39,15 +39,7 @@ public class LogroDB implements LogroDataCtrl{
             selectAdmin = conn.prepareStatement("SELECT * FROM Logro WHERE name = ? AND tier = ?");
             selectAllAdmin = conn.prepareStatement("SELECT * FROM Logro");
             switchActivation = conn.prepareStatement("UPDATE Logro SET activated = NOT activated WHERE name = ? AND tier = ?");
-            incrementStatistic = conn.prepareStatement("UPDATE UserLogros ul " +
-                                                        "SET ul.points = ul.points+1 " +
-                                                        "WHERE EXISTS (  SELECT * "  +
-                                                                        "FROM User u, Logro l " +
-                                                                        "WHERE l.activated = 1 "  +
-                                                                            "AND l.statistic = ? "  +
-                                                                            "AND u.token = ? "  +
-                                                                            "AND ul.idUser = u.idUser " +
-                                                                            "AND ul.nameLogro = l.name)");
+            incrementStatistic = conn.prepareStatement("CALL IncrementStatistic (?, ?)");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
