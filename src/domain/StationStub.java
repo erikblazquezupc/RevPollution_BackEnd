@@ -101,14 +101,6 @@ public class StationStub {
         return "StationStub [id=" + id + ", name=" + name + ", address=" + address + ", lat=" + lat + ", lon=" + lon + "]";
     }
 
-    public String toStringActivated() {
-        int act;
-        if (activated) act = 1;
-        else act = 0;
-        return "StationStub [id=" + id + ", name=" + name + ", address=" + address 
-            + ", lat=" + lat + ", lon=" + lon + ", activated=" + act + "]";
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;

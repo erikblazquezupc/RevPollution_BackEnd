@@ -10,6 +10,8 @@ public class Logro {
     Tier tier;
     String cond;
     boolean activated;
+    int limit;
+    EnumStatistics statistic;
 
     public Logro() {
         activated = true;
@@ -35,6 +37,15 @@ public class Logro {
         this.activated = activated;
     }
 
+    public Logro(String name, Tier tier, String cond, boolean activated, int limit, EnumStatistics statistic) {
+        this.name = name;
+        this.tier = tier;
+        this.cond = cond;
+        this.activated = activated;
+        this.limit = limit;
+        this.statistic = statistic;
+    }
+
     public Logro (String name, String tier, String cond) {
         this.name = name;
         this.tier = Tier.valueOf(tier);
@@ -45,10 +56,6 @@ public class Logro {
     public String getName() {
         return name;
     }
-
-    //public String getTier() {
-    //    return tier.toString();
-    //}
 
     public Tier getTier() {
         return tier;
@@ -78,19 +85,25 @@ public class Logro {
         this.activated = activated;
     }
 
-
-    public String toStringActivated() {
-        int act;
-        if (activated) act = 1;
-        else act = 0;
-        return "Logro [name=" + name + ", tier=" + tier + ", cond=" + cond + ", activated=" + act + "]";
+    public EnumStatistics getStatistic(){
+        return statistic;
     }
 
-    
+    public void setStatistic(EnumStatistics statistic){
+        this.statistic = statistic;
+    }
+
+    public int getLimit(){
+        return limit;
+    }
+
+    public void setLimit(int limit){
+        this.limit = limit;
+    }
 
     @Override
     public String toString() {
-        return "Logro [activated=" + activated + ", cond=" + cond + ", name=" + name + ", tier=" + tier + "]";
+        return "Logro [activated=" + activated + ", cond=" + cond + ", name=" + name + ", tier=" + tier + ", limit=" + limit + ", statistic=" + statistic + "]";
     }
 
     @Override
@@ -99,7 +112,9 @@ public class Logro {
         int result = 1;
         result = prime * result + (activated ? 1231 : 1237);
         result = prime * result + ((cond == null) ? 0 : cond.hashCode());
+        result = prime * result + limit;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((statistic == null) ? 0 : statistic.hashCode());
         result = prime * result + ((tier == null) ? 0 : tier.hashCode());
         return result;
     }
@@ -120,16 +135,17 @@ public class Logro {
                 return false;
         } else if (!cond.equals(other.cond))
             return false;
+        if (limit != other.limit)
+            return false;
         if (name == null) {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
             return false;
+        if (statistic != other.statistic)
+            return false;
         if (tier != other.tier)
             return false;
         return true;
     }
-
-    
-
 }

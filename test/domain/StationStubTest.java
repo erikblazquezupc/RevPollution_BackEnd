@@ -83,9 +83,4 @@ public class StationStubTest {
     public void testToString() {
         assertEquals("StationStub [id=1, name=name, address=address, lat=0.0, lon=0.0]", s.toString());
     }
-
-    @Test
-    public void testToStringActivated() {
-        assertEquals("StationStub [id=1, name=name, address=address, lat=0.0, lon=0.0, activated=1]", s.toStringActivated());
-    }
 }

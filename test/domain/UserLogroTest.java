@@ -16,9 +16,9 @@ public class UserLogroTest {
     public void setUp(){
         u = new User(132, "username", "name", "email", "password", "tel", "img");
         u2 = new User(1322, "username", "name", "email", "password", "tel", "img");
-        l = new Logro("name", Tier.bronce, "cond", false);
-        l2 = new Logro("name2", Tier.bronce, "cond", false);
-        ul = new UserLogro(u, l);
+        l = new Logro("name", Tier.bronce, "cond", false, 10, EnumStatistics.AchiveAchievement);
+        l2 = new Logro("name2", Tier.bronce, "cond", false, 10, EnumStatistics.AchiveAchievement);
+        ul = new UserLogro(u, l, 10, true);
     }
 
     @Test
@@ -47,6 +47,16 @@ public class UserLogroTest {
     }
 
     @Test
+    public void testGetPoints() {
+        assertEquals(10, ul.getPoints());
+    }
+
+    @Test
+    public void testIsAchieved() {
+        assertEquals(true, ul.isAchieved());
+    }
+
+    @Test
     public void testSetLogro() {
         ul.setLogro(l2);
         assertEquals(l2, ul.getLogro());
@@ -59,7 +69,19 @@ public class UserLogroTest {
     }
 
     @Test
+    public void testsetAchieved() {
+        ul.setAchieved(false);
+        assertEquals(false, ul.isAchieved());
+    }
+
+    @Test
+    public void testSetPoints() {
+        ul.setPoints(20);
+        assertEquals(20, ul.getPoints());
+    }
+
+    @Test
     public void testToString() {
-        assertEquals("UserLogro [logro="+l+", user="+u+"]", ul.toString());
+        assertEquals("UserLogro [logro="+l+", user="+u+", points=10, achieved=true]", ul.toString());
     }
 }

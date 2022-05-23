@@ -27,10 +27,10 @@ public class UserLogroDB implements UserLogroDataCtrl {
         try {
             conn = ConnectionFactory.getInstance().getConnection();
             select = conn.prepareStatement("SELECT * FROM UserLogros WHERE idUser = ? AND nameLogro = ? AND tier = ?");
-            selectByUser = conn.prepareStatement("SELECT * FROM UserLogros WHERE idUser = ?");
-            selectAll = conn.prepareStatement("SELECT * FROM UserLogros");
-            insert = conn.prepareStatement("INSERT INTO UserLogros (idUser, nameLogro, tier) VALUES (?, ?, ?)");
-            update = conn.prepareStatement("UPDATE UserLogros SET idUser = ?, nameLogro = ?, tier = ? WHERE idUser = ? AND nameLogro = ? AND tier = ?");
+            selectByUser = conn.prepareStatement("SELECT * FROM UserLogros ul, Logro l WHERE idUser = ? AND ul.nameLogro = l.name AND ul.tier = l.tier AND ul.points >= l.min_value AND l.activated = 1");
+            selectAll = conn.prepareStatement("SELECT * FROM UserLogros ul, Logro l WHERE ul.nameLogro = l.name AND ul.tier = l.tier AND ul.points >= l.min_value AND l.activated = 1");
+            insert = conn.prepareStatement("INSERT INTO UserLogros (idUser, nameLogro, tier, points) VALUES (?, ?, ?, ?)");
+            update = conn.prepareStatement("UPDATE UserLogros SET points = ? WHERE idUser = ? AND nameLogro = ? AND tier = ?");
             delete = conn.prepareStatement("DELETE FROM UserLogros WHERE idUser = ? AND nameLogro = ? AND tier = ?");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,7 +51,8 @@ public class UserLogroDB implements UserLogroDataCtrl {
             while (r.next()) {
                 User u = UserDB.getInstance().select(idUser);
                 Logro l = LogroDB.getInstance().select(name, Tier.valueOf(tier));
-                UserLogro ul = new UserLogro(u, l);
+                int points = r.getInt("points");
+                UserLogro ul = new UserLogro(u, l, points, true);
                 return ul;
             }
         } catch (SQLException e) {
@@ -70,7 +71,8 @@ public class UserLogroDB implements UserLogroDataCtrl {
                 Tier tier = Tier.valueOf(r.getString("tier"));
                 User u = UserDB.getInstance().select(idUser);
                 Logro l = LogroDB.getInstance().select(name, tier);
-                UserLogro ul = new UserLogro(u, l);
+                int points = r.getInt("points");
+                UserLogro ul = new UserLogro(u, l, points, true);
                 ret.add(ul);
             }
         } catch (SQLException e) {
@@ -89,7 +91,8 @@ public class UserLogroDB implements UserLogroDataCtrl {
                 Tier tier = Tier.valueOf(r.getString("tier"));
                 User u = UserDB.getInstance().select(idUser);
                 Logro l = LogroDB.getInstance().select(name, tier);
-                UserLogro ul = new UserLogro(u, l);
+                int points = r.getInt("points");
+                UserLogro ul = new UserLogro(u, l, points, true);
                 ret.add(ul);
             }
             return ret;
@@ -104,6 +107,7 @@ public class UserLogroDB implements UserLogroDataCtrl {
             insert.setInt(1, ul.getUserId());
             insert.setString(2, ul.getLogroName());
             insert.setString(3, ul.getLogroTier());
+            insert.setInt(4, ul.getPoints());
             int n = insert.executeUpdate();
             if (n >= 1) return true;
         } catch (SQLException e) {
@@ -114,12 +118,10 @@ public class UserLogroDB implements UserLogroDataCtrl {
     
     public boolean update(UserLogro ul){
         try {
-            update.setInt(1, ul.getUserId());
-            update.setString(2, ul.getLogroName());
-            update.setString(3, ul.getLogroTier());
-            update.setInt(4, ul.getUserId());
-            update.setString(5, ul.getLogroName());
-            update.setString(6, ul.getLogroTier());
+            update.setInt(1, ul.getPoints());
+            update.setInt(2, ul.getUserId());
+            update.setString(3, ul.getLogroName());
+            update.setString(4, ul.getLogroTier());
             int n = update.executeUpdate();
             if (n >= 1) return true;
         } catch (SQLException e) {

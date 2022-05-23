@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
@@ -26,7 +27,7 @@ public class LogrosAdminTest {
     @Before
     public void setUp(){
         ls = new LogrosAdmin();
-        l = new Logro("test", Tier.valueOf("plata"), "más de 100 tests"/*, false*/);
+        l = new Logro("test", Tier.valueOf("plata"), "más de 100 tests", true, 10, EnumStatistics.AchiveAchievement);
         ldc.insert(l);
     }
     
