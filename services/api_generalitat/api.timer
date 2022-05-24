@@ -1,0 +1,11 @@
+[Unit]
+Description= Timer para descargar datos de la API de la Generalitat
+
+[Timer]
+Unit=api.service
+OnBootSec=1min
+OnUnitActiveSec=60min
+#OnCalendar=Thu *-*-* 17:00:00
+
+[Install]
+WantedBy=timers.target
