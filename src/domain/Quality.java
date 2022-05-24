@@ -3,26 +3,17 @@ package domain;
 import java.util.Comparator;
 import java.util.Date;
 
-/*
-Timestamp timestamp = resultSet.getTimeStamp("instant");
-if (timestamp != null) {
-    instant = new Date(timestamp.getTime());
-}
-*/
-
-public class Concentration {
+public class Quality {
     StationStub station;
-    Particle particle;
     Date instant;
     double value;
 
-    public Concentration() {
+    public Quality() {
 
     }
 
-    public Concentration(StationStub station, Particle particle, Date date, double value) {
+    public Quality(StationStub station, Date date, double value) {
         this.station = station;
-        this.particle = particle;
         this.instant = date;
         this.value = value;
     }
@@ -33,14 +24,6 @@ public class Concentration {
 
     public void setStation(StationStub station) {
         this.station = station;
-    }
-
-    public Particle getParticle() {
-        return particle;
-    }
-
-    public void setParticle(Particle particle) {
-        this.particle = particle;
     }
 
     public Date getInstant() {
@@ -61,7 +44,7 @@ public class Concentration {
 
     @Override
     public String toString() {
-        return "Concentration [station=" + station.getName() + ", particle=" + particle.getName() + ", instant=" + instant + ", value=" + value +  
+        return "Quality [station=" + station.getName() + ", instant=" + instant + ", value=" + value +  
                 "]" ;
     }
 
@@ -69,16 +52,11 @@ public class Concentration {
         return station.getId();
     }
 
-    public String getParticleName() {
-        return particle.getName();
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((instant == null) ? 0 : instant.hashCode());
-        result = prime * result + ((particle == null) ? 0 : particle.hashCode());
         result = prime * result + ((station == null) ? 0 : station.hashCode());
         long temp;
         temp = Double.doubleToLongBits(value);
@@ -100,11 +78,6 @@ public class Concentration {
                 return false;
         } else if (!instant.equals(other.instant))
             return false;
-        if (particle == null) {
-            if (other.particle != null)
-                return false;
-        } else if (!particle.equals(other.particle))
-            return false;
         if (station == null) {
             if (other.station != null)
                 return false;
@@ -115,8 +88,8 @@ public class Concentration {
         return true;
     }
 
-    public static Comparator<Concentration> dateComp = new Comparator<Concentration> () {
-        public int compare (Concentration c1, Concentration c2) {
+    public static Comparator<Quality> dateComp = new Comparator<Quality> () {
+        public int compare (Quality c1, Quality c2) {
             Date d1 = c1.getInstant();
             Date d2 = c2.getInstant();
             return d1.compareTo(d2);

@@ -1,11 +1,6 @@
 package domain.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import com.mysql.fabric.xmlrpc.base.Data;
 
 import org.junit.After;
 import org.junit.Before;

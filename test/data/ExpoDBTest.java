@@ -23,7 +23,7 @@ public class ExpoDBTest {
 
     @Before
     public void setUp(){
-        u = new User("Testusername", "name", "email@prueba", "password", "tel", "img");
+        u = new User("TestExpoDB", "name", "TestExpoDB@prueba", "password", "tel", "img");
         udb = UserDB.getInstance();
         udb.insert(u);
 

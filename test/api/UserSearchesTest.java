@@ -34,7 +34,7 @@ public class UserSearchesTest {
     public void setUp(){
         uAPI = new UserSearches();
         u = new User("TestApiuserSear", "name", "testapiusersear@prueba", "password", "tel", "img");
-        u.setToken("token");
+        u.setToken("Testusersearches");
         udc.insert(u);
         name = "Calafell";
         Date d = new Date(1650838000);
@@ -45,12 +45,13 @@ public class UserSearchesTest {
     @After
     public void clean(){
         sdc.delete(u.getId(), name);
+        sdc.delete(u.getId(), "hola");
         udc.delete(u.getId());
     }
 
     @Test
     public void testRecentSearches() {
-        Response r = uAPI.recentSearches("token");
+        Response r = uAPI.recentSearches("Testusersearches");
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
         assertTrue(r.getEntity().toString().contains(s.toString()));
@@ -58,7 +59,7 @@ public class UserSearchesTest {
     
     @Test
     public void testAddSearch(){
-        Response r = uAPI.addSearch("token", "hola");
+        Response r = uAPI.addSearch("Testusersearches", "hola");
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
         assertTrue(r.getEntity().toString().contains("true"));
@@ -74,7 +75,7 @@ public class UserSearchesTest {
         Search s2 = new Search(u, "hola", d);
         sdc.insert(s2);
         assertEquals(s2, sdc.select(u.getId(), "hola"));
-        Response r = uAPI.deleteSearch("token", "hola");
+        Response r = uAPI.deleteSearch("Testusersearches", "hola");
         assertEquals(200, r.getStatus());
         assertNotNull(r.getEntity());
         assertTrue(r.getEntity().toString().contains("true"));

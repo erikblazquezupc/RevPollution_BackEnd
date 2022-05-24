@@ -1,11 +1,6 @@
 package api;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AbstractDocument.Content;
 import javax.ws.rs.core.Response;
 
 import org.junit.After;
@@ -22,8 +17,8 @@ public class UserEditTest {
 
     @Before
     public void setUp(){
-        u = new User(1, "username", "name", "email@prueba", "password", "tel", "img");
-        u.setToken("token");
+        u = new User(1, "usernameTestEdit", "name", "emailTestEdit@prueba", "password", "tel", "img");
+        u.setToken("tokenUserEdit");
         DataCtrl dataCtrl = DataCtrl.getInstance();
         udc = dataCtrl.getUserDataCtrl();
         udc.insert(u);
@@ -37,9 +32,9 @@ public class UserEditTest {
     @Test
     public void testUserEdit() {
         UserEdit ue = new UserEdit();
-        Response r = ue.useredit("usernamechanged", "password", "email@prueba", "name", "tel", "img", "token");
+        Response r = ue.useredit("usernamechanged", "password", "emailTestEdit@prueba", "name", "tel", "img", "tokenUserEdit");
         assertEquals(200, r.getStatus());
-        u = udc.selectByToken("token");
+        u = udc.selectByToken("tokenUserEdit");
         assertEquals(u.getUsername(), "usernamechanged");
     }
 }

@@ -1,16 +1,16 @@
 openapi: 3.0.3
 info:
   version: 1.0.0
-  title: Exercise 5.4
-  description: "Versió OpenAPI del la solució publicada a <https://atenea.upc.edu/mod/resource/view.php?id=2158292>. Suposem que totes les crides necessiten autentificació via una api_key que indentifica un usuari determinat. Només es poc accedir als missatges de l'usuari autentificat."
+  title: RevPollution API
+  description: "Documentación en OpenAPI de RevPollution API."
 servers:
-  - url: 'http://localhost:8080/RevPollution/services'
+  - url: 'http://10.4.41.56/RevPollution/services'
 
 paths:
   /login/login:
     get:
       tags:
-      - users
+      - Users
       summary: Iniciar sesión.
       parameters:
       - name: username
@@ -41,7 +41,7 @@ paths:
   /concentrations:
     get:
       tags:
-      - missatges
+      - Concentrations
       summary: Obtenir Missatges Usuari
       parameters:
       - name: idStation
@@ -57,7 +57,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: './components/schemas/concentration.yml'
+                  $ref: '#/components/schemas/concentration'
         404:
           description: 'Error: Not Found'
         401:
@@ -69,7 +69,7 @@ paths:
   /dailyExpo:
     get:
       tags:
-      - exposicion
+      - Exposicion
       summary: Obtener la exposición diaria.
       parameters:
       - name: token
@@ -85,7 +85,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/expo.yml'
+                  $ref: '#/components/schemas/expo'
         404:
           description: 'Error: Not Found'
         401:
@@ -97,7 +97,7 @@ paths:
   /dailyExpo/addExpo:
     post:
       tags:
-      - exposicion
+      - Exposicion
       summary: Añadir la exposición en una ubicación.
       parameters:
       - name: token
@@ -133,7 +133,7 @@ paths:
   /logros:
     get:
       tags:
-      - logros
+      - Logros
       summary: Obtener la lista de logros completa.
       responses:
         200:
@@ -143,7 +143,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'
+                  $ref: '#/components/schemas/logro'
         404:
           description: 'Error: Not Found'
         401:
@@ -155,7 +155,7 @@ paths:
   /logros/info:
     get:
       tags:
-      - logros
+      - Logros
       summary: Obtener información de un logro.
       parameters:
       - name: name
@@ -176,7 +176,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/logro.yml'
+                  $ref: '#/components/schemas/logro'
         404:
           description: 'Error: Not Found'
         401:
@@ -188,7 +188,7 @@ paths:
   /signup:
     post:
       tags:
-      - users
+      - Users
       summary: Obtener información de un logro.
       parameters:
       - name: username
@@ -242,7 +242,7 @@ paths:
   /stations:
     get:
       tags:
-      - estaciones
+      - Stations
       summary: Obtener todas las estaciones.
       responses:
         200:
@@ -252,7 +252,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+                  $ref: '#/components/schemas/station'
         404:
           description: 'Error: Not Found'
         401:
@@ -264,7 +264,7 @@ paths:
   /stations/info:
     get:
       tags:
-      - estaciones
+      - Stations
       summary: Obtener la informaciñón de una estación.
       parameters:
       - name: idStation
@@ -280,7 +280,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+                  $ref: '#/components/schemas/station'
         404:
           description: 'Error: Not Found'
         401:
@@ -292,7 +292,7 @@ paths:
   /stations/quality:
     get:
       tags:
-      - estaciones
+      - Stations
       summary: Devuelve la calidad del aire en un punto.
       parameters:
       - name: lat
@@ -320,10 +320,114 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /stations/pastQualitiesByHours:
+    get:
+      tags:
+      - Stations
+      summary: Devuelve la calidad del aire por horas de las últimas 72 horas.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/pastQualities:
+    get:
+      tags:
+      - Stations
+      summary: Devuelve la calidad del aire por días de los últimos 3 días.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/futureQualitiesByHours:
+    get:
+      tags:
+      - Stations
+      summary: Devuelve la predicción de calidad del aire por horas de las próximas 24 horas.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /stations/futureQualities:
+    get:
+      tags:
+      - Stations
+      summary: Devuelve la predicción de calidad del aire por días de los próximos 3 días.
+      parameters:
+      - name: idStation
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
   /stationsAdmin:
     get:
       tags:
-      - estaciones
+      - Stations
       summary: Obtener todas las estaciones.
       responses:
         200:
@@ -333,7 +437,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+                  $ref: '#/components/schemas/station'
         404:
           description: 'Error: Not Found'
         401:
@@ -345,7 +449,7 @@ paths:
   /stationsAdmin/info:
     get:
       tags:
-      - estaciones
+      - Stations
       summary: Obtener la informaciñón de una estación.
       parameters:
       - name: idStation
@@ -361,7 +465,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/station.yml'
+                  $ref: '#/components/schemas/station'
         404:
           description: 'Error: Not Found'
         401:
@@ -373,7 +477,7 @@ paths:
   /stationsAdmin/switchActivation:
     put:
       tags:
-      - estaciones
+      - Stations
       summary: Activar o desactivar una estación.
       parameters:
       - name: idStation
@@ -399,7 +503,7 @@ paths:
   /userinfo:
     get:
       tags:
-      - users
+      - Users
       summary: Obtener la informaciñón de una estación.
       parameters:
       - name: token
@@ -413,7 +517,9 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'
         404:
           description: 'Error: Not Found'
         401:
@@ -425,7 +531,7 @@ paths:
   /userSearches/recentSearches:
     get:
       tags:
-      - searches
+      - Searches
       summary: Obtener las busquedas mas recientes.
       parameters:
       - name: token
@@ -441,7 +547,7 @@ paths:
               schema:
                 type: array
                 items: 
-                  $ref: '/home/erik/Escritorio/UNI/3/Q6/PES/BackEnd/doc/components/schemas/search.yml'
+                  $ref: '#/components/schemas/search'
         404:
           description: 'Error: Not Found'
         401:
@@ -453,7 +559,7 @@ paths:
   /userSearches/addSearch:
     post:
       tags:
-      - searches
+      - Searches
       summary: Añadir una busqueda.
       parameters:
       - name: token
@@ -484,7 +590,7 @@ paths:
   /userSearches/deleteSearch:
     delete:
       tags:
-      - searches
+      - Searches
       summary: Borrar una busqueda.
       parameters:
       - name: token
@@ -512,3 +618,488 @@ paths:
           description: 'Error: Forbidden'
       security:
       - ApiKeyAuth: []
+  /userdelete:
+    delete:
+      tags:
+      - Users
+      summary: Borrar usuario.
+      parameters:
+      - name: idUser
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /useredit:
+    put:
+      tags:
+      - Users
+      summary: Borrar usuario.
+      parameters:
+      - name: username
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: telf
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: img
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logrosAdmin:
+    get:
+      tags:
+      - Logros
+      summary: Ver todos los logros.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/logro'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logrosAdmin/info:
+    get:
+      tags:
+      - Logros
+      summary: Obtener la información de un logro.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/logro'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logrosAdmin/switchActivation:
+    put:
+      tags:
+      - Logros
+      summary: Activar o desactivar logro.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /logrosAdmin/create:
+    put:
+      tags:
+      - Logros
+      summary: Crear nuevo logro.
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: tier
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: cond
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: activated
+        in: query
+        required: true
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /users/{username}/logros:
+    get:
+      tags:
+      - Logros
+      - Users
+      summary: Obtener los logros de un usuario.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/userlogro'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /posts:
+    get:
+      tags:
+      - Posts
+      summary: Ver posts de un intervalo de tiempo.
+      parameters:
+      - name: firstDate
+        in: query
+        schema:
+          type: number
+      - name: lastDate
+        in: query
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/post'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /posts/new:
+    post:
+      tags:
+      - Posts
+      summary: Crear un post.
+      parameters:
+      - name: text
+        in: query
+        schema:
+          type: string
+      - name: userToken
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: number
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /particles:
+    get:
+      tags:
+      - Particles
+      summary: Obtener todas las particulas.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/particle'
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /particles/{particleName}/activate:
+    put:
+      tags:
+      - Particles
+      summary: Activar una particula.
+      parameters:
+      - name: particleName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+  /particles/{particleName}/deactivate:
+    put:
+      tags:
+      - Particles
+      summary: Desactivar una particula.
+      parameters:
+      - name: particleName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: boolean
+        404:
+          description: 'Error: Not Found'
+        401:
+          description: 'Error: Unauthorized'
+        403:
+          description: 'Error: Forbidden'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        name:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        token:
+          type: string
+        id:
+          type: number
+        tel:
+          type: string
+        img:
+          type: string
+        password:
+          type: string
+    concentration:
+      type: object
+      properties:
+        station:
+          $ref: '#/components/schemas/user'
+        particle:
+          $ref: '#/components/schemas/particle'
+        date:
+          type: string
+        value:
+          type: number
+    particle:
+      type: object
+      properties:
+        name:
+          type: string
+        unit:
+          type: string
+        activated: 
+          type: boolean
+    userlogro:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/user'
+        logro:
+          $ref: '#/components/schemas/logro'
+    station:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        activated:
+          type: boolean
+    search:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/user'
+        name:
+          type: string
+        date:
+          type: string
+    post:
+      type: object
+      properties:
+        username:
+          type: string
+        profilepic:
+          type: string
+        text:
+          type: string
+        timestamp:
+          type: number
+    logro:
+      type: object
+      properties:
+        name:
+          type: string
+        tier:
+          type: string
+        condition:
+          type: string
+    expo:
+      type: object
+      properties:
+        user:
+          type: integer
+        day:
+          type: integer
+        month:
+          type: integer
+        year:
+          type: integer
+        value:
+          type: number
+    concentrarion:
+      type: object
+      properties:
+        station:
+          $ref: '#/components/schemas/station'
+        particle:
+          $ref: '#/components/schemas/particle'
+        date:
+          type: string
+        value:
+          type: number

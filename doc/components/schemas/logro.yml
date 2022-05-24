@@ -1,8 +1,0 @@
-type: object
-properties:
-  name:
-    type: string
-  tier:
-    type: string
-  condition:
-    type: string

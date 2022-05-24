@@ -1,6 +1,5 @@
 package domain.controllers;
 
-import domain.Logro;
 import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.LogroDataCtrl;
