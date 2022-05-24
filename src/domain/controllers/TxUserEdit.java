@@ -39,7 +39,7 @@ public class TxUserEdit {
         u.setUsername(username);*/
         User u = new User(username, name, email, password, telf, image);
         u.setToken(token);
-        userCtrl.editInfo(u);
+        result = userCtrl.editInfo(u);
     }
 
     public boolean getResult(){

@@ -156,7 +156,7 @@ public class UserDB implements UserDataCtrl{
         return null;
     }
 
-    public void editInfo(User u){
+    public boolean editInfo(User u){
         try {
             editUserInfo.setString(1, u.getUsername());
             editUserInfo.setString(2, u.getPassword());
@@ -165,9 +165,11 @@ public class UserDB implements UserDataCtrl{
             editUserInfo.setString(5, u.getTel());
             editUserInfo.setString(6, u.getImg());
             editUserInfo.setString(7, u.getToken());
-            editUserInfo.executeUpdate();
+            int n = editUserInfo.executeUpdate();
+            if(n != 0) return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }
