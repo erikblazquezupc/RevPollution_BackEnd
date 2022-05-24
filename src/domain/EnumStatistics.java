@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public enum EnumStatistics {
     LogIn,
     ShareStation,
-    ShareAchivement,
+    ShareAchievement,
     ViewStation,
     AchiveAchievement;
 
@@ -13,7 +13,7 @@ public enum EnumStatistics {
         ArrayList<EnumStatistics> res = new ArrayList<EnumStatistics>();
         res.add(LogIn);
         res.add(ShareStation);
-        res.add(ShareAchivement);
+        res.add(ShareAchievement);
         res.add(ViewStation);
         res.add(AchiveAchievement);
         return res;
