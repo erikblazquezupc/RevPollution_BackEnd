@@ -1,10 +1,12 @@
 package domain.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.lang.Math;
 
 import domain.Concentration;
 import domain.StationStub;
+import domain.SystemState;
 import domain.dataCtrl.DataCtrl;
 import domain.dataCtrl.ConcentrationDataCtrl;
 import domain.dataCtrl.StationDataCtrl;
@@ -55,40 +57,48 @@ public class TxGetQuality {
         }
 
         if (closerId != -1) {
+            SystemState sy = SystemState.getInstance();
             StationStub closer = sdc.select(closerId);
             Integer idStation = closer.getId();
+            Date lastChangeDate = sy.getActualLastChangeDate(idStation);
+            long now = (new Date()).toInstant().toEpochMilli();
+            if(!sy.existsStationActualQuality(idStation) || (now - lastChangeDate.toInstant().toEpochMilli()) >= 3600000 ){
 
-            ArrayList<Concentration> concs = cdc.selectMostRecentFromStation(idStation);
+                ArrayList<Concentration> concs = cdc.selectMostRecentFromStation(idStation);
 
-            double IPSO2, IPNO2, IPPM10, IPCO, IPO3;
-            IPSO2 = IPNO2 = IPPM10 = IPCO = IPO3 = -1.0;
+                double IPSO2, IPNO2, IPPM10, IPCO, IPO3;
+                IPSO2 = IPNO2 = IPPM10 = IPCO = IPO3 = -1.0;
 
-            for (int i = 0; i < concs.size(); ++i) {
+                for (int i = 0; i < concs.size(); ++i) {
 
-                Concentration curConcentration = concs.get(i);
+                    Concentration curConcentration = concs.get(i);
 
-                if (curConcentration.getParticle().getName().equals("SO2")) {
-                    IPSO2 = 0.286 * curConcentration.getValue();
+                    if (curConcentration.getParticle().getName().equals("SO2")) {
+                        IPSO2 = 0.286 * curConcentration.getValue();
+                    }
+                    else if (curConcentration.getParticle().getName().equals("NO2")) {
+                        IPNO2 = 0.5 * curConcentration.getValue();
+                    }
+                    else if (curConcentration.getParticle().getName().equals("PM10")) {
+                        IPPM10 = 1.0 * curConcentration.getValue();
+                    }
+                    else if (curConcentration.getParticle().getName().equals("CO")) {
+                        IPCO = 10 * curConcentration.getValue();
+                    }
+                    else if (curConcentration.getParticle().getName().equals("O3")) {
+                        IPO3 = 0.556 * curConcentration.getValue();
+                    }
                 }
-                else if (curConcentration.getParticle().getName().equals("NO2")) {
-                    IPNO2 = 0.5 * curConcentration.getValue();
-                }
-                else if (curConcentration.getParticle().getName().equals("PM10")) {
-                    IPPM10 = 1.0 * curConcentration.getValue();
-                }
-                else if (curConcentration.getParticle().getName().equals("CO")) {
-                    IPCO = 10 * curConcentration.getValue();
-                }
-                else if (curConcentration.getParticle().getName().equals("O3")) {
-                    IPO3 = 0.556 * curConcentration.getValue();
-                }
+                double max = Math.max( Math.max( Math.max( Math.max(IPSO2, IPNO2), IPPM10 ), IPCO), IPO3);
+                if (max == -1.0) result = "No data available";
+                else if (max < 45) result = "Good";
+                else if (max > 100) result = "Bad";
+                else result = "Mid";
+                sy.addStationActualQuality(idStation, result);
+            } else {
+                result = sy.getStationActualQuality(idStation);
             }
 
-            double max = Math.max( Math.max( Math.max( Math.max(IPSO2, IPNO2), IPPM10 ), IPCO), IPO3);
-            if (max == -1.0) result = "No data available";
-            else if (max < 75) result = "Good";
-            else if (max > 100) result = "Bad";
-            else result = "Mid";
         }
         else result = "No data available";
     }
