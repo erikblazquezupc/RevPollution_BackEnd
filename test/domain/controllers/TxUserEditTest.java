@@ -1,9 +1,6 @@
 package domain.controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,7 +32,6 @@ public class TxUserEditTest {
     public void testTxUserEdit() {
         TxUserEdit tx = new TxUserEdit("usernametxchanged", "nametx", "passwordtx", "emailtx", "telftx", "imagetx", "token");
         tx.execute();
-        //assertTrue(tx.getResult());
         u = udc.selectByToken("token");
         assertEquals(u.getUsername(), "usernametxchanged");
     }

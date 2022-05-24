@@ -15,7 +15,7 @@ public class LogroTest {
     @Before
     public void setUp(){
         tier = "oro";
-        l = new Logro("logro1", Tier.valueOf(tier), "testeando", true);
+        l = new Logro("logro1", Tier.valueOf(tier), "testeando", true, 10, EnumStatistics.LogIn);
     }
 
     @Test
@@ -63,13 +63,30 @@ public class LogroTest {
     }
 
     @Test
-    public void testToStringActivated() {
-        l.setActivated(true);
-        assertEquals("Logro [name=logro1, tier=oro, cond=testeando, activated=1]", l.toStringActivated());
+    public void testSetLimit(){
+        l.setLimit(20);
+        assertEquals(20, l.getLimit());
+    }
+    
+    @Test
+    public void testGetLimit(){
+        assertEquals(10, l.getLimit());
     }
 
     @Test
+    public void testSetStatistic(){
+        l.setStatistic(EnumStatistics.AchiveAchievement);
+        assertEquals(EnumStatistics.AchiveAchievement, l.getStatistic());
+    }
+    
+    @Test
+    public void testGetStatistic(){
+        assertEquals(EnumStatistics.LogIn, l.getStatistic());
+    }
+
+
+    @Test
     public void testToString() {
-        assertEquals("Logro [activated=true, cond=testeando, name=logro1, tier=oro]", l.toString());
+        assertEquals("Logro [activated=true, cond=testeando, name=logro1, tier=oro, limit=10, statistic=LogIn]", l.toString());
     }
 }

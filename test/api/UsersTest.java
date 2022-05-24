@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.User;
 import domain.UserLogro;
@@ -36,8 +37,8 @@ public class UsersTest {
         u.setToken("APIGetUserLogros");
         u2 = new User(132, "APIGetUserLogros2", "name", "APIGetUserLogros2", "password", "tel", "img");
         u2.setToken("APIGetUserLogros2");
-        l = new Logro("APIGetUserLogros", Tier.bronce, "cond", false);
-        ul = new UserLogro(u, l);
+        l = new Logro("APIGetUserLogros", Tier.bronce, "cond", true, 10, EnumStatistics.AchiveAchievement);
+        ul = new UserLogro(u, l, 10, true);
 
         udc.insert(u);
         udc.insert(u2);

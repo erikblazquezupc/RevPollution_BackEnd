@@ -15,9 +15,7 @@ import javax.ws.rs.core.Response;
 import domain.Logro;
 import domain.Logro.Tier;
 import domain.controllers.TxCreateLogro;
-//import domain.controllers.TxGetLogro;
 import domain.controllers.TxGetLogroAdmin;
-//import domain.controllers.TxGetLogros;
 import domain.controllers.TxGetLogrosAdmin;
 import domain.controllers.TxSwitchActivationLogro;
 
@@ -59,8 +57,8 @@ public class LogrosAdmin {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/create")
-	public Response createLogro(@QueryParam("name") String name, @QueryParam("tier") Tier tier, @QueryParam("cond") String cond, @QueryParam("activated") boolean activated) {
-		TxCreateLogro tx = new TxCreateLogro(name, tier, cond, activated);
+	public Response createLogro(@QueryParam("name") String name, @QueryParam("tier") Tier tier, @QueryParam("cond") String cond, @QueryParam("activated") boolean activated, @QueryParam("limit") int limit, @QueryParam("statistic") String statistic) {
+		TxCreateLogro tx = new TxCreateLogro(name, tier, cond, activated, limit, statistic);
 		tx.execute();
 		return Response.ok(true).header("Access-Control-Allow-Origin", "*").build();
 	}

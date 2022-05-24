@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.User;
 import domain.UserLogro;
@@ -32,8 +33,8 @@ public class TxGetUserLogrosTest {
         u.setToken("TxGetUserLogros");
         u2 = new User(132, "TxGetUserLogros2", "name", "TxGetUserLogros2", "password", "tel", "img");
         u2.setToken("TxGetUserLogros2");
-        l = new Logro("TxGetUserLogros", Tier.bronce, "cond", false);
-        ul = new UserLogro(u, l);
+        l = new Logro("TxGetUserLogros", Tier.bronce, "cond", true, 10, EnumStatistics.AchiveAchievement);
+        ul = new UserLogro(u, l, 10, true);
 
         udc.insert(u);
         udc.insert(u2);

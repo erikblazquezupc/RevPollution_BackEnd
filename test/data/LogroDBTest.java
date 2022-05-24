@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.Logro.Tier;
 
@@ -21,9 +22,9 @@ public class LogroDBTest {
 
     @Before
     public void setUp(){
-        l = new Logro("Testlogro1", Tier.valueOf("plata"), "testeando", true);
-        l2 = new Logro("Testlogro2", Tier.valueOf("plata"), "testeando", true);
-        l3 = new Logro("Testlogro1", Tier.valueOf("oro"), "testeando", true);
+        l = new Logro("Testlogro1", Tier.valueOf("plata"), "testeando", true, 10, EnumStatistics.AchiveAchievement);
+        l2 = new Logro("Testlogro2", Tier.valueOf("plata"), "testeando", true, 10, EnumStatistics.LogIn);
+        l3 = new Logro("Testlogro1", Tier.valueOf("oro"), "testeando", true, 20, EnumStatistics.AchiveAchievement);
         ldb = LogroDB.getInstance();
         ldb.insert(l);
         ldb.insert(l2);

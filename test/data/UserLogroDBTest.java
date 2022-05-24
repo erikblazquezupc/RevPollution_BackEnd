@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.User;
 import domain.UserLogro;
@@ -25,8 +26,8 @@ public class UserLogroDBTest {
     public void setUp(){
         u = new User(132, "UserLogroTest", "name", "UserLogroTest", "password", "tel", "img");
         u.setToken("UserLogroTest");
-        l = new Logro("UserLogroTest", Tier.bronce, "cond", false);
-        ul = new UserLogro(u, l);
+        l = new Logro("UserLogroTest", Tier.bronce, "cond", true, 10, EnumStatistics.AchiveAchievement);
+        ul = new UserLogro(u, l, 10, true);
 
         udb.insert(u);
         ldb.insert(l);

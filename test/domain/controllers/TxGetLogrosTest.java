@@ -3,12 +3,11 @@ package domain.controllers;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-//import java.util.ArrayList;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
@@ -21,7 +20,7 @@ public class TxGetLogrosTest {
     @Before
     public void setUp(){
         String tier = "bronce";
-        l = new Logro("logro1", Tier.valueOf(tier), "condicion");
+        l = new Logro("logro1", Tier.valueOf(tier), "condicion", true, 10, EnumStatistics.AchiveAchievement);
         DataCtrl dataCtrl = DataCtrl.getInstance();
         ldc = dataCtrl.getLogroDataCtrl();
         ldc.insert(l);

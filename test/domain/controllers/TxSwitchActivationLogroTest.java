@@ -1,16 +1,13 @@
 package domain.controllers;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-
-//import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.EnumStatistics;
 import domain.Logro;
 import domain.Logro.Tier;
 import domain.dataCtrl.DataCtrl;
@@ -22,7 +19,7 @@ public class TxSwitchActivationLogroTest {
 
     @Before
     public void setUp(){
-        l = new Logro("logro1", Tier.valueOf("bronce"), "condicion", true);
+        l = new Logro("logro1", Tier.valueOf("bronce"), "condicion", true, 10, EnumStatistics.AchiveAchievement);
         ldc.insert(l);
     }
     
